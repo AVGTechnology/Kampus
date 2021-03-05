@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+    <br>
+    <div class="container">
+        {% for article in article %}
+        <div>
+        <h4><b>{{article.title}}</b></h4>
+        <!-- user info -->
+        <a  href="{% url 'articles_author' article.user.pk %}" data-target="modal1" class=" modal-trigger  ">
+            <b class="valign-wrapper" style="font-size: 20px; color: #330354;"><i
+                class="material-icons">info</i>Author info</b></a>
+           <font class="valign-wrapper" style="font-size: 15px; color: #000000;">
+                Last Updated {{article.timestamp}}</font>
+        </div><br>
+
+
+        <div>
+        {%  if article.image%}
+        <a href="" class="center"><img class="responsive-img" src={{article.image.url}} style=" width: 200px;"></a>
+       {% else %}
+       {% endif %}
+        <font class="valign-wrapper" style="font-size: 20px; color: #000000;">
+        {{article.body}}</font>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="fixed-action-btn">
+        <a href="{% url 'create_article' %}" class="btn-floating btn-large #aa00ff purple accent-4">
+            <i class="large material-icons">edit</i>
+        </a>
+    </div>
+
+</div>
+
+
+{% endblock%}

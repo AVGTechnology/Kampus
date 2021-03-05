@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+  <div class="container">
+    <br>
+    <h4><font color="black">New Post</font></h4> <br>
+    <form method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn-floating btn-large cyan pulse right">
+            <i class="material-icons right" style="font-size: 30px;">check</i></button>
+  </form>
+  <br>
+
+  </div>
+
+</div>
+   {%endblock%}

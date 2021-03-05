@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+    <br>
+<div class="container">
+<div align="center">
+ <h4>The Student Guardian </h4>
+
+</div><br>
+ <div class="#e8f5e9 green lighten-5" style="
+                          text-align: center;
+                           width: 100%;
+                           border-radius: 25px;
+                           ">
+
+        <div class="container">
+            <form action="{% url 'search_article' %}" method="GET">
+                {% csrf_token %}
+                <div class="row valign-wrapper space">
+                    <input class="form-control me-2" type="search" placeholder="search for Articles or Author" name="article"
+                           value="{{ art }}"
+                           aria-label="Search" id="article">
+                    <br>
+                   <!-- <i class="material-icons right"
+                       style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
+                    <br>
+                    <div>
+                        <button type="submit" class="N/A transparent" style="border: 0px;">
+                            <i class="material-icons" style="font-size: 25px;">search</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<ul class="collection">
+{%  if article %}
+    {% for article in article %}
+       <li class="collection-item">
+
+       {%  if article.image%}
+        <a href="" class="secondary-content"><img class="responsive-img" src={{article.image.url}} style=" width: 100px;"></a>
+       {% else %}
+       {% endif %}
+           <a href="{% url 'articles_details' article.pk %}">
+          <span class="title " style="color:#000000;"><b>{{article.title}}</b></span>
+      <p  style="color:#000000;">{{article.body|truncatewords:"10"}} <br>
+          <b>written by: {{article.user}}</b>
+      </p>
+      </a> </li>
+        {% endfor %}
+    {%  else %}
+
+    no article yet!!
+
+    {%  endif %}
+
+  </ul>
+
+  <div class="fixed-action-btn">
+  <a href="{% url 'create_article' %}" class="btn-floating btn-large #aa00ff purple accent-4">
+    <i class="large material-icons">edit</i>
+  </a>
+</div>
+
+
+
+
+</div>
+
+
+{% endblock%}

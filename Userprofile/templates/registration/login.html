@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+  <div class="container">
+    <br>
+   <div align="center " >  <img alt="..." class="rounded-circle"
+          height="70dp" src="{% static 'images/logo.png' %}" width="70dp"><br>
+     <h4><font style="color:#850785;">Kampus Login</font></h4></div><br>
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <br>
+    <div align="center">
+    <input type="submit" value="login"  class="btn #4a148c purple darken-4" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </form>
+<br>
+    <div align="center">
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <h6><a href="{% url 'password_reset' %}">Lost password?</a></h6>
+    <br>
+    <h6>Am a new user!</h6>
+    <p><a href="{% url 'signup' %}"><button type="submit" class="btn #880e4f pink darken-4">Signup first</button></a></p>
+ <br>
+    </div>
+  </div>
+  </div>
+</div>
+{%endblock%}

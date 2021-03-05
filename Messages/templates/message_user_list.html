@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+<div class="container">
+    <h4>Kampus Accounts </h4>
+ <div class="#e8f5e9 green lighten-5" style="
+                          text-align: center;
+                           width: 100%;
+                           border-radius: 25px;
+                           ">
+
+        <div class="container">
+            <form action="{% url 'search_message_user_list' %}" method="GET">
+                {% csrf_token %}
+                <div class="row valign-wrapper space">
+                    <input class="form-control me-2" type="search" placeholder="search for username or profession" name="acct"
+                           value="{{ acct }}"
+                           aria-label="Search" id="acct">
+                    <br>
+                   <!-- <i class="material-icons right"
+                       style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
+                    <br>
+                    <div>
+                        <button type="submit" class="N/A transparent" style="border: 0px;">
+                            <i class="material-icons" style="font-size: 25px;">search</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<ul class="collection">
+
+    {% for users in users %}
+       <li class="collection-item avatar">
+      <a href="{% url 'view_user_profile' users.user.pk %}">
+      <img src={{users.image.url}} alt="" class="circle">
+          <span class="title " style="color:#000000;"><b>{{users.user}}</b></span>
+      <p  style="color:gray;">{{users.profession}} <br>
+         {{users.dept}}
+      </p>
+      </a>
+       <a href="{% url 'chat_page' users.user.pk %}">
+        <i class="material-icons secondary-content " style="color:#06bd4c">send</i>
+      </a>
+    </li>
+        {% endfor %}
+
+  </ul>
+
+
+
+
+</div>
+
+
+{% endblock%}

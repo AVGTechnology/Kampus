@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+<div class="container">
+    <h4>Chat history</h4>
+    <a href="{% url 'received_list' %}"> <font class="chip ">Received messages</font></a>
+    <a href="{% url 'sent_list' %}"><font class="chip #00e676 green accent-3">Sent messages</font></a>
+</div>
+<ul class="collection">
+
+    {% for gm in megs %}
+       <li class="collection-item avatar">
+      <a href="{% url 'chat_page' gm.recipient.pk %}">
+      <img src={{gm.recipient.owner.image.url}} alt="" class="circle">
+           <span class="title" style="color:#000000;">To <b>{{gm.recipient}}</b></span>
+      <p style="color:gray;">{{gm.text}} <br>
+         {{gm.timestamp}}
+      </p>
+          <i class="material-icons secondary-content " style="color:#06bd4c">call_made</i>
+      </a>
+       </li>
+        {% endfor %}
+
+
+  </ul>
+
+    <div class="fixed-action-btn">
+  <a href="{% url 'message_user_list' %}" class="btn-floating btn-large #aa00ff purple accent-4">
+    <i class="large material-icons">people</i>
+  </a>
+</div>
+
+
+
+</div>
+
+
+{% endblock%}

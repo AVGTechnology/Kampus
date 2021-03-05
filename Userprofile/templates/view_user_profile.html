@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+
+    <div class="" align="center">
+        <br>
+        {% for user_p in user_p %}
+
+        <div class="col">
+            <img src={{user_p.image.url}} alt="..." width="120" height="120"
+                class="circle responsive-img"><br>
+            <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
+            <b><font  style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
+                <div class=" " align="center">
+            <b><font color="black"> ({{ user_p.dept }}) </font>
+                <font color="black"> {{ user_p.school }} </font></b><br>
+            <!--<font color="#1f011f"><b>Call</b> {{user_p.phone}} </font><br>-->
+
+        </div><br>
+
+        </div>
+          <br>
+        <div class="container" align="center">
+
+            <table align="center">
+
+        <tbody>
+          <tr>
+            <td>
+                <a href="">
+                    <div class="center">
+                        <font color="black" style="font-size: 15px;"> <b>{{posts.count}}</b> <br> Posts </font>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'followers' user_p.user.pk %}">
+                    <div class="center">
+                        <font color="black" style="font-size: 15px;"> <b>{{ user_p.follower.count }}</b> <br> Followers </font>
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'followings' user_p.user.pk %}">
+                    <div class="center">
+                        <font color="black" style="font-size: 15px;"> <b>{{ user_p.following.count }}</b> <br> Following </font>
+                    </div>
+                </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+        <br>
+        <div class="center">
+            <div class="row">
+                <div class="col">
+            {%  if user in user_p.follower.all%}
+           <a href="{% url 'unfollow' user_p.user.pk %}" style="" class="waves-effect waves-light btn #bbdefb blue lighten-3">Unfollow</a>
+       {% else %}
+           <a href="{% url 'follow' user_p.user.pk %}" style="" class="waves-effect waves-light btn #1565c0 blue darken-1">Follow</a>
+       {% endif %}
+            </div>
+            <div class="col">
+            <a href="{% url 'chat_page' user_p.user.pk %}" style="" class="#1565c0 blue darken-1 btn">Message<i class="material-icons left" style="font-size: 30px;">send</i></a>
+            </div>
+        </div>
+            <br>
+
+{% if posts %}
+    {% for posts in posts %}
+    <div style="background-color: #ffffff;">
+        <br>
+        <div class="space">
+            <div class="">
+            <b>{{ posts.caption}}</b>
+            </div>
+            {% if posts.file.url|slice:"-4:" == ".mp4" %}
+            <video class="responsive-video" controls>
+                <source src={{posts.file.url}} type="video/mp4" style="max-width: 100%;">
+            </video>
+            {% else %}
+            <img class="responsive-img" src={{posts.file.url}} style="max-width: 100%;">
+            {% endif %}
+        </div>
+          <br>
+        <div class="row valign-wrapper">
+            <div class="col s15">
+                <a href="{% url 'like' posts.pk %}">
+               <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929" >favorite_border</i>
+                </a>
+            </div>
+
+            <div class="col s15">
+                <a href="{% url 'comment_view' posts.pk %}">
+               <i class="material-icons" style="font-size: 30px;  text-decoration: none; color: #292929" >comment</i>
+                </a>
+            </div>
+
+             <div class="col s15">
+               <a href="{% url 'chat_page' posts.user.pk %}">
+               <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929" >send</i>
+               </a>
+            </div>
+
+            <div class="col s1">
+               <i class="material-icons right" style="font-size: 30px; text-decoration: none; color: #292929" >file_download</i>
+            </div>
+
+        </div>
+
+         <div class="row valign-wrapper">
+             <div class="col s15">
+                 <b>{{posts.like.count}} likes</b>
+            </div>
+
+            <div class="col s15">
+                <a href="{% url 'comment_view' posts.pk %}">
+                <p> <font color="gray">View 200 comments</font></p>
+                </a>
+            </div>
+         </div>
+       <!-- <div class="container">
+           comments....
+        </div>-->
+
+        <div class="row valign-wrapper">
+             <div class="col s15">
+                 <img src={{profile.image.url}}
+                     width="30px"
+                     alt="" class="circle responsive-img">
+            </div>
+
+            <div class="col s15 chip">
+                <p> <font color="gray">Add a comment...</font></p>
+            </div><br>
+            <div class="col s4">
+               <p class="right"> <font color="gray">{{posts.timestamp|date:"D d M Y" }}</font></p>
+            </div>
+         </div>
+
+    </div>
+    {% endfor %}
+          {% else %}
+
+            <h2><b>{{user.username}}  you haven't created any Post Yet!!!</b></h2>
+           {% endif %}
+
+
+        </div>
+
+    </div>
+</div>
+{% endfor%}
+</div>
+
+
+
+{% endblock %}

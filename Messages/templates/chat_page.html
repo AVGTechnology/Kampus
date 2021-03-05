@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="navbar-fixed ">
+    <nav class="#00c853 green accent-4">
+        <div class="nav-wrapper container">
+            <div class="row valign-wrapper space">
+
+                <img src={{recipient.image.url}}
+                     width="40px"
+                     alt="" class="circle responsive-img">
+                <b style="margin-left:20px;
+                              font-size: 18px;
+                              margin-right:0px;"> {{ recipient.user}}</b>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container" id="message" style="scroll-margin-bottom: 100px; scroll-margin-bottom: initial;">
+
+    {% for megs in megs %}
+    {% if megs.sender == request.user %}
+    <div class="right #00e676 green accent-3" style="  text-align: left;
+                  border-radius: 25px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+
+        <p class=""><b style="font-size: 15px;">{{megs.text}}</b> <font style="color:#828181;
+                                                                               margin-left:20px;
+                                                                               margin-right:0px;">
+            {{megs.timestamp|time }}</font> <i class="right material-icons" style="color:#828181;
+                                                                                 font-size: 20px;
+                                                                               margin-left:0px;
+                                                                               margin-right:0px;">done_all</i></p>
+
+    </div>
+    <br><br><br>
+    {% else %}
+    <div class="left #b9f6ca green accent-1" style="  text-align: left;
+                  border-radius: 25px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+
+        <p class=""><b style="font-size: 15px;">{{megs.text}}</b> <font style="color:#828181;
+                                                                               margin-left:20px;
+                                                                               margin-right:0px;">
+            {{megs.timestamp|time }}</font></p>
+
+    </div>
+    <br><br><br>
+    {% endif %}
+    {% endfor %}
+    <br><br>
+</div>
+
+<footer>
+    <div class="#e8f5e9 green lighten-5" style="  position: fixed;
+                           left: 0;
+                           bottom: 0;
+                           text-align: center;
+                           width: 100%;
+                           border-radius: 25px;
+                           ">
+
+        <div class="container">
+            <form action="{% url 'send_chat' recipient.user.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="row valign-wrapper space">
+                    <input class="form-control me-2" type="text" placeholder="Type a message" name="chats"
+                           value="{{ Chat }}"
+                           aria-label="Search" id="chats">
+                    <br>
+                    <!-- <i class="material-icons right"
+                        style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
+                    <br>
+                    <div>
+                        <button type="submit" class="btn-floating btn-medium #00c853 green accent-4">
+                            <i class="material-icons" style="font-size: 25px;">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+</footer>
+{% endblock %}

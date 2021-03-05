@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+    <br>
+<div class="container">
+<div align="center">
+    <a href="{% url 'discover_account' %}"> <font class="chip #ce93d8 purple lighten-3 waves-effect waves-light">Discover Accounts</font></a>
+    <a href="{% url 'discover_post' %}"> <font class="chip waves-effect waves-light">Discover Posts</font></a>
+</div><br>
+ <div class="#e8f5e9 green lighten-5" style="
+                          text-align: center;
+                           width: 100%;
+                           border-radius: 25px;
+                           ">
+
+        <div class="container">
+            <form action="{% url 'search_discover_account' %}" method="GET">
+                {% csrf_token %}
+                <div class="row valign-wrapper space">
+                    <input class="form-control me-2" type="search" placeholder="search for username or profession" name="acct"
+                           value="{{ acct }}"
+                           aria-label="Search" id="acct">
+                    <br>
+                   <!-- <i class="material-icons right"
+                       style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
+                    <br>
+                    <div>
+                        <button type="submit" class="N/A transparent" style="border: 0px;">
+                            <i class="material-icons" style="font-size: 25px;">search</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<ul class="collection">
+
+    {% for account in account %}
+       <li class="collection-item avatar">
+      <a href="{% url 'view_user_profile' account.user.pk %}">
+      <img src={{account.image.url}} alt="" class="circle">
+          <span class="title " style="color:#000000;"><b>{{account.user}}</b></span>
+      <p  style="color:gray;">{{account.profession}} <br>
+         {{account.dept}}
+      </p>
+      </a>
+       {%  if user in account.follower.all%}
+           <a href="{% url 'unfollow' account.user.pk %}" class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
+       {% else %}
+           <a href="{% url 'follow' account.user.pk %}" class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
+       {% endif %}
+    </li>
+        {% endfor %}
+
+  </ul>
+
+
+
+
+</div>
+
+
+{% endblock%}

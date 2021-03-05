@@ -1,0 +1,89 @@
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  color: #ffffff;
+  font-family: "Lucida Console", Courier, monospace;
+  font-size: 15px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #1b2282;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #796eeb;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: none;
+  border-top: none;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+.bge {
+  color: #ffffff;
+  font-family: "Lucida Console", Courier, monospace;
+  font-size: 15px;
+  }
+
+.marginspace {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  }
+
+  p {
+  display: block;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 0;
+  margin-right: 0;
+  }
+ .space{
+   margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 0;
+  margin-right: 0;
+
+ }
+
+  .comment{
+   margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 5;
+  padding: 5em;
+  margin-right: 0;
+
+ }
+  .content {
+  max-width: 500px;
+  margin: auto;
+  background-color: #ffffff;
+  }
+
+  header{
+  position: fixed;
+
+
+
+  }
