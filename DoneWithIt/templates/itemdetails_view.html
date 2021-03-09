@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+    <div class="container">
+        <br>
+        <div class="row valign-wrapper space">
+            <div class="col s15">
+                <img src={{posts.user.owner.image.url}}
+                     width="50px"
+                     alt="" class="circle responsive-img">
+            </div>
+            <div class="col s16">
+                <b>{{ posts.user}}</b>
+                <p><font color="#9e9e9e">{{ posts.user.owner.profession}}</font></p>
+            </div>
+        </div>
+        <div class="space">
+            <div class="">
+                <b>{{ posts.caption}}</b>
+            </div>
+            {% if posts.file.url|slice:"-4:" == ".mp4" %}
+            <video class="responsive-video" controls>
+                <source src={{posts.file.url}} type="video/mp4">
+            </video>
+            {% else %}
+            <img class="responsive-img" src={{posts.file.url}}>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row valign-wrapper">
+            <div class="col s15">
+                {% if user in posts.like.all%}
+                <a href="{% url 'like' posts.pk %}">
+                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: red;">favorite</i>
+                </a>
+                {% else %}
+                <a href="{% url 'like' posts.pk %}">
+                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929">favorite_border</i>
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="col s15">
+                <a href="{% url 'comment_view' posts.pk %}">
+                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929">comment</i>
+                </a>
+            </div>
+
+            <div class="col s15">
+                <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929">send</i>
+            </div>
+
+            <div class="col s1">
+                <i class="material-icons right" style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
+            </div>
+
+        </div>
+
+        <div class="row valign-wrapper">
+            <div class="col s15">
+                <b>{{posts.like.count}} likes</b>
+            </div>
+
+            <div class="col s15">
+                <b>{{comments.count}} comments</b>
+            </div>
+
+        </div>
+        <div style="">
+            <form action="{% url 'comment' posts.pk %}" method="post">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="write a comments..." name="comment"
+                       value="{{ comment }}"
+                       aria-label="Search" id="comment">
+                <br>
+                <button type="submit" class="btn-floating btn-medium cyan pulse right"><i
+                        class="material-icons right"
+                        style="font-size: 20px;">
+                    send</i></button>
+            </form>
+        </div>
+        <br>
+        <br>
+        <div>
+
+            {% if comments %}
+            {% for comments in comments %}
+
+            <div class="row valign-wrapper space">
+                <div class="col s15">
+                    <img src={{comments.user.owner.image.url}}
+                         width="30px"
+                         alt="" class="circle responsive-img">
+                </div>
+                <div class="col s16">
+                    <b>{{ comments.user}}</b>
+                    <font size='4px;' color="#9e9e9e;">{{comments.comment}}</font><br>
+                    <font>{{ comments.timestamp|date:"D d M Y" }}</font>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+            {% else %}
+            <h5>No comments...</h5>
+            {% endif %}
+            <br>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #dbdbdb;">
+
+    <div class="" align="center">
+        <br>
+        {% for profile in profile %}
+
+        <div class="col">
+            <img src={{profile.image.url}} alt="..." width="120" height="120"
+                class="circle responsive-img"><br>
+            <b><font style="color: #000000; font-size: 20px;">{{profile.user}}</font></b><br>
+             <font style="color:white;"
+               class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                   You have {{ items.count }} items for sale.
+             </font>
+
+        {% endfor %}
+
+     <div class="">
+        <br>
+
+{% if items %}
+        {% for items in items %}
+        <div class="card" style="border-radius: 20px 20px">
+
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src={{items.first_image.url}} style="border-radius: 20px 20px 0px 0px;">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">{{items.item_name}}<i
+                        class="material-icons right">more_vert</i></span>
+                <p><a href="#"><font style="font-size:20px;">
+
+                    {% if items.free == True %}
+                    Free
+                    {% else %}
+                    N{{items.price}}
+                    {% endif %}
+                </font></a>
+                <a href="{% url 'delete_item' items.pk %}">
+                <font style="color:white;"
+                  class="chip  #00c853 red accent-4 white waves-effect waves-light">
+                    Delete
+                    </font>
+                </a>
+
+                </p>
+                <p>  <font style="color:black;"><b>
+                    Have You sold this item ? </b>
+
+                  {% if items.sold == True %}
+                 <a href="">
+                 <font class="chip  #00c853 red accent-4 white waves-effect waves-light">
+                    No
+                </font>
+                    {% else %}
+                  <a href="{% url 'sold_item' items.pk %}">
+                 <font class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                    Yes
+                </font>
+                  </a>
+                    {% endif %}
+                    </font>
+                </p>
+
+            </div>
+
+            <div class="card-reveal"  align="center">
+                <span class="card-title grey-text text-darken-4">{{items.item_name}}<i
+                        class="material-icons right">close</i></span>
+                <p>
+                    {% if items.item_dis%}
+                    {{items.item_dis}}
+                    {% else %}
+                    No description !!!
+                    {% endif %}
+                </p>
+
+                <p><a href="#"><font style="font-size:20px;">
+
+                    {% if items.free == True %}
+                    Free
+                    {% else %}
+                    N{{items.price}}
+                    {% endif %}
+                </font></a></p>
+
+                <a href="">
+                    {% if items.negotiable == True %}
+                    <font style="color:white;"
+                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                    Negotiable
+                    </font>
+                    {% else %}
+                    <font style="color:white;"
+                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                    Not Negotiable
+                    </font>
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'delete_item' items.pk %}">
+                <font style="color:white;"
+                  class="chip  #00c853 red accent-4 white waves-effect waves-light">
+                    Delete
+                    </font>
+                </a>
+                 <br>
+
+                     <br>
+                 <p><a href="#"><font style="font-size:20px; color:gray;">
+
+                    {% if items.location %}
+                     <i class="material-icons">location_on</i>{{ items.location }}
+                    {% else %}
+
+                    {% endif %}
+                </font></a></p>
+
+                <br>
+                {% if items.sold == True %}
+                   <font style="color:white;"
+                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                    Sold
+                    </font>
+                {% else %}
+                   <font style="color:white;"
+                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                    Available
+                    </font>
+                {% endif %}
+
+
+
+            </div>
+        </div>
+
+    {% endfor %}
+          {% else %}
+
+            <h2><b>{{user.username}} you have notting for sale Yet!!!</b></h2>
+           {% endif %}
+
+
+        </div>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+{% endblock %}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'StudentGuildian',
     'Userprofile',
     'Messages',
+    'DoneWithIt',
 
     # default apps
     'django.contrib.admin',

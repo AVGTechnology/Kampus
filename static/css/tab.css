@@ -67,6 +67,15 @@
 
  }
 
+  .space2{
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 2em;
+  margin-right: 2em;
+  border-radius: 10px;
+
+ }
+
   .comment{
    margin-top: 0em;
   margin-bottom: 0em;
@@ -87,3 +96,14 @@
 
 
   }
+
+ .scrollmenu {
+ overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+ .as {
+ display: inline-block;
+}
+

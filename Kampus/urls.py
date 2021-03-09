@@ -22,6 +22,7 @@ urlpatterns = [
     path("", include("PostsManagement.urls")),
     path("", include("Messages.urls")),
     path("", include("StudentGuildian.urls")),
+    path("", include("DoneWithIt.urls")),
     path("accounts/", include("allauth.urls")),
 
 ]

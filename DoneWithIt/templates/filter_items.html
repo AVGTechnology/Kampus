@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #fffffff;">
+<div class="container">
+    <h5>Filter Results for <b style="color: blue;">{{ str }}</b></h5>
+
+</div>
+        {% if items %}
+        {% for items in items %}
+        <div class="card" style="border-radius: 20px 20px">
+
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src={{items.first_image.url}} style="border-radius: 20px 20px 0px 0px;">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">{{items.item_name}}<i
+                        class="material-icons right">more_vert</i></span>
+                <p><a href="#"><font style="font-size:20px;">
+
+                    {% if items.free == True %}
+                    Free
+                    {% else %}
+                    N{{items.price}}
+                    {% endif %}
+                </font></a></p>
+            </div>
+            <div class="card-reveal" align="center">
+                <span class="card-title grey-text text-darken-4">{{items.item_name}}<i
+                        class="material-icons right">close</i></span>
+                <p>
+                    {% if items.item_dis%}
+                    {{items.item_dis}}
+                    {% else %}
+                    No description !!!
+                    {% endif %}
+                </p>
+
+                <p><a href="#"><font style="font-size:20px;">
+
+                    {% if items.free == True %}
+                    Free
+                    {% else %}
+                    N{{items.price}}
+                    {% endif %}
+                </font></a></p>
+
+                <a href="">
+                    {% if items.negotiable == True %}
+                    <font style="color:white;"
+                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                    Negotiable
+                    </font>
+                    {% else %}
+                    <font style="color:white;"
+                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                    Not Negotiable
+                    </font>
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white;"
+                                  class="chip  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                    Contact
+                </font></a>
+                 <br>
+                <div class="row valign-wrapper space">
+                    <div class="col s15">
+                        <a href="{% url 'view_account' items.user.pk %}">
+                            <img src={{items.user.owner.image.url}}
+                                 width="50px"
+                                 alt="" class="circle responsive-img">
+                        </a>
+                    </div>
+                    <div class="col s16">
+                        <b>{{ items.user}}</b>
+                        <p><font color="#9e9e9e">{{ items.user.owner.profession}}</font></p>
+                    </div>
+                </div>
+                     <br>
+                 <p><a href="#"><font style="font-size:20px; color:gray;">
+
+                    {% if items.location %}
+                     <i class="material-icons">location_on</i>{{ items.location }}
+                    {% else %}
+
+                    {% endif %}
+                </font></a></p>
+
+                <br>
+                {% if items.sold == True %}
+                   <font style="color:white;"
+                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                    Sold
+                    </font>
+                {% else %}
+                   <font style="color:white;"
+                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                    Available
+                    </font>
+                {% endif %}
+
+
+
+            </div>
+        </div>
+
+        {% endfor %}
+        {% else %}
+        <h2><b>Not Found !!!</b></h2>
+        {% endif %}
+
+</div>
+
+
+{% endblock %}
