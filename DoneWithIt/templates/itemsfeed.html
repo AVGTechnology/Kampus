@@ -6,17 +6,17 @@
     <br><br>
     <div class="scrollmenu">
         <div class="" align="center">
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Books</b></font></a>
-            <a href=""> <font class="chip as  #ffffff white waves-effect waves-light"><b>Phone</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Computer</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Appliances</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Gadget</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Furniture</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Apartment</b></font></a>
-            <a href=""> <font class="chip as  #ffffff white waves-effect waves-light"><b>Clothing</b></font></a>
-            <a href=""> <font class="chip as  #ffffff white waves-effect waves-light"><b>Vehicle</b></font></a>
-            <a href=""> <font class="chip  as #ffffff white waves-effect waves-light"><b>Kitchen</b></font></a>
-            <a href=""> <font class="chip as #ffffff white waves-effect waves-light"><b>Others</b></font></a>
+            <a href="{% url 'filter_book' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Books</b></font></a>
+            <a href="{% url 'filter_phone' %}"> <font class="chip as  #ffffff white waves-effect waves-light"><b>Phone</b></font></a>
+            <a href="{% url 'filter_computer' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Computer</b></font></a>
+            <a href="{% url 'filter_appliances' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Appliances</b></font></a>
+            <a href="{% url 'filter_gadget' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Gadget</b></font></a>
+            <a href="{% url 'filter_furniture' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Furniture</b></font></a>
+            <a href="{% url 'filter_apartment' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Apartment</b></font></a>
+            <a href="{% url 'filter_clothing' %}"> <font class="chip as  #ffffff white waves-effect waves-light"><b>Clothing</b></font></a>
+            <a href="{% url 'filter_vehicle' %}"> <font class="chip as  #ffffff white waves-effect waves-light"><b>Vehicle</b></font></a>
+            <a href="{% url 'filter_kitchen' %}"> <font class="chip  as #ffffff white waves-effect waves-light"><b>Kitchen</b></font></a>
+            <a href="{% url 'filter_others' %}"> <font class="chip as #ffffff white waves-effect waves-light"><b>Others</b></font></a>
         </div>
     </div>
 
@@ -56,10 +56,14 @@
                         class="material-icons right">more_vert</i></span>
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                     {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a></p>
             </div>
@@ -78,6 +82,9 @@
 
                     {% if items.free == True %}
                     Free
+                    {% endif %}
+                    {% if items.contact == True %}
+                    Contact for price
                     {% else %}
                     N{{items.price}}
                     {% endif %}
@@ -137,6 +144,19 @@
                     Available
                     </font>
                 {% endif %}
+                <br>
+                <h5> Contact </h5>
+                 <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white; font-size:20px;"
+                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                 <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">message</i>
+                  Chat
+                </font></a>
+
+             <a href="tel:{{ items.user.owner.phone }}" target="_blank"> <font style="color:white; font-size:20px;"
+                  class="chip valign  #004d40 teal darken-4 white waves-effect waves-light">
+                  <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">call</i>
+                    Call
+                </font></a>
 
 
 

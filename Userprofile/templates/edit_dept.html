@@ -5,14 +5,14 @@
 <div class="content" style="background-color: #ffffff;">
     <div class="container">
          <br>
-    <h5>Make changes to your profession</h5><br>
+    <h5>Make changes to your dept.</h5><br>
 
            <div style="">
-            <form action="{% url 'profession' %}" method="post">
+            <form action="{% url 'dept' %}" method="post">
                 {% csrf_token %}
-                <input class="form-control me-2" type="text" placeholder="profession skill office" name="profession"
-                       value="{{ profession }}"
-                       aria-label="Search" id="profession">
+                <input class="form-control me-2" type="text" placeholder="dept." name="dept"
+                       value="{{ dept }}"
+                       aria-label="Search" id="dept">
                 <br>
                 <button type="submit" class="btn-floating btn-medium cyan pulse right"><i
                         class="material-icons right"

@@ -10,64 +10,73 @@
 
         <div class="col">
             <img src={{user_p.image.url}} alt="..." width="120" height="120"
-                class="circle responsive-img"><br>
+                 class="circle responsive-img"><br>
             <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
-            <b><font  style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
-                <div class=" " align="center">
-            <b><font color="black"> ({{ user_p.dept }}) </font>
-                <font color="black"> {{ user_p.school }} </font></b><br>
-            <!--<font color="#1f011f"><b>Call</b> {{user_p.phone}} </font><br>-->
-            {% endfor %}
+            <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
+            <div class=" " align="center">
+                <b><font color="black"> ({{ user_p.dept }}) </font>
+                    <font color="black"> {{ user_p.school }} </font></b><br>
+                <!--<font color="#1f011f"><b>Call</b> {{user_p.phone}} </font><br>-->
+                {% endfor %}
 
-        </div>
+            </div>
 
         </div>
         <div class="container" align="center">
 
             <table align="center">
 
-        <tbody>
-          <tr>
-            <td>
-                <a href="">
-                    <div class="center">
-                        <font color="black" style="font-size: 30px;"> <b>{{article.count}}</b> <br>Articles</font>
-                    </div>
-                </a>
-            </td>
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="">
+                            <div class="center">
+                                <font color="black" style="font-size: 30px;"> <b>{{article.count}}</b>
+                                    <br>Articles</font>
+                            </div>
+                        </a>
+                    </td>
 
-          </tr>
-        </tbody>
-      </table>
+                </tr>
+                </tbody>
+            </table>
 
-<ul class="collection">
-{%  if article %}
-    {% for article in article %}
-       <li class="collection-item">
+            <ul class="collection">
+                {% if article %}
+                {% for article in article %}
+                <li class="collection-item">
 
-       {%  if article.image%}
-        <a href="" class="secondary-content"><img class="responsive-img" src={{article.image.url}} style=" width: 100px;"></a>
-       {% else %}
-       {% endif %}
-           <a href="{% url 'articles_details' article.pk %}">
-          <span class="title " style="color:#000000;"><b>{{article.title}}</b></span>
-      <p  style="color:#000000;">{{article.body|truncatewords:"10"}} <br>
-          <font style=" font-size: 10px;" >LastUpdated: {{article.timestamp}}</font>
-      </p>
-      </a> </li>
-        {% endfor %}
-    {%  else %}
+                    {% if article.image%}
+                    <a href="" class="secondary-content"><img class="responsive-img" src={{article.image.url}}
+                                                              style=" width: 100px;"></a>
+                    {% else %}
+                    {% endif %}
+                    <a href="{% url 'articles_details' article.pk %}">
+                        <span class="title " style="color:#000000;"><b>{{article.title}}</b></span>
+                        <p style="color:#000000;">{{article.body|truncatewords:"10"}} <br>
+                            <font style=" font-size: 10px;">LastUpdated: {{article.timestamp}}</font>
+                        </p>
+                    </a>
+                       {% if user == article.user %}
+                    <a href="{% url 'delete_article' article.pk %}">
+                        <div class="col s15 chip">
+                            <p><font color="red">Delete</font></p>
+                        </div>
+                    </a>
+                       {% endif %}
+                </li>
+                {% endfor %}
+                {% else %}
 
-    no article yet!!
+                no article yet!!
 
-    {%  endif %}
+                {% endif %}
 
-  </ul>
+            </ul>
 
-</div>
+        </div>
     </div>
 </div>
-
 
 
 {% endblock %}

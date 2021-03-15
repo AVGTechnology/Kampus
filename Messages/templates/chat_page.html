@@ -4,7 +4,7 @@
 
 
 <div class="navbar-fixed ">
-    <nav class="#00c853 green accent-4">
+    <nav class="#004d40 teal darken-4">
         <div class="nav-wrapper container">
             <div class="row valign-wrapper space">
 
@@ -17,10 +17,10 @@
             </div>
         </div>
     </nav>
-</div>
+</div><br>
 
 
-<div class="container" id="message" style="scroll-margin-bottom: 100px; scroll-margin-bottom: initial;">
+<div class="content" id="message" onload="updateScroll()" style="">
 
     {% for megs in megs %}
     {% if megs.sender == request.user %}
@@ -42,7 +42,7 @@
     <br><br><br>
     {% else %}
     <div class="left #b9f6ca green accent-1" style="  text-align: left;
-                  border-radius: 25px;
+                  border-radius: 20px;
                   bottom: 0;
                   padding: 10px;
                   background-color: #f2f0f0;">
@@ -57,7 +57,18 @@
     {% endif %}
     {% endfor %}
     <br><br>
+
 </div>
+
+<script>
+
+function updateScroll(){
+    var element = document.getElementById("message");
+    element.scrollTop = element.scrollHeight;
+}
+
+
+ </script>
 
 <footer>
     <div class="#e8f5e9 green lighten-5" style="  position: fixed;
@@ -65,7 +76,7 @@
                            bottom: 0;
                            text-align: center;
                            width: 100%;
-                           border-radius: 25px;
+                           border-radius: 20px;
                            ">
 
         <div class="container">
@@ -80,7 +91,7 @@
                         style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
                     <br>
                     <div>
-                        <button type="submit" class="btn-floating btn-medium #00c853 green accent-4">
+                        <button type="submit" class="btn-floating btn-medium #004d40 teal darken-4">
                             <i class="material-icons" style="font-size: 25px;">send</i>
                         </button>
                     </div>

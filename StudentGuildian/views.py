@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from Userprofile.models import UserProfile
 from .models import *
 from .forms import ArticleForm
-
+from django.contrib import messages
 
 # Create your views here.
 
@@ -47,10 +47,12 @@ def create_article(request):
     form.instance.user = request.user
     if form.is_valid():
         form.save()
+        messages.success(request, 'Article was created Successfully!! .')
+        messages.success(request, 'Create more Articles!')
         return redirect('articles')
     else:
         form = ArticleForm()
-
+    messages.info(request, 'Creating Article please wait...')
     return render(request, 'create_article.html', {"form": form, })
 
 
@@ -80,3 +82,8 @@ def search_article(request):
 
         }
         return render(request, 'search_article.html', context)
+
+
+def delete_article(request, pk):
+    get_object_or_404(Article, pk=pk).delete()
+    return redirect('articles')

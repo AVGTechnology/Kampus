@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 
 from .models import *
 from django import forms
@@ -10,6 +11,40 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2',)
+
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = PaymentDetail
+        fields = [
+            'account_number',
+            'account_name',
+            'bank',
+
+        ]
+
+
+class PayrequstForm(forms.ModelForm):
+    class Meta:
+        model = RequestPayment
+        fields = [
+            'user',
+            'Amount',
+            'pending',
+
+        ]
+
+
+
+class PaymentEditForm(ModelForm):
+    class Meta:
+        model = PaymentDetail
+        fields = [
+            'account_number',
+            'account_name',
+            'bank',
+
+        ]
 
 
 class UserProfileForm(forms.ModelForm):
@@ -36,3 +71,9 @@ class UserProfileForm(forms.ModelForm):
             inst.save()
             self.save_m2m()
         return inst
+
+
+class ImageEditForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('image',)

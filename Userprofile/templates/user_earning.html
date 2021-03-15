@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+
+    <div class="" align="center">
+        <br>
+        {% for user_p in user_p %}
+
+        <div class="col">
+            <img src={{user_p.image.url}} alt="..." width="120" height="120"
+                 class="circle responsive-img"><br>
+            <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
+            <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
+            <div class=" " align="center">
+                <b><font color="black"> ({{ user_p.dept }}) </font>
+                    <font color="black"> {{ user_p.school }} </font></b><br>
+                <!--<font color="#1f011f"><b>Call</b> {{user_p.phone}} </font><br>-->
+
+            </div>
+            <br>
+
+        </div>
+        <br>
+        <div class="container" align="center">
+
+
+            <div class="center #00e676 red accent-1" style="  text-align: left;
+                  border-radius: 15px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="black" style="font-size: 20px;"> <b> {{total_like}} <br>
+                        Total Likes</b></font>
+                </div>
+
+                <div>
+                    You get ₦10 for every like
+                </div>
+
+            </div>
+            <br>
+            <div class="center #aa00ff purple accent-4" style="  text-align: left;
+                  border-radius: 15px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="black" style="font-size: 20px;"> <b class="row valign-wrapper"> <i
+                            class="material-icons" style="font-size: 30px;">account_balance_wallet </i> Wallet </b>
+                        <b style="font-size: 30px;"> ₦ {{wallet}} </b></font>
+                </div>
+                {% if payment %}
+                {% for payment in payment%}
+                <font color="white" style="font-size: 15px;"> You have been paid <font color="black" style="font-size: 15px;"> ₦  {{payment.paid}}</font> so far.</font>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <br>
+
+            {% for requestpay in requestpay %}
+           {% if requestpay.pending == True %}
+            <div class="center #aa00ff green accent-1" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;"> Processing payment.. <br> You will receive payment soon...</font>
+                </div>
+            </div><br>
+           {% endif %}
+            {% endfor %}
+
+            {% if wallet >= 100 %}
+            {% if payment %}
+
+             <a href="{% url 'requestpay' %}">
+            <div class="center #aa00ff green accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;"> Withdraw </font>
+                </div>
+            </div></a>
+                 <br>
+            <div class="center #aa00ff accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="black" style="font-size: 20px;"> <b class="row valign-wrapper"> Payment details <i
+                            class="material-icons" style="font-size: 30px;">account_balance_bank </i>  </b>
+                     </font>
+                    {% for pay in payment %}
+                    <div>
+                        <font color="black" style="font-size: 15px;"> Account No.: {{ pay.account_number}}</font><br>
+                        <font color="black" style="font-size: 15px;"> Account Name.: {{ pay.account_name}}</font><br>
+                        <font color="black" style="font-size: 15px;"> Bank.: {{ pay.bank}}</font><br>
+                        <a href="{% url 'edit_payment' %}">
+                            Change Account details
+                        </a>
+
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% else %}
+            <div class="center #aa00ff gray accent-1" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;"> Withdraw </font>
+                </div>
+            </div>
+            <br>
+            <a href="{% url 'paymentform' %}">
+                <div class="center #aa00ff red accent-1" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  color: white;
+                  background-color: #f2f0f0;">
+
+                    <h5 class="row valign-wrapper"><i class="material-icons" style="font-size: 30px;">info</i> Fill
+                        payment detail to withdraw</h5>
+
+                </div>
+            </a>
+
+            {% endif %}
+            {% else %}
+            <div class="center #aa00ff gray accent-1" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;"> Withdraw </font>
+                </div>
+            </div>
+            <br>
+            <div class="center #aa00ff red accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="black" style="font-size: 20px;"> Wallet balance must be ₦1000 or above to
+                        withdraw </font>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div><br>
+
+
+
+{% endfor%}
+
+
+{% endblock %}

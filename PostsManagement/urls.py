@@ -11,6 +11,7 @@ urlpatterns = [
     path('like/<int:pk>/', views.like, name='like'),
     path('comment_view/<int:pk>/', views.comment_view, name='comment_view'),
     path('comment/<int:pk>/', views.comment, name='comment'),
+    path('delete/<int:pk>/', views.delete_post, name='delete_post'),
 ]
 
 if settings.DEBUG:

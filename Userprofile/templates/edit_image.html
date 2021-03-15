@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+    <div class="container">
+        <br>
+        <h5>Make changes to your profile image</h5><br>
+
+        <div style="">
+
+
+            <form action="" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ image_edit_form.as_p }}
+            {{ image_edit_form.errors }}
+            <!--To redirect user to prvious page after post req-->
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+               <button type="submit" class="btn-floating btn-medium cyan pulse right"><i
+                        class="material-icons right"
+                        style="font-size: 20px;">
+                    save</i></button>
+
+        </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

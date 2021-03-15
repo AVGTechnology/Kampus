@@ -2,8 +2,8 @@
 {% block content %}
 {% load static %}
 
-<div class="content" style="background-color: #dbdbdb;">
-
+<div class="content" style="background-color: #ddeaf0;">
+<br>
     <div class="" align="center">
         <br>
         {% for profile in profile %}
@@ -34,10 +34,14 @@
                         class="material-icons right">more_vert</i></span>
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                   {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a>
                 <a href="{% url 'delete_item' items.pk %}">
@@ -81,10 +85,14 @@
 
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                       {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a></p>
 
@@ -152,8 +160,7 @@
 
 
 
-
-
+</div>
 
 
 </div>

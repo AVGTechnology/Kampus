@@ -29,6 +29,7 @@ class Item(models.Model):
     price = models.IntegerField(default=0, verbose_name='Price', null=True, blank=True, )
     sold = models.BooleanField(default=False)
     free = models.BooleanField(default=False, verbose_name='Give item for free', )
+    contact = models.BooleanField(default=False, verbose_name='Contact for price', )
     negotiable = models.BooleanField(default=True, verbose_name='Negotiable',)
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
 

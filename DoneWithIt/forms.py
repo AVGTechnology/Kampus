@@ -15,6 +15,7 @@ class ItemForm(forms.ModelForm):
             'category',
             'item_dis',
             'location',
+            'contact',
             'price',
             'free',
             'negotiable',

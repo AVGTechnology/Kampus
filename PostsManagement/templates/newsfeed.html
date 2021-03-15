@@ -57,14 +57,16 @@
                 </a>
             </div>
 
-            <div class="col s15">
+            <div class="col s15" >
                 <a href="{% url 'chat_page' posts.user.pk %}">
-                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929">send</i>
+                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929; transform: rotate(0deg);">send</i>
                 </a>
             </div>
 
             <div class="col s1">
+                <a href="{{posts.file.url}}" class="pull-right" download>
                 <i class="material-icons right" style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
+                    </a>
             </div>
 
         </div>
@@ -76,11 +78,18 @@
 
             <div class="col s15">
                 <a href="{% url 'comment_view' posts.pk %}">
-                    {{ comments.count }} View Comments
+
+                    View all comments
 
                 </a>
             </div>
         </div>
+
+         {% for comments in comments %}
+                    {% if comments.post == posts %}
+        <b>{{comments.user}}</b> <font size='3px;' color="#9e9e9e;">  {{ comments.comment|truncatewords:"5"}}</font><br>
+                    {% endif %}
+                    {% endfor %}
         <!-- <div class="container">
             comments....
          </div>-->
@@ -92,9 +101,11 @@
                      alt="" class="circle responsive-img">
             </div>
 
+           <a href="{% url 'comment_view' posts.pk %}">
             <div class="col s15 chip">
                 <p><font color="gray">Add a comment...</font></p>
             </div>
+           </a>
             <br>
             <div class="col s4">
                 <p class="right"><font color="gray">{{posts.timestamp|date:"D d M Y" }}</font></p>

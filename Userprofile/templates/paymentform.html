@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+  <div class="container">
+    <br>
+   <div align="center " >  <img alt="..." class="rounded-circle"
+          height="70dp" src="{% static 'images/logo.png' %}" width="70dp"></a></div><br>
+    <h5><font color="#850785">{{user}} add payment details to get payed on Kampus</font></h5><br>
+    <form method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.as_p }}
+        <br>
+    <button type="submit" class="btn-floating btn-large #ba68c8 purple lighten-2 pulse right"><i class="material-icons right" style="font-size: 30px;">
+      check</i></button>
+  </form>
+  <br>
+
+  </div>
+</div>
+
+   {%endblock%}

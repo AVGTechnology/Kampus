@@ -3,19 +3,73 @@
 {% load static %}
 
 <div class="content" style="background-color: #ffffff;">
-  <div class="container">
-    <br>
-    <h4><font color="black">New Post</font></h4> <br>
-    <form method="post" enctype='multipart/form-data'>
-    {% csrf_token %}
-    {{ form.as_p }}
+    <div class="container">
         <br>
-        <button type="submit" class="btn-floating btn-large cyan pulse right">
-            <i class="material-icons right" style="font-size: 30px;">check</i></button>
-  </form>
-  <br>
+        <div align="center "><img alt="..." class=""
+                                  height="70dp" src="{% static 'images/kampuslogo2.png' %}" width="70dp"></a></div>
 
-  </div>
+        <h4><font color="black">Whats happening... on Kampus!</font></h4> <br>
+        <form method="post" enctype='multipart/form-data' style="font-size: 20px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <button type="submit" class="btn-floating btn-large cyan pulse right" onclick="myFunction()">
+                <i class="material-icons right" style="font-size: 30px;">check</i></button>
+        </form>
+        <br>
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'success' in message.tags %}
+         <div class="#e8f5e9 green lighten-4" style="
+                          text-align: center;
+                           width: 100%;
+                           font-size: 20px;
+                           color: #ffffff;
+                           border-radius: 20px;
+                           ">
+        <div class="alert alert-success" role="alert">
+            <div class="alert {{ message.tags }} m-2 row valign-wrapper" id="success" role="alert">
+                 <i class="material-icons " style="font-size: 30px; color:green;">check_circle</i>
+                {{ message }}
+            </div>
+        </div>
+         </div><br><br>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if 'info' in message.tags %}
+        <div class="#e8f5e9 green lighten-4" style="
+                          text-align: center;
+                           width: 100%;
+                           font-size: 20px;
+                           color: #ffffff;
+                           border-radius: 20px;
+                           ">
+        <div class="alert alert-success" role="alert" id="info" style="display:none;">
+            <div class="alert {{ message.tags }} m-2 row valign-wrapper" role="alert">
+                <i class="material-icons " style="font-size: 30px; color:green;">check_circle</i>
+                {{ message }}
+            </div>
+        </div>
+        </div><br>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+  <script>
+
+function myFunction() {
+      var postInfo = document.getElementById('info')
+      postInfo.style.display = "block"
+}
+
+ </script>
+
+
+    </div>
 
 </div>
-   {%endblock%}
+{%endblock%}

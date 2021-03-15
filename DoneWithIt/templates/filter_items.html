@@ -4,7 +4,7 @@
 
 <div class="content" style="background-color: #fffffff;">
 <div class="container">
-    <h5>Filter Results for <b style="color: blue;">{{ str }}</b></h5>
+    <h5>Filter Results for <b style="color: blue;">{{ items.all.category }}</b></h5>
 
 </div>
         {% if items %}
@@ -19,10 +19,14 @@
                         class="material-icons right">more_vert</i></span>
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                       {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a></p>
             </div>
@@ -39,10 +43,14 @@
 
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                       {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a></p>
 
@@ -108,7 +116,7 @@
 
         {% endfor %}
         {% else %}
-        <h2><b>Not Found !!!</b></h2>
+        <h4><b>No items in this category !!!</b></h4>
         {% endif %}
 
 </div>

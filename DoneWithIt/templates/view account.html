@@ -17,9 +17,17 @@
                    {{profile.user}} has {{ items.count }} items for sale.
              </font><br>
 
-              <a href="{% url 'chat_page' profile.user.pk %}"> <font style="color:white;"
-                  class="chip  #f4511e deep-orange darken-1 white waves-effect waves-light">
-                    Contact
+                 <h5> Contact </h5>
+                 <a href="{% url 'chat_page' profile.user.pk %}"> <font style="color:white; font-size:20px;"
+                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                 <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">message</i>
+                  Chat
+                </font></a>
+
+             <a href="tel:{{ profile.phone }}" target="_blank"> <font style="color:white; font-size:20px;"
+                  class="chip valign  #004d40 teal darken-4 white waves-effect waves-light">
+                  <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">call</i>
+                    Call
                 </font></a>
 
         {% endfor %}
@@ -40,10 +48,14 @@
                         class="material-icons right">more_vert</i></span>
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                       {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a>
                 </p>
@@ -61,10 +73,14 @@
 
                 <p><a href="#"><font style="font-size:20px;">
 
-                    {% if items.free == True %}
+                       {% if items.free == True %}
                     Free
                     {% else %}
+                    {% if items.contact == True %}
+                    Contact for price
+                    {% else %}
                     N{{items.price}}
+                    {% endif %}
                     {% endif %}
                 </font></a></p>
 
@@ -81,11 +97,6 @@
                     </font>
                     {% endif %}
                 </a>
-
-                 <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white;"
-                  class="chip  #f4511e deep-orange darken-1 white waves-effect waves-light">
-                    Contact
-                </font></a>
 
                      <br>
                  <p><a href="#"><font style="font-size:20px; color:gray;">
@@ -110,6 +121,19 @@
                     </font>
                 {% endif %}
 
+                <br>
+                <h5> Contact </h5>
+                 <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white; font-size:20px;"
+                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                 <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">message</i>
+                  Chat
+                </font></a>
+
+             <a href="tel:{{ items.user.owner.phone }}" target="_blank"> <font style="color:white; font-size:20px;"
+                  class="chip valign  #004d40 teal darken-4 white waves-effect waves-light">
+                  <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">call</i>
+                    Call
+                </font></a>
 
 
             </div>

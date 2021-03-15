@@ -8,6 +8,7 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 
 # Create your views here.
@@ -18,11 +19,13 @@ def sell_item(request):
     form = ItemForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Item added Successfully!! .')
+        messages.success(request, 'Add More Items...')
         return redirect('sell_item')
     else:
         form = ItemForm(user=request.user)
-
-    return render(request, 'sell_item.html', {"form": form, })
+        messages.info(request, 'Posting please wait...')
+    return render(request, 'sell_item.html', {"form": form,})
 
 
 @login_required
@@ -101,12 +104,121 @@ def search_item(request):
         return render(request, 'search_items.html', context)
 
 
-def filter_item(request, Books):
-    items = Item.objects.all().filter(category=Books)
+def filter_book(request):
+    items = Item.objects.all().filter(category='Book')
 
     context = {
         'items': items,
-        'str': Books,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_phone(request):
+    items = Item.objects.all().filter(category='Phone')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_computer(request):
+    items = Item.objects.all().filter(category='Computer')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_appliances(request):
+    items = Item.objects.all().filter(category='Appliances')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_gadget(request):
+    items = Item.objects.all().filter(category='Gadget')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_furniture(request):
+    items = Item.objects.all().filter(category='Furniture')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_apartment(request):
+    items = Item.objects.all().filter(category='Apartment')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_book(request):
+    items = Item.objects.all().filter(category='Book')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_clothing(request):
+    items = Item.objects.all().filter(category='Clothing')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_vehicle(request):
+    items = Item.objects.all().filter(category='Vehicle')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_kitchen(request):
+    items = Item.objects.all().filter(category='Kitchen')
+
+    context = {
+        'items': items,
+
+    }
+    return render(request, 'filter_items.html', context)
+
+
+def filter_others(request):
+    items = Item.objects.all().filter(category='Others')
+
+    context = {
+        'items': items,
 
     }
     return render(request, 'filter_items.html', context)

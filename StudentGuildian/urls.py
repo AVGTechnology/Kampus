@@ -13,7 +13,7 @@ urlpatterns = [
     path('create_article', views.create_article, name='create_article'),
     path('add_article', views.add_article, name='add_article'),
     path('search/article/', views.search_article, name='search_article'),
-
+    path('article/delete/<int:pk>/', views.delete_article, name='delete_article'),
 ]
 
 if settings.DEBUG:

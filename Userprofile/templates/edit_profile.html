@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+
+    <div class="" align="center">
+        <br>
+        <h5>Make changes to your profile</h5>
+        <br>
+        {% for user_p in user_p %}
+
+         <p style="color: #000000; font-size: 20px;"> Profile image </p>
+        <img src={{user_p.image.url}} alt="..." width="120" height="120"
+             class="circle responsive-img"> <a href="{% url 'edit_image' %}">
+        <i class="material-icons" style="font-size: 30px;">edit</i> </a> <br>
+
+        <br>
+        <p style="color: #000000; font-size: 20px;"> Username  </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font> <a href="{% url 'edit_username' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+                <br>
+        <p style="color: #000000; font-size: 20px;"> Profession or skill or office </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.profession}}</font> <a href="{% url 'edit_profession' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+                <br>
+        <p style="color: #000000; font-size: 20px;"> Phone number </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.phone}}</font> <a href="{% url 'edit_phone' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+                <br>
+        <p style="color: #000000; font-size: 20px;"> Full name  </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.full_name }}</font> <a href="{% url 'edit_name' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+                <br>
+        <p style="color: #000000; font-size: 20px;"> Department  </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.dept }}</font> <a href="{% url 'edit_dept' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+
+                <br>
+        <p style="color: #000000; font-size: 20px;"> School   </p>
+        <b><font style="color: #000000; font-size: 20px;">{{user_p.school}}</font> <a href="{% url 'edit_school' %}">
+            <font style="font-size: 20px;">Edit</font> </a></b><br>
+
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
