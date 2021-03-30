@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Userprofile',
     'Messages',
     'DoneWithIt',
+    'sslserver',
 
     # default apps
     'django.contrib.admin',
@@ -54,11 +55,18 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # third party apps
+    "fcm_django",
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
+    "ONE_DEVICE_PER_USER": False,
+    "DELETE_INACTIVE_DEVICES":  False,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

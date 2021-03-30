@@ -10,7 +10,7 @@
 
         <div class="col">
             <img src={{user_p.image.url}} alt="..." width="120" height="120"
-                 class="circle responsive-img"><br>
+                 class="circle"><br>
             <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
             <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
             <div class=" " align="center">
@@ -53,9 +53,9 @@
                         <b style="font-size: 30px;"> ₦ {{wallet}} </b></font>
                 </div>
                 {% if payment %}
-                {% for payment in payment%}
-                <font color="white" style="font-size: 15px;"> You have been paid <font color="black" style="font-size: 15px;"> ₦  {{payment.paid}}</font> so far.</font>
-                {% endfor %}
+
+                <font color="white" style="font-size: 15px;"> You have been paid <font color="black" style="font-size: 15px;"> ₦  {{payment.paid}}</font> </font>
+
                 {% endif %}
             </div>
 
@@ -75,7 +75,7 @@
            {% endif %}
             {% endfor %}
 
-            {% if wallet >= 100 %}
+            {% if wallet >= 10 %}
             {% if payment %}
 
              <a href="{% url 'requestpay' %}">
@@ -98,17 +98,17 @@
                     <font color="black" style="font-size: 20px;"> <b class="row valign-wrapper"> Payment details <i
                             class="material-icons" style="font-size: 30px;">account_balance_bank </i>  </b>
                      </font>
-                    {% for pay in payment %}
+
                     <div>
-                        <font color="black" style="font-size: 15px;"> Account No.: {{ pay.account_number}}</font><br>
-                        <font color="black" style="font-size: 15px;"> Account Name.: {{ pay.account_name}}</font><br>
-                        <font color="black" style="font-size: 15px;"> Bank.: {{ pay.bank}}</font><br>
+                        <font color="black" style="font-size: 15px;"> Account No.: {{ payment.account_number}}</font><br>
+                        <font color="black" style="font-size: 15px;"> Account Name.: {{ payment.account_name}}</font><br>
+                        <font color="black" style="font-size: 15px;"> Bank.: {{ payment.bank}}</font><br>
                         <a href="{% url 'edit_payment' %}">
                             Change Account details
                         </a>
 
                     </div>
-                    {% endfor %}
+
                 </div>
             </div>
 

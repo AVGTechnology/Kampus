@@ -1,0 +1,107 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load static %}
+<br>
+<div class="container" align="center">
+<div class="center #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+    <div class="center">
+        <font color="white" style="font-size: 30px;"><b style="color: gray;"> {{rpay.user}}</b> Payment Request Detail </font>
+    </div>
+</div>
+<br>
+
+<div class="center #e0e0e0 grey lighten-2" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+    <div class="center">
+        <div class="" align="center">
+
+            <div class="col">
+                <img src={{profile.image.url}} alt="..." width="120" height="120"
+                     class="circle"><br>
+                <b><font style="color: #000000; font-size: 20px;">{{profile.user}}</font></b><br>
+                <b><font style="color: #515152; font-size: 15px;">{{profile.profession}}</font></b>
+                <div class=" " align="center">
+                    <b><font color="black"> ({{ profile.dept }}) </font>
+                        <font color="black"> {{ profile.school }} </font></b><br>
+                    <h5><font color="black" >Mobile contact: {{ profile.phone }} </font></h5><br>
+                </div>
+
+            </div>
+     <div class="">
+    <table class="striped" >
+        <thead>
+          <tr>
+              <th>Request Amount</th>
+              <th>Status </th>
+              <th>Request time </th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size: 30px;">
+
+          <tr>
+
+            <td>₦ {{rpay.Amount}}</td>
+
+              <td>
+                  {% if rpay.pending == True %}
+                  <font class="chip #d50000 red accent-4" style="color:white;"> Pending... </font>
+                  {% endif %}
+                  {% if rpay.paid == True %}
+                  <font class="chip #00c853 green accent-4" style="color:white;"> Paid </font>
+                  {% endif %}
+                  {% if rpay.failed == True %}
+                  <font class="chip #d50000 red accent-4" style="color:white;"> Failed payment! </font>
+                  {% endif %}
+              </td>
+
+               <td>{{rpay.timestamp}}</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+</div>
+   <br>
+                 <div class="center #aa00ff accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="black" style="font-size: 20px;"> <b class="row valign-wrapper"> Account details <i
+                            class="material-icons" style="font-size: 30px;">account_balance_bank </i>  </b>
+                     </font>
+
+                    <div>
+                        <font color="blue" style="font-size: 30px;"> Account No.: {{ acct.account_number}}</font><br>
+                        <font color="black" style="font-size: 30px;"> Account Name.: {{ acct.account_name}}</font><br>
+                        <font color="black" style="font-size: 30px;"> Bank.: {{ acct.bank}}</font><br>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div><br>
+   <div align="center">
+
+    <a class="waves-effect waves-light chip #00c853 green accent-4" href="{% url 'paid' rpay.pk %}">
+        <font color="white" style="font-size: 15px;"> Payment Successful </font></a>
+
+      <a class="waves-effect waves-light chip #00c853 red accent-4" href="{% url 'failed' rpay.pk %}">
+        <font color="white" style="font-size: 15px;"> Payment Failed </font></a>
+   </div>
+
+
+</div>
+</div>
+        {% endblock %}

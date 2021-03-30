@@ -1,0 +1,63 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load static %}
+       <br>
+
+    <div class="container #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"><b>{{ article.count }} </b> Student Guardian article Today</font><br>
+        </div>
+    </div>
+
+       <br>
+<div class="">
+    {% if article %}
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>S/N</th>
+              <th>User</th>
+              <th>Title</th>
+              <th>Body </th>
+              <th>Timestamp </th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size: 20px;">
+        {% for article in article %}
+          <tr>
+              <td><b>{{forloop.counter}}</b></td>
+              <td>{{article.user}}</td>
+            <td>
+                {{article.title|truncatewords:"5"}}
+            </td>
+              <td>
+                {{article.body|truncatewords:"5"}}
+            </td>
+
+               <td>{{article.timestamp}}</td>
+            <td>
+              <a href="{% url 'articles_details' article.pk %}">
+                <font class="chip #00c853 green accent-4" style="color:white;"> Article Details </font>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    {% else %}
+
+    <div class="center"> <font color="black" style="font-size: 30px;"><b> No Articles Today !!! </b></font> </div>
+
+
+    {% endif %}
+
+</div>
+{% endblock %}

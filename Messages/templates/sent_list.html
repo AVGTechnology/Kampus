@@ -13,7 +13,7 @@
     {% for gm in megs %}
        <li class="collection-item avatar">
       <a href="{% url 'chat_page' gm.recipient.pk %}">
-      <img src={{gm.recipient.owner.image.url}} alt="" class="circle">
+      <img src={{gm.recipient.owner.image.url}} alt="" class="circle" width="40px" height="40px">
            <span class="title" style="color:#000000;">To <b>{{gm.recipient}}</b></span>
       <p style="color:gray;">{{gm.text}} <br>
          {{gm.timestamp}}

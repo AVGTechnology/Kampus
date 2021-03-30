@@ -1,0 +1,267 @@
+{% extends "base2.html" %}
+{% block content %}
+{% load static %}
+
+    <br>
+   <a href="{% url 'kampus_users' %}">
+    <div class="center #6a1b9a purple darken-3" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  margin-right: 400px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"><b>{{profile.count}}</b> <br>Kampus Users</font>
+        </div>
+    </div>
+   </a>
+    <br>
+
+
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'kampus_post' %}">
+            <div class="center #ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                   width: 300px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #e62097;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <img alt="..." class=" left rounded-circle"
+                         height="50dp" src="{% static 'images/logo.png' %}" width="50dp">
+                    <font color="black" style="font-size: 30px;"> {{posts.count}} <br> Kampus Posts</font>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'donewithit_items' %}">
+            <div class="#ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width: 300px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #e65b20;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <img alt="..." class=" left rounded-circle"
+                         height="50dp" src="{% static 'images/donewithit.png' %}" width="50dp">
+                    <font color="black" style="font-size: 30px;"> {{items.count}} <br> Items for Sale </font>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col">
+             <a href="{% url 'articles_list' %}">
+            <div class="#ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width: 300px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #240073;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <img alt="..." class=" left rounded-circle"
+                         height="50dp" src="{% static 'images/garud.png' %}" width="50dp">
+                    <font color="black" style="font-size: 30px;">{{articles.count}} <br> Articles </font>
+                </div>
+            </div>
+             </a>
+        </div>
+        <div class="col">
+            <div class="center #ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width: 300px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #007810;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <img alt="..." class=" left rounded-circle"
+                         height="50dp" src="{% static 'images/logo.png' %}" width="50dp">
+                    <font color="black" style="font-size: 30px;">{{messages.count}} <br> Messages </font>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'new_user' %}">
+            <div align="center" class=" #6a1b9a purple darken-3" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    {% if new_profile %}
+                    <font color="white" style="font-size: 25px;">{{new_profile.count}} <br><b>New Kampus Users</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No new Kampus users today</b></font>
+                    {% endif %}
+                </div>
+            </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'new_post' %}">
+            <div align="center" class=" #c51162 pink accent-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    {% if new_posts %}
+                    <font color="white" style="font-size: 25px;">{{new_posts.count}} <br><b>New Kampus Post</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No new Kampus posts today</b></font>
+                    {% endif %}
+                </div>
+            </div>
+            </a>
+        </div>
+
+        <div class="col">
+         <a href="{% url 'new_items' %}">
+            <div align="center" class=" #dd2c00 deep-orange accent-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                     {% if new_items %}
+                    <font color="white" style="font-size: 25px;">{{new_items.count}} <br><b>New Item for sale</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No new item for sale today</b></font>
+                    {% endif %}
+                </div>
+            </div>
+         </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'new_articles' %}">
+            <div align="center" class=" #01579b light-blue darken-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    {% if new_articles %}
+                    <font color="white" style="font-size: 25px;">{{new_articles.count}} <br><b>New Articles</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No new article today</b></font>
+                    {% endif %}
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+        <div class="col">
+            <a href="{% url 'payment_request' %}">
+            <div align="center" class=" #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    {% if rpay %}
+                    <font color="white" style="font-size: 25px;">{{rpay.count}} <br><b>payment request</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No payment request</b></font>
+                    {% endif %}
+
+                </div>
+            </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'failed_payment' %}">
+            <div align="center" class="#d50000 red accent-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                     {% if fpay %}
+                    <font color="white" style="font-size: 25px;">{{fpay.count}} <br><b>Failed Payment</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No Failed Payment</b></font>
+                    {% endif %}
+
+                </div>
+            </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'paid_user' %}">
+            <div align="center" class=" #3e2723 green darken-4" style="  text-align: left;
+                  border-radius: 0px 0px 10px 10px;
+                  bottom: 0;
+                  padding: 10px;
+                  width:200px;
+                  height: 200px;
+                  margin-left:50px;
+                  margin-top:20px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    {% if ppay %}
+                    <font color="white" style="font-size: 25px;">{{ppay.count}} <br><b>Paid users</b></font>
+                    {% else %}
+                    <font color="gray" style="font-size: 25px;"><b>No user has been paid</b></font>
+                    {% endif %}
+
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+        <div class="col">
+            <img alt="..." class=" right"
+                 height="400dp" src="{% static 'images/dash.png' %}" width="500dp">
+        </div>
+
+    </div>
+
+
+
+
+
+{% endblock %}

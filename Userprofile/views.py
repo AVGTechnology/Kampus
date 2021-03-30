@@ -8,6 +8,7 @@ from django.db.models import Sum, Count, Aggregate
 from PostsManagement.models import Post
 from .forms import *
 from .models import *
+from fcm_django.models import FCMDevice, FCMDeviceManager
 
 
 # Create your views here.
@@ -32,9 +33,13 @@ def user_login(request):
 
 @login_required
 def create_profile(request):
+    user = request.user
     form = UserProfileForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
         form.save()
+        payment = PaymentDetail()
+        payment.user = user
+        payment.save()
         return redirect('user_profile')
     else:
         form = UserProfileForm(user=request.user)
@@ -51,9 +56,8 @@ def logout(request):
 def user_profile(request):
     user = request.user
     user_p = UserProfile.objects.all().filter(user=user)
-    posts = Post.objects.all().filter(user=user)
+    posts = Post.objects.all().filter(user=user).order_by('-timestamp')
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
-    print(total_like)
 
     return render(request, 'user_profile.html', {'user_p': user_p,
                                                  'posts': posts,
@@ -66,8 +70,11 @@ def user_earning(request):
     user_p = UserProfile.objects.all().filter(user=user)
     posts = Post.objects.all().filter(user=user)
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
-    wallet = total_like * 10
-    payment = PaymentDetail.objects.all().filter(user=user)
+    payment = PaymentDetail.objects.get(user=user)
+    p = payment.paid
+    w = total_like * 10
+    rw = w - p
+    wallet = rw
     requestpay = RequestPayment.objects.all().filter(user=user)
 
     return render(request, 'user_earning.html', {'user_p': user_p,
@@ -80,11 +87,16 @@ def user_earning(request):
 
 
 def requestpay(request):
+    wallet = 0
     user = request.user
     posts = Post.objects.all().filter(user=request.user)
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
-    payment = PaymentDetail.objects.all().filter(user=request.user)
-    wallet = total_like * 10
+    payment = PaymentDetail.objects.all().filter(user=user)
+    for pay in payment:
+        paid = pay.paid
+        w = total_like * 10
+        rw = w - paid
+        wallet = rw
     request = RequestPayment.objects.all().filter(user=request.user)
     if request:
 

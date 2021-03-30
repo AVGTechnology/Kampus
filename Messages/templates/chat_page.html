@@ -1,16 +1,16 @@
-{% extends "base.html" %}
+{% extends "base3.html" %}
 {% block content %}
 {% load static %}
 
-
+<div class=""   >
 <div class="navbar-fixed ">
-    <nav class="#004d40 teal darken-4">
+    <nav class="#263238 blue-grey darken-4">
         <div class="nav-wrapper container">
             <div class="row valign-wrapper space">
 
                 <img src={{recipient.image.url}}
-                     width="40px"
-                     alt="" class="circle responsive-img">
+                     width="40px" height="40px"
+                     alt="" class="circle">
                 <b style="margin-left:20px;
                               font-size: 18px;
                               margin-right:0px;"> {{ recipient.user}}</b>
@@ -20,20 +20,20 @@
 </div><br>
 
 
-<div class="content" id="message" onload="updateScroll()" style="">
+<div class="content container ">
 
     {% for megs in megs %}
     {% if megs.sender == request.user %}
-    <div class="right #00e676 green accent-3" style="  text-align: left;
+    <div class="right #607d8b blue-grey" style="  text-align: left;
                   border-radius: 25px;
                   bottom: 0;
                   padding: 10px;
                   background-color: #f2f0f0;">
 
-        <p class=""><b style="font-size: 15px;">{{megs.text}}</b> <font style="color:#828181;
+        <p class=""><b style="font-size: 15px;">{{megs.text}}</b> <font style="color:#fff;
                                                                                margin-left:20px;
                                                                                margin-right:0px;">
-            {{megs.timestamp|time }}</font> <i class="right material-icons" style="color:#828181;
+            {{megs.timestamp|time }}</font> <i class="right material-icons" style="color:#fff;
                                                                                  font-size: 20px;
                                                                                margin-left:0px;
                                                                                margin-right:0px;">done_all</i></p>
@@ -41,7 +41,7 @@
     </div>
     <br><br><br>
     {% else %}
-    <div class="left #b9f6ca green accent-1" style="  text-align: left;
+    <div class="left #cfd8dc blue-grey lighten-4" style="  text-align: left;
                   border-radius: 20px;
                   bottom: 0;
                   padding: 10px;
@@ -60,18 +60,10 @@
 
 </div>
 
-<script>
 
-function updateScroll(){
-    var element = document.getElementById("message");
-    element.scrollTop = element.scrollHeight;
-}
-
-
- </script>
 
 <footer>
-    <div class="#e8f5e9 green lighten-5" style="  position: fixed;
+    <div class="#eceff1 blue-grey lighten-5" style="  position: fixed;
                            left: 0;
                            bottom: 0;
                            text-align: center;
@@ -91,7 +83,7 @@ function updateScroll(){
                         style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
                     <br>
                     <div>
-                        <button type="submit" class="btn-floating btn-medium #004d40 teal darken-4">
+                        <button type="submit" class="btn-floating btn-medium #263238 blue-grey darken-4">
                             <i class="material-icons" style="font-size: 25px;">send</i>
                         </button>
                     </div>
@@ -101,6 +93,10 @@ function updateScroll(){
         </div>
     </div>
 
-
+<br>
 </footer>
+<br>
+</div>
+
+
 {% endblock %}

@@ -8,8 +8,8 @@
         <div class="row valign-wrapper space">
             <div class="col s15">
                 <img src={{posts.user.owner.image.url}}
-                     width="50px"
-                     alt="" class="circle responsive-img">
+                     width="50px" height="50px"
+                     alt="" class="circle">
             </div>
             <div class="col s16">
                 <b>{{ posts.user}}</b>
@@ -60,9 +60,11 @@
 
         </div>
 
-        <div class="row valign-wrapper">
+          <div class="row valign-wrapper">
             <div class="col s15">
-                <b>{{posts.like.count}} likes</b>
+                <a href="{% url 'likes' posts.pk %}">
+                <b style="color: black;">{{posts.like.count}} likes</b>
+                </a>
             </div>
 
             <div class="col s15">
@@ -93,8 +95,9 @@
             <div class="row valign-wrapper space">
                 <div class="col s15">
                     <img src={{comments.user.owner.image.url}}
-                         width="30px"
-                         alt="" class="circle responsive-img">
+
+                         width="30px" height="30px"
+                         alt="" class="circle">
                 </div>
                 <div class="col s16">
                     <b>{{ comments.user}}</b>

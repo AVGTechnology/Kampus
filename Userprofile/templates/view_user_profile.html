@@ -10,7 +10,7 @@
 
         <div class="col">
             <img src={{user_p.image.url}} alt="..." width="120" height="120"
-                 class="circle responsive-img"><br>
+                 class="circle"><br>
             <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
             <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
             <div class=" " align="center">
@@ -136,9 +136,11 @@
                     </div>
 
                     <div class="row valign-wrapper">
-                        <div class="col s15">
-                            <b>{{posts.like.count}} likes</b>
-                        </div>
+            <div class="col s15">
+                <a href="{% url 'likes' posts.pk %}">
+                <b style="color: black;">{{posts.like.count}} likes</b>
+                </a>
+            </div>
 
                         <div class="col s15">
                             <a href="{% url 'comment_view' posts.pk %}">
@@ -154,7 +156,7 @@
                         <div class="col s15">
                             <img src={{profile.image.url}}
                                  width="30px"
-                                 alt="" class="circle responsive-img">
+                                 alt="" class="circle">
                         </div>
 
                         <div class="col s15 chip">
@@ -170,7 +172,7 @@
                 {% endfor %}
                 {% else %}
 
-                <h2><b>{{user.username}} you haven't created any Post Yet!!!</b></h2>
+                <h2><b>{{user_p.user.username}} you haven't created any Post Yet!!!</b></h2>
                 {% endif %}
 
 

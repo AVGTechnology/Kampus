@@ -1,3 +1,4 @@
+from PIL import Image
 from django.conf import settings
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
@@ -14,10 +15,10 @@ class UserProfile(models.Model):
     image = models.ImageField(verbose_name='Profile Image', default='media/profile.jpg',
                               upload_to='media/profile_image',
                               null=True, blank=True)
-    profession = models.CharField(max_length=20, verbose_name='profession or skill', null=True, blank=True)
-    full_name = models.CharField(max_length=40, verbose_name="Full Name", default='full name', null=False, blank=False)
-    dept = models.CharField(max_length=20, verbose_name="Dept.(Optional)", null=True, blank=True)
-    school = models.CharField(max_length=20, verbose_name="School(Optional)", default="Federal poly Auchi", null=True,
+    profession = models.CharField(max_length=100, verbose_name='profession or skill', null=True, blank=True)
+    full_name = models.CharField(max_length=100, verbose_name="Full Name", default='full name', null=False, blank=False)
+    dept = models.CharField(max_length=100, verbose_name="Dept.(Optional)", null=True, blank=True)
+    school = models.CharField(max_length=100, verbose_name="School(Optional)", default="Federal poly Auchi", null=True,
                               blank=True)
     location = models.CharField(max_length=50, default=0, null=True, blank=True)
     phone = models.CharField(max_length=50, default='phone number', null=True, blank=True)
@@ -27,6 +28,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user} Profile '
+
+    def save(self, *arg, **kwargs):
+        super().save(*arg, **kwargs)
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 
 class Relationship(models.Model):
@@ -41,7 +51,8 @@ class Relationship(models.Model):
 class PaymentDetail(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='account', on_delete=models.CASCADE)
-    account_number = models.CharField(max_length=20, verbose_name='Account number', default='account number', null=False, blank=False)
+    account_number = models.CharField(max_length=20, verbose_name='Account number', default='account number',
+                                      null=False, blank=False)
     account_name = models.CharField(max_length=100, verbose_name='Account name', default='account name', null=False,
                                     blank=False)
     bank = models.CharField(max_length=30, verbose_name='Bank', default='bank', null=False, blank=False)

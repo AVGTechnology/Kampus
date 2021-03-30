@@ -23,6 +23,7 @@ urlpatterns = [
     path("", include("Messages.urls")),
     path("", include("StudentGuildian.urls")),
     path("", include("DoneWithIt.urls")),
+    path("", include("Management.urls")),
     path("accounts/", include("allauth.urls")),
 
 ]

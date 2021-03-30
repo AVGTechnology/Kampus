@@ -1,0 +1,78 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load static %}
+       <br>
+
+    <div class="container #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"><b>{{ post.count }} </b> Kampus post </font><br>
+
+                  <font class="chip #00c853 pink accent-4" style="color:white;"> {{post.count}} Videos </font>
+
+                  <font class="chip #00c853 purple accent-4" style="color:white;"> {{post.count}} Photos </font>
+
+        </div>
+    </div>
+
+       <br>
+<div class="">
+    {% if post %}
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>S/N</th>
+              <th>User</th>
+              <th>Caption</th>
+              <th>Likes</th>
+              <th>Type </th>
+              <th>Timestamp </th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size: 20px;">
+        {% for post in post %}
+          <tr>
+            <td><b>{{forloop.counter}}</b></td>
+            <td>{{post.user}}</td>
+            <td>
+                {% if post.caption %}
+                {{post.caption|truncatewords:"5"}}
+                {% else %}
+                No caption!
+                {% endif %}
+            </td>
+            <td>{{post.like.count}}</td>
+              <td>
+             {% if post.file.url|slice:"-4:" == ".mp4" %}
+                  <font class="chip #00c853 pink accent-4" style="color:white;"> Video </font>
+            {% else %}
+                  <font class="chip #00c853 purple accent-4" style="color:white;"> Photo </font>
+            {% endif %}
+
+              </td>
+               <td>{{post.timestamp}}</td>
+            <td>
+              <a href="{% url 'comment_view' post.pk %}">
+                <font class="chip #00c853 green accent-4" style="color:white;"> Post Details </font>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    {% else %}
+
+    <div class="center"> <font color="black" style="font-size: 30px;"><b> No Post yet !!! </b></font> </div>
+
+
+    {% endif %}
+
+</div>
+{% endblock %}

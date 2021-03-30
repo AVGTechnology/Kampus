@@ -1,0 +1,98 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+     <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Import local css-->
+     <link rel="stylesheet" href="{% static 'css/tab.css' %}" type="text/css">
+     <link rel="icon" href="{% static 'images/logo.png' %}" type="image/lxx-icon" >
+
+    <title>Kampus</title>
+  </head>
+  <body>
+  <nav>
+    <div class="nav-wrapper #d81b60 pink darken-1">
+
+        <ul class="right hide-on-med-and-down">
+            <li><a href=""> <h6>{{user}} Online</h6></a></li>
+            <li><a href=""><i class="material-icons">more_vert</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col #d81b60 pink darken-1" style="width:200px; height:1000px;">
+        <a href="">
+            <div class="center">
+                <i class=" large material-icons" style="color: white;">dashboard</i><br>
+                <font color="white" style="font-size: 20px;">Dashboard</font>
+            </div>
+        </a>
+        <div class="card-body">
+            <p><font color="white">Admin</font></p>
+            <a href="/admin">
+                <font color="black" style="font-size: 20px;"> <i class="material-icons">developer_board</i>
+                    Database</font>
+            </a>
+            <hr color="white">
+            <h6><font color="white">Main</font></h6>
+            <a href="{% url 'kampus_post' %}">
+                <p><font color="black" style="font-size: 20px;"><i class="material-icons">perm_media</i> Posts </font>
+                </p>
+            </a><br>
+           <a href="{% url 'kampus_post' %}">
+                <p><font color="black" style="font-size: 20px;"><i class="material-icons">people</i>Users</font></p>
+            </a><br>
+            <a href="{% url 'donewithit_items' %}">
+                <p><font color="black" style="font-size: 20px;"><i
+                        class="material-icons">local_offer</i>Donewithit</font></p>
+            </a><br>
+            <a href="{% url 'articles_list' %}">
+                <p><font color="black" style="font-size: 20px;"><i
+                        class="material-icons">local_library</i>Articles</font></p>
+            </a><br>
+
+
+            <hr color="white">
+            <h6><font color="white">Account</font></h6>
+
+            <a href="/admin/logout/">
+                <p><font color="black" style="font-size: 20px;">Logout</font></p>
+            </a>
+
+
+        </div>
+        <hr color="white">
+        <div class="col">
+
+            <div class="center #aa00ff green accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;"> Important info!</font>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {% block content %} {%endblock%}
+   </div>
+   <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+  </body>
+</html>

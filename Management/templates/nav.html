@@ -1,0 +1,45 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+     <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Import local css-->
+     <link rel="stylesheet" href="{% static 'css/tab.css' %}" type="text/css">
+     <link rel="icon" href="{% static 'images/logo.png' %}" type="image/lxx-icon" >
+
+    <title>Kampus</title>
+  </head>
+  <body>
+   <a href="{% url 'dashboard' %}">
+     <div class="left #d81b60 pink darken-1"
+                  style="  text-align: left;
+                  border-radius: 0px 0px 60px 60px;
+                  width: 150px;
+                  height: 150px;
+                                     ">
+       <div class="center">
+                <font color="white" style="font-size: 20px;">Dashboard</font><br>
+           <i class=" large material-icons" style="color: white;">dashboard</i>
+
+            </div>
+    </div>
+   </a>
+    <br>
+
+    {% block content %} {%endblock%}
+   </div>
+   <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+  </body>
+</html>

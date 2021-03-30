@@ -1,0 +1,57 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load static %}
+       <br>
+
+    <div class="container #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"><b>{{ items.count }} </b> Items for sale </font><br>
+
+        </div>
+    </div>
+
+       <br>
+<div class="">
+    {% if items %}
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>S/N</th>
+              <th>User</th>
+              <th>Item Name</th>
+              <th>Timestamp </th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size: 20px;">
+        {% for item in items %}
+          <tr>
+            <td><b>{{forloop.counter}}</b></td>
+            <td>{{item.user}}</td>
+            <td>{{item.item_name}}</td>
+            <td>{{item.timestamp}}</td>
+            <td>
+              <a href="{% url 'items_details' item.pk %}">
+                <font class="chip #00c853 green accent-4" style="color:white;"> Item Details </font>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    {% else %}
+
+    <div class="center"> <font color="black" style="font-size: 30px;"><b> No Post yet !!! </b></font> </div>
+
+
+    {% endif %}
+
+</div>
+{% endblock %}

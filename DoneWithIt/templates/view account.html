@@ -10,7 +10,7 @@
 
         <div class="col">
             <img src={{profile.image.url}} alt="..." width="120" height="120"
-                class="circle responsive-img"><br>
+                class="circle"><br>
             <b><font style="color: #000000; font-size: 20px;">{{profile.user}}</font></b><br>
              <font style="color:white;"
                class="chip  #00c853 green accent-4 white waves-effect waves-light">
@@ -54,7 +54,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                     {% endif %}
                 </font></a>
@@ -79,7 +79,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                     {% endif %}
                 </font></a></p>

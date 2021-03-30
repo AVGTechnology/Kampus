@@ -49,7 +49,7 @@
         <div class="card" style="border-radius: 20px 20px">
 
             <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src={{items.first_image.url}} style="border-radius: 20px 20px 0px 0px;">
+                <img class="activator" src={{items.first_image.url}} style=" max-height:400px; max-width: 400px; border-radius: 20px 20px 0px 0px;">
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">{{items.item_name}}<i
@@ -62,7 +62,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                     {% endif %}
                 </font></a></p>
@@ -86,7 +86,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                 </font></a></p>
 
@@ -113,8 +113,8 @@
                     <div class="col s15">
                         <a href="{% url 'view_account' items.user.pk %}">
                             <img src={{items.user.owner.image.url}}
-                                 width="50px"
-                                 alt="" class="circle responsive-img">
+                                 width="50px" height="50px"
+                                 alt="" class="circle">
                         </a>
                     </div>
                     <div class="col s16">

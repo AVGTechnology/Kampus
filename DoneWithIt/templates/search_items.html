@@ -24,7 +24,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                     {% endif %}
                 </font></a></p>
@@ -48,7 +48,7 @@
                     {% if items.contact == True %}
                     Contact for price
                     {% else %}
-                    N{{items.price}}
+                    ₦{{items.price}}
                     {% endif %}
                     {% endif %}
                 </font></a></p>
@@ -76,8 +76,8 @@
                     <div class="col s15">
                         <a href="{% url 'view_account' items.user.pk %}">
                             <img src={{items.user.owner.image.url}}
-                                 width="50px"
-                                 alt="" class="circle responsive-img">
+                                 width="50px" height="50px"
+                                 alt="" class="circle">
                         </a>
                     </div>
                     <div class="col s16">

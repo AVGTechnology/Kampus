@@ -11,6 +11,7 @@ from .forms import PostForm, CommentForm
 from .models import *
 from Userprofile.models import *
 from django.contrib import messages
+from fcm_django.models import FCMDevice
 
 
 # Create your views here.
@@ -23,12 +24,29 @@ def post(request):
         form.save()
         messages.success(request, 'Post was created Successfully!! .')
         messages.success(request, 'Create more posts!')
+
+       # device = FCMDevice.objects.all()
+       # device.send_message("New post", "new post has been created")
+       # device.send_message(data={"test": "test"})
+       # device.send_message(title="New post", body="new post has been created", data={"test": "test"})
+
         return redirect('post')
     else:
         form = PostForm(user=request.user)
-        messages.info(request, 'Creating Posting please wait...')
+        messages.info(request, 'Creating Post please wait...')
 
     return render(request, 'add_post.html', {"form": form, })
+
+
+@login_required
+def likes(request, pk):
+    p_likes = get_object_or_404(Post, pk=pk)
+
+    context = {
+        'p_likes': p_likes,
+
+    }
+    return render(request, 'likes.html', context)
 
 
 @login_required
@@ -78,7 +96,7 @@ def comment(request, pk):
 @login_required
 def comment_view(request, pk):
     posts = Post.objects.get(pk=pk)
-    comments = Comment.objects.all().filter(post=posts).order_by('timestamp')
+    comments = Comment.objects.all().filter(post=posts).order_by('-timestamp')
 
     context = {
 

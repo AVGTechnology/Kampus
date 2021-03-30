@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -9,6 +10,7 @@ from .forms import ChatForm
 from .models import *
 
 
+@login_required
 def chat_page(request, pk):
     recipient = UserProfile.objects.get(user=pk)
     user = get_user_model()
@@ -27,6 +29,7 @@ def chat_page(request, pk):
     return render(request, 'chat_page.html', context)
 
 
+@login_required
 def received_list(request):
     megs = Chat.objects.all().filter(recipient=request.user).order_by('-timestamp')
 
@@ -37,6 +40,7 @@ def received_list(request):
     return render(request, 'received_list.html', context)
 
 
+@login_required
 def sent_list(request):
     megs = Chat.objects.all().filter(sender=request.user).order_by('-timestamp')
 
@@ -47,6 +51,7 @@ def sent_list(request):
     return render(request, 'sent_list.html', context)
 
 
+@login_required
 def message_user_list(request):
     users = UserProfile.objects.all().order_by('user').exclude(user=request.user)
 
@@ -57,6 +62,7 @@ def message_user_list(request):
     return render(request, 'message_user_list.html', context)
 
 
+@login_required
 def search_message_user_list(request):
     query = request.GET.get('acct')
     if query is not None:
@@ -65,7 +71,7 @@ def search_message_user_list(request):
 
         context = {
             'account': account,
-            'query' : query,
+            'query': query,
 
         }
         return render(request, 'search_message_user_list.html', context)
@@ -74,6 +80,7 @@ def search_message_user_list(request):
         return redirect('message_user_list')
 
 
+@login_required
 def send_chat(request, pk):
     chats = request.POST.get('chats')
     user = get_user_model()

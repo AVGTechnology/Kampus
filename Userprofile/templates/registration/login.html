@@ -38,6 +38,15 @@
     <input type="submit" value="login"  class="btn #4a148c purple darken-4" />
     <input type="hidden" name="next" value="{{ next }}" />
     </div>
+
+ <input id = "token" type="text" name="token" hidden>
+ <script>
+Notification.requestPermission (status => {
+  console.log('Notification permission status: ', status)
+})
+</script>
+
+
   </form>
 <br>
     <div align="center">
@@ -50,5 +59,6 @@
     </div>
   </div>
   </div>
+
 </div>
 {%endblock%}

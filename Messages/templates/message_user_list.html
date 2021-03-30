@@ -39,7 +39,7 @@
     {% for users in users %}
        <li class="collection-item avatar">
       <a href="{% url 'view_user_profile' users.user.pk %}">
-      <img src={{users.image.url}} alt="" class="circle">
+      <img src={{users.image.url}} alt="" class="circle" width="40px" height="40px">
           <span class="title " style="color:#000000;"><b>{{users.user}}</b></span>
       <p  style="color:gray;">{{users.profession}} <br>
          {{users.dept}}

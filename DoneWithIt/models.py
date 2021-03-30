@@ -1,3 +1,4 @@
+from PIL import Image
 from django.conf import settings
 from django.db import models
 
@@ -30,8 +31,17 @@ class Item(models.Model):
     sold = models.BooleanField(default=False)
     free = models.BooleanField(default=False, verbose_name='Give item for free', )
     contact = models.BooleanField(default=False, verbose_name='Contact for price', )
-    negotiable = models.BooleanField(default=True, verbose_name='Negotiable',)
+    negotiable = models.BooleanField(default=True, verbose_name='Negotiable', )
     timestamp = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
         return f'{self.user} sell {self.item_name}  '
+
+    def save(self, *arg, **kwargs):
+        super().save(*arg, **kwargs)
+        img = Image.open(self.first_image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.first_image.path)
