@@ -1,7 +1,9 @@
+
 importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js');
 
-var firebaseConfig = {
+
+  var firebaseConfig = {
     apiKey: "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
     authDomain: "kampus-305500.firebaseapp.com",
     projectId: "kampus-305500",
@@ -10,8 +12,8 @@ var firebaseConfig = {
     appId: "1:968358554586:web:f22fed2afe90864b5d6ee3",
     measurementId: "G-5FE0JQ1XEE"
   };
-
-firebase.initializeApp(firebaseConfig);
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 const messaging=firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function (payload) {

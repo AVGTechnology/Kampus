@@ -1,14 +1,19 @@
+import os
+
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, Count, Aggregate
+from django.views.decorators.csrf import csrf_exempt
+
 from PostsManagement.models import Post
 from .forms import *
 from .models import *
 from fcm_django.models import FCMDevice, FCMDeviceManager
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 # Create your views here.
@@ -186,7 +191,7 @@ def search_discover_account(request):
 
 
 def discover_post(request):
-    posts = Post.objects.all().order_by('like')
+    posts = Post.objects.all().order_by('-timestamp')
 
     context = {
         'posts': posts,
@@ -375,3 +380,12 @@ def school(request):
     profile.save()
 
     return redirect('edit_profile')
+
+
+@csrf_exempt
+def firebase_messaging_sw_js(request):
+    filename = '/js/firebase-messaging-sw.js'
+    jsfile = open(settings.APP_ROOT + filename, 'r')
+    response = HttpResponse(content=jsfile)
+    response['Content-Type'] = 'application/javascript'
+    return response

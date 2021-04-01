@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("login/", views.login, name='login'),
-
+    path('firebase-messaging-sw.js', views.firebase_messaging_sw_js),
     path('accounts/', include('django.contrib.auth.urls')),
     # accounts/ login/ [name='login']
     # accounts/ logout/ [name='logout']
