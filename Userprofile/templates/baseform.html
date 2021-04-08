@@ -23,29 +23,7 @@
   </head>
   <body>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-</script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {
-      direction: 'top',
-      hoverEnabled: false
-    });
-  });
-  </script>
-  <div class="fixed-action-btn">
-  <a class="btn-floating btn-large #e53935 red darken-1">
-    <i class="large material-icons" style="font-size:30px;">menu</i>
-  </a>
-  <ul>
-    <li><a href="{% url 'donewithit' %}" class="btn-floating red"><i class="material-icons">home</i></a></li>
-    <li><a href="{% url 'sell_item' %}" class="btn-floating btn-large #880e4f pink darken-4 darken-1"><i class="center material-icons" style="font-size:35px;">add_circle_outline</i></a></li>
-    <li><a href="{% url 'account' %}" class="btn-floating #0d47a1 blue darken-4"><i class="material-icons">account_circle</i></a></li>
 
-  </ul>
-</div>
     {% block content %} {%endblock%}
 
    <!--JavaScript at end of body for optimized loading-->
