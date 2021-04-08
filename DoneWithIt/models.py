@@ -19,7 +19,7 @@ Item_Category = (
 )
 
 
-class Item(models.Model):
+class Product(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="item_owner", on_delete=models.CASCADE)
     first_image = models.FileField(verbose_name='Image', upload_to='media/Donewithit', null=False, blank=False, )

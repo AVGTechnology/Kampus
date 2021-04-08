@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Relationship, PaymentDetail, RequestPayment
+from .models import UserProfile, Relationship, PaymentDetail, RequestPayment, Trending
 
 
 # Register your models here.
@@ -16,3 +16,5 @@ admin.site.register(Relationship)
 admin.site.register(PaymentDetail)
 
 admin.site.register(RequestPayment)
+
+admin.site.register(Trending)

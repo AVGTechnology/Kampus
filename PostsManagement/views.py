@@ -13,23 +13,37 @@ from Userprofile.models import *
 from django.contrib import messages
 from fcm_django.models import FCMDevice
 
+from django.shortcuts import render
+from .models import Post
+from django.views.generic.list import ListView
 
-# Create your views here.
+
+class NewsFeed(ListView):
+    model = Post
+    paginate_by = 2
+    context_object_name = 'posts'
+    template_name = 'newsfeed.html'
+    ordering = ['-timestamp']
 
 
 @login_required
 def post(request):
+    user_p = UserProfile.objects.get(user=request.user)
+    follower = user_p.follower.all()
+    print(follower)
     form = PostForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
-        form.save()
+        instance = form.save()
         messages.success(request, 'Post was created Successfully!! .')
         messages.success(request, 'Create more posts!')
-
-       # device = FCMDevice.objects.all()
-       # device.send_message("New post", "new post has been created")
-       # device.send_message(data={"test": "test"})
-       # device.send_message(title="New post", body="new post has been created", data={"test": "test"})
-
+        n_post = Post.objects.get(pk=instance.pk)
+        caption = n_post.caption
+        auth = n_post.user
+        image = n_post.file
+        device = FCMDevice.objects.all().filter(user__in=follower)
+        device.send_message(title=f'{auth} created a new post on Kampus ', body=f'{caption} ',
+                            icon='static/images/logo.png',
+                            data={"Details": "Details"})
         return redirect('post')
     else:
         form = PostForm(user=request.user)

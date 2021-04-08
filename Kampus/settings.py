@@ -63,10 +63,10 @@ INSTALLED_APPS = [
 ]
 
 FCM_DJANGO_SETTINGS = {
-    "FCM_SERVER_KEY": "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
-    "ONE_DEVICE_PER_USER": False,
-    "DELETE_INACTIVE_DEVICES":  False,
+    "FCM_SERVER_KEY": "AAAA4Xaq69o:APA91bEc0czjPn2PPNflxNWzTapGbyquD0YUtm6HInc-My0BFe9HWO7dr96zcEJgBqEy3S3YFBjK37uz3Bfq-7ldfICmch410xomlCP6UdYp5LL9ZxPfIHofUPlqiMGZFgIdhQPH1eqO",
+
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

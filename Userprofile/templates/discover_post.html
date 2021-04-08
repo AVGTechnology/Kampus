@@ -42,6 +42,7 @@
 
 {% if posts %}
     {% for posts in posts %}
+     {% if posts.like.count >= trending.likes %}
     <div style="background-color: #ffffff;">
         <br>
         <div class="row valign-wrapper space">
@@ -105,7 +106,7 @@
 
             <div class="col s15">
                 <a href="{% url 'comment_view' posts.pk %}">
-                <p> <font color="gray">View 200 comments</font></p>
+                <p> <font color="gray">View comments</font></p>
                 </a>
             </div>
          </div>
@@ -129,6 +130,7 @@
          </div>
 
     </div>
+    {% endif %}
     {% endfor %}
     {% else %}
     <h2><b>No Posts has been created Yet!!</b></h2>

@@ -3,10 +3,12 @@ from django.urls import path, include
 from django.contrib.auth import login
 from django.conf import settings
 from django.conf.urls.static import static
+from PostsManagement.views import NewsFeed
 
 urlpatterns = [
 
-    path("", views.news_feed, name='index'),
+    #path("", views.news_feed, name='index'),
+    path('', NewsFeed.as_view(),  name="index"),
     path('post/', views.post, name='post'),
     path('like/<int:pk>/', views.like, name='like'),
     path('comment_view/<int:pk>/', views.comment_view, name='comment_view'),

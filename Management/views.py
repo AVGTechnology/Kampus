@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Aggregate
 # Create your views here.
-from DoneWithIt.models import Item
+from DoneWithIt.models import Product
 from Messages.models import Chat
 from PostsManagement.models import Post, Comment
 from StudentGuildian.models import Article
@@ -20,7 +20,7 @@ def dashboard(request):
     profile = UserProfile.objects.all().exclude(user=request.user)
     articles = Article.objects.all()
     messages = Chat.objects.all()
-    items = Item.objects.all()
+    items = Product.objects.all()
     new_posts = Post.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     new_profile = UserProfile.objects.all().exclude(user=request.user).filter(join__gte=datetime.date.today()) \
@@ -29,7 +29,7 @@ def dashboard(request):
         .order_by('-timestamp')
     new_messages = Chat.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
-    new_items = Item.objects.all().filter(timestamp__gte=datetime.date.today()) \
+    new_items = Product.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     rpay = RequestPayment.objects.all().filter(pending=True)
     fpay = RequestPayment.objects.all().filter(failed=True)
@@ -121,7 +121,7 @@ def new_post(request):
 @staff_member_required
 @login_required
 def donewithit_items(request):
-    items = Item.objects.all().order_by('-timestamp')
+    items = Product.objects.all().order_by('-timestamp')
     context = {
         'items': items,
     }
@@ -131,7 +131,7 @@ def donewithit_items(request):
 @staff_member_required
 @login_required
 def new_items(request):
-    items = Item.objects.all().filter(timestamp__gte=datetime.date.today()) \
+    items = Product.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     context = {
         'items': items,
@@ -142,7 +142,7 @@ def new_items(request):
 @staff_member_required
 @login_required
 def item_details(request, pk):
-    items = Item.objects.get(pk=pk)
+    items = Product.objects.get(pk=pk)
     context = {
         'items': items,
     }

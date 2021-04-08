@@ -32,6 +32,11 @@
                     <b><font color="black"> ({{ user_p.dept }}) </font>
                         <font color="black"> {{ user_p.school }} </font></b><br>
                     <h5><font color="black" >Mobile contact: {{ user_p.phone }} </font></h5><br>
+                <br>
+                 <a href="{% url 'chat_page' user_p.user.pk %}">
+                <font class="chip #00c853 pink accent-4" style="color:white;"> Message </font>
+                 </a>
+              <br>
                     <font color="black"> Created on {{ user_p.join }} </font></b><br>
                 </div>
             </div>

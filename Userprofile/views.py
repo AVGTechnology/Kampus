@@ -3,6 +3,7 @@ import os
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
+import json
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,6 +15,8 @@ from .forms import *
 from .models import *
 from fcm_django.models import FCMDevice, FCMDeviceManager
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.http import JsonResponse
+from django.core import serializers
 
 
 # Create your views here.
@@ -33,6 +36,23 @@ def signup(request):
 
 
 def user_login(request):
+    user = request.user
+    if request.is_ajax():
+        token = request.POST.get('token')
+        print(token)
+        devices = FCMDevice.objects.filter(user=user.pk).exists()
+        if devices:
+            ufm = FCMDevice.objects.filter(user=user.pk)
+            ufm.registration_id = token
+            ufm.save()
+        else:
+            fcm = FCMDevice()
+            fcm.name = user
+            fcm.registration_id = token
+            fcm.type = 'web'
+            fcm.user = user.pk
+            fcm.save()
+            print(token)
     return render(request, 'registration/login.html ')
 
 
@@ -166,16 +186,33 @@ def view_user_profile(request, pk):
                                                       })
 
 
+@login_required
 def discover_account(request):
     account = UserProfile.objects.all().order_by('user').exclude(user=request.user)
-    relationship = Relationship.objects.all()
+
+    # relationship = Relationship.objects.all()
+    user_p = UserProfile.objects.get(user=request.user)
+    prof = user_p.profession
+    plookups = Q(profession__icontains=prof)
+    prof = UserProfile.objects.filter(plookups).distinct().exclude(user=request.user)
+
+    depts = user_p.dept
+    dlookups = Q(profession__icontains=depts)
+    depts = UserProfile.objects.filter(dlookups).distinct().exclude(user=request.user)
+
+    trending = Trending.objects.get(Trend_number=1)
+
     context = {
         'account': account,
-        'relationship': relationship,
+        'prof': prof,
+        'depts': depts,
+        'trending': trending
+
     }
     return render(request, 'discover_account.html', context)
 
 
+@login_required
 def search_discover_account(request):
     query = request.GET.get('acct')
     if query is not None:
@@ -190,16 +227,19 @@ def search_discover_account(request):
         return render(request, 'search_discover_account.html', context)
 
 
+@login_required
 def discover_post(request):
     posts = Post.objects.all().order_by('-timestamp')
-
+    trending = Trending.objects.get(Trend_number=1)
     context = {
         'posts': posts,
+        'trending': trending,
 
     }
     return render(request, 'discover_post.html', context)
 
 
+@login_required
 def search_discover_post(request):
     query = request.GET.get('post')
     if query is not None:
@@ -389,3 +429,26 @@ def firebase_messaging_sw_js(request):
     response = HttpResponse(content=jsfile)
     response['Content-Type'] = 'application/javascript'
     return response
+
+
+@csrf_exempt
+@login_required
+def update_fcm_token(request):
+    user = request.user
+    token = request.GET.get('token', None)
+    print(token)
+    devices = FCMDevice.objects.filter(user=user).exists()
+    if devices:
+        ufm = FCMDevice.objects.get(user=user)
+        ufm.registration_id = token
+        ufm.save()
+    else:
+        fcm = FCMDevice()
+        fcm.name = user
+        fcm.registration_id = token
+        fcm.type = 'web'
+        fcm.user = user
+        fcm.save()
+        print(token)
+
+    return JsonResponse({"token": token}, status=200)

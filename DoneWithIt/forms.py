@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 class ItemForm(forms.ModelForm):
     class Meta:
-        model = Item
+        model = Product
         fields = [
             'first_image',
             'item_name',

@@ -3,10 +3,12 @@ from django.urls import path, include
 from django.contrib.auth import login
 from django.conf import settings
 from django.conf.urls.static import static
+from DoneWithIt.views import Item
 
 urlpatterns = [
 
-    path('donewithit/', views.items, name='donewithit'),
+    #path('donewithit/', views.items, name='donewithit'),
+    path('donewithit/', Item.as_view(),  name="donewithit"),
     path('sell/item/', views.sell_item, name='sell_item'),
     path('account/', views.account, name='account'),
     path('item_details/<int:pk>/', views.details, name='item_details'),

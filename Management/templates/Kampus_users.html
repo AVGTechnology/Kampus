@@ -24,6 +24,7 @@
               <th>User</th>
               <th>Email</th>
               <th>Staff status</th>
+              <th>Message</th>
               <th>View profile</th>
               <th></th>
           </tr>
@@ -43,6 +44,11 @@
                 {% endif %}
 
             </td>
+              <td>
+                 <a href="{% url 'chat_page' users.pk %}">
+                <font class="chip #00c853 pink accent-4" style="color:white;"> Message </font>
+                 </a>
+              </td>
             <td>
               <a href="{% url 'user_details' users.pk %}">
                 <font class="chip #00c853 green accent-4" style="color:white;"> User Details </font>

@@ -73,3 +73,12 @@ class RequestPayment(models.Model):
 
     def __str__(self):
         return f'{self.user} '
+
+
+class Trending(models.Model):
+    Trend_number = models.IntegerField(default=1)
+    follower = models.BigIntegerField(default=0)
+    likes = models.BigIntegerField(default=0)
+
+    def __str__(self):
+        return f'Trending '

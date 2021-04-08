@@ -13,11 +13,11 @@
             {% csrf_token %}
             {{ form.as_p }}
             <br>
-            <button type="submit" class="btn-floating btn-large cyan pulse right" onclick="myFunction()">
+            <button type="submit" class="btn-floating btn-large cyan  right" id = 'btn1' style="display:block;" onclick="myFunction()">
                 <i class="material-icons right" style="font-size: 30px;">check</i></button>
 
-             <input id = "token" type="text" name="token" hidden>
-
+            <a  class="btn-floating btn-large cyan pulse right" id = 'btn2' style="display:none;">
+                <i class="material-icons right" style="font-size: 30px;">check</i></a>
 
         </form>
         <br>
@@ -67,7 +67,11 @@
 
 function myFunction() {
       var postInfo = document.getElementById('info')
+      var btn1 = document.getElementById('btn1')
+      var btn2 = document.getElementById('btn2')
       postInfo.style.display = "block"
+      btn1.style.display = "none"
+      btn2.style.display = "block"
 }
 
  </script>

@@ -5,6 +5,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from fcm_django.models import FCMDevice
+
 from Userprofile.models import UserProfile
 from .forms import ChatForm
 from .models import *
@@ -90,5 +92,10 @@ def send_chat(request, pk):
     chat.sender = request.user
     chat.text = chats
     chat.save()
+    sender = request.user
+    device = FCMDevice.objects.get(user=receiver)
+    device.send_message(title=f'{sender} sent you a message', body=f'{chats} ',
+                        icon='static/images/logo.png',
+                        data={"Details": "Details"})
 
     return redirect('chat_page', pk)

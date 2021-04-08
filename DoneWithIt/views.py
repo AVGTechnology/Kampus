@@ -1,14 +1,18 @@
 from django.db.models import Q
 from django.shortcuts import render
+from fcm_django.models import FCMDevice
 
 from Userprofile.models import UserProfile
 from .forms import *
-from .models import *
+from .models import Product
+from PostsManagement.models import Post
 
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.shortcuts import render
+from django.views.generic.list import ListView
 
 
 # Create your views here.
@@ -18,19 +22,46 @@ from django.contrib import messages
 def sell_item(request):
     form = ItemForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
-        form.save()
+        instance = form.save()
         messages.success(request, 'Item added Successfully!! .')
         messages.success(request, 'Add More Items...')
+        n_item = Item.objects.get(pk=instance.pk)
+        name = n_item.item_name
+        seller = n_item.user
+        image = n_item.first_image
+        location = n_item.location
+        price = n_item.price
+        free = n_item.free
+        contact = n_item.contact
+        if price > 0:
+            device = FCMDevice.objects.all()
+            device.send_message(title=f'{seller} want to sell {name} on DoneWithIt ', body=f'For ₦{price}, location is '
+                                                                                           f'at {location}. Check App for more details...',
+                                icon='static/images/logo.png',
+                                data={"Details": "Details"})
+        elif free:
+            device = FCMDevice.objects.all()
+            device.send_message(title=f'{seller} want to give out {name} on DoneWithIt ', body=f'For FREE, locations '
+                                                                                               f'is  at {location}. Check App for more details... ',
+                                icon='static/images/logo.png',
+                                data={"Details": "Details"})
+        elif contact:
+            device = FCMDevice.objects.all()
+            device.send_message(title=f'{seller} want to sell {name} on DoneWithIt ', body=f'Contact for price, '
+                                                                                           f'location is at {location}. Check App for more details... ',
+                                icon='static/images/logo.png',
+                                data={"Details": "Details"})
+
         return redirect('sell_item')
     else:
         form = ItemForm(user=request.user)
         messages.info(request, 'Posting please wait...')
-    return render(request, 'sell_item.html', {"form": form,})
+    return render(request, 'sell_item.html', {"form": form, })
 
 
 @login_required
 def details(request, pk):
-    items = Item.objects.get(pk=pk)
+    items = Product.objects.get(pk=pk)
     context = {
         'items': items,
 
@@ -41,7 +72,7 @@ def details(request, pk):
 @login_required
 def account(request):
     profile = UserProfile.objects.all().filter(user=request.user)
-    items = Item.objects.all().filter(user=request.user).order_by('-timestamp')
+    items = Product.objects.all().filter(user=request.user).order_by('-timestamp')
     context = {
         'items': items,
         'profile': profile,
@@ -52,7 +83,7 @@ def account(request):
 
 def view_account(request, pk):
     profile = UserProfile.objects.all().filter(user=pk)
-    items = Item.objects.all().filter(user=pk).order_by('-timestamp')
+    items = Product.objects.all().filter(user=pk).order_by('-timestamp')
     context = {
         'items': items,
         'profile': profile,
@@ -61,30 +92,28 @@ def view_account(request, pk):
     return render(request, 'view account.html', context)
 
 
-def items(request):
-    items = Item.objects.all().order_by('-timestamp')
-
-    context = {
-        'items': items,
-
-    }
-    return render(request, 'itemsfeed.html', context)
+class Item(ListView):
+    model = Product
+    paginate_by = 3
+    context_object_name = 'items'
+    template_name = 'itemsfeed.html'
+    ordering = ['-timestamp']
 
 
 def delete_item(request, pk):
-    get_object_or_404(Item, pk=pk).delete()
+    get_object_or_404(Product, pk=pk).delete()
     return redirect('account')
 
 
 def sold_item(request, pk):
-    item = Item.objects.all().get(pk=pk)
+    item = Product.objects.all().get(pk=pk)
     item.sold = True
     item.save()
     return redirect('account')
 
 
 def notsold_item(request, pk):
-    item = Item.objects.all().get(pk=pk)
+    item = Product.objects.all().get(pk=pk)
     item.sold = False
     item.save()
     return redirect('account')
@@ -94,7 +123,7 @@ def search_item(request):
     query = request.GET.get('item')
     if query is not None:
         lookups = Q(item_name__icontains=query) | Q(item_dis__icontains=query)
-        items = Item.objects.filter(lookups).distinct()
+        items = Product.objects.filter(lookups).distinct()
 
         context = {
             'items': items,
@@ -105,7 +134,7 @@ def search_item(request):
 
 
 def filter_book(request):
-    items = Item.objects.all().filter(category='Book')
+    items = Product.objects.all().filter(category='Book')
 
     context = {
         'items': items,
@@ -115,7 +144,7 @@ def filter_book(request):
 
 
 def filter_phone(request):
-    items = Item.objects.all().filter(category='Phone')
+    items = Product.objects.all().filter(category='Phone')
 
     context = {
         'items': items,
@@ -125,7 +154,7 @@ def filter_phone(request):
 
 
 def filter_computer(request):
-    items = Item.objects.all().filter(category='Computer')
+    items = Product.objects.all().filter(category='Computer')
 
     context = {
         'items': items,
@@ -135,7 +164,7 @@ def filter_computer(request):
 
 
 def filter_appliances(request):
-    items = Item.objects.all().filter(category='Appliances')
+    items = Product.objects.all().filter(category='Appliances')
 
     context = {
         'items': items,
@@ -145,7 +174,7 @@ def filter_appliances(request):
 
 
 def filter_gadget(request):
-    items = Item.objects.all().filter(category='Gadget')
+    items = Product.objects.all().filter(category='Gadget')
 
     context = {
         'items': items,
@@ -155,7 +184,7 @@ def filter_gadget(request):
 
 
 def filter_furniture(request):
-    items = Item.objects.all().filter(category='Furniture')
+    items = Product.objects.all().filter(category='Furniture')
 
     context = {
         'items': items,
@@ -165,7 +194,7 @@ def filter_furniture(request):
 
 
 def filter_apartment(request):
-    items = Item.objects.all().filter(category='Apartment')
+    items = Product.objects.all().filter(category='Apartment')
 
     context = {
         'items': items,
@@ -175,7 +204,7 @@ def filter_apartment(request):
 
 
 def filter_book(request):
-    items = Item.objects.all().filter(category='Book')
+    items = Product.objects.all().filter(category='Book')
 
     context = {
         'items': items,
@@ -185,7 +214,7 @@ def filter_book(request):
 
 
 def filter_clothing(request):
-    items = Item.objects.all().filter(category='Clothing')
+    items = Product.objects.all().filter(category='Clothing')
 
     context = {
         'items': items,
@@ -195,7 +224,7 @@ def filter_clothing(request):
 
 
 def filter_vehicle(request):
-    items = Item.objects.all().filter(category='Vehicle')
+    items = Product.objects.all().filter(category='Vehicle')
 
     context = {
         'items': items,
@@ -205,7 +234,7 @@ def filter_vehicle(request):
 
 
 def filter_kitchen(request):
-    items = Item.objects.all().filter(category='Kitchen')
+    items = Product.objects.all().filter(category='Kitchen')
 
     context = {
         'items': items,
@@ -215,7 +244,7 @@ def filter_kitchen(request):
 
 
 def filter_others(request):
-    items = Item.objects.all().filter(category='Others')
+    items = Product.objects.all().filter(category='Others')
 
     context = {
         'items': items,

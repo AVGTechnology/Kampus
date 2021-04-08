@@ -15,13 +15,18 @@ importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js');
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 const messaging=firebase.messaging();
+messaging.usePublicVapidKey('BMc_Wye4mGlB5K76dN8Mdnt-4Fi-VyjjRzFpOdvlzuG8yelcS_HWNiCpjTLVRVkfunPIWYbCYRQwaHs0AJCRGNc');
 
-messaging.setBackgroundMessageHandler(function (payload) {
-    console.log(payload);
-    const notification=JSON.parse(payload);
-    const notificationOption={
-        body:notification.body,
-        icon:notification.icon
-    };
-    return self.registration.showNotification(payload.notification.title,notificationOption);
+messaging.onBackgroundMessage(function(payload) {
+console.log('[firebase-messaging-sw.js] Received background message ', payload);
+var obj = payload.notification;
+// Customize notification here
+var notificationTitle = obj.title;
+var notificationOptions = {
+body: obj.body,
+icon: 'static/images/logo.png',
+};
+return self.registration.showNotification(notificationTitle,notificationOptions);
 });
+
+

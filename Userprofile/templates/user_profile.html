@@ -92,6 +92,30 @@
 
             </div>
             <br>
+             <div class="space">
+                 <font color="black" style="font-size: 16px;"><b>Oya Go to..  </b></font>
+                <div class="row valign-wrapper">
+
+                   <div class="" style="margin-left:20px;">
+                    <a href="{% url 'donewithit' %}" style="">
+                       <img alt="..." class="rounded-circle"
+                                  height="50dp" src="{% static 'images/donewithit.png' %}" width="50dp"><br>
+                        <font color="black" style="font-size: 15px;">  DoneWithIt </font>
+                    </a>
+                   </div>
+                            <div class="" style="margin-left:20px;">
+                                <a href="{% url 'articles' %}" style="">
+                                  <img alt="..." class="rounded-circle"
+                                  height="50dp" src="{% static 'images/garud.png' %}" width="50dp"><br>
+                        <font color="black" style="font-size: 15px;">  Student Guardian </font>
+
+                                </a>
+                            </div>
+
+                </div>
+
+            </div>
+
 
             {% if posts %}
             {% for posts in posts %}

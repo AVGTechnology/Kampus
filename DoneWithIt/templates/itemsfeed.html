@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base24.html" %}
 {% block content %}
 {% load static %}
 
@@ -45,7 +45,9 @@
     <div class="container" >
 
         {% if items %}
+        <div class="row infinite-container">
         {% for items in items %}
+        <div class="col-md-6 infinite-item">
         <div class="card" style="border-radius: 20px 20px">
 
             <div class="card-image waves-effect waves-block waves-light">
@@ -162,12 +164,125 @@
 
             </div>
         </div>
-
+        </div>
         {% endfor %}
+        </div>
         {% else %}
         <h2><b>No Items avaliable for sale Yet!!</b></h2>
         {% endif %}
 
+    {% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+    {% endif %}
+    <div class="d-flex justify-content-center" style="display:none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
+
+    </div>
+
 </div>
+
+<script type="text/javascript" src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/infinite.min.js' %}"></script>
+<script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        handler: function(direction) {
+
+    },
+    offset: 'bottom-in-view',
+
+    onBeforePageLoad: function () {
+    $('.spinner-border').show();
+    },
+    onAfterPageLoad: function () {
+    $('.spinner-border').hide();
+    }
+
+    });
+
+</script>
+
+
+<p style="color:blue; display:none;" id="msg"></p>
+<p style="color:blue; display:none;" id="token"></p>
+<p style="color:green; display:none;" id="notis"></p>
+<p style="color:red; display:none;" id="err"></p>
+
 {% endblock %}
+
+{% block javascript %}
+
+<script>
+        MsgElem = document.getElementById("msg");
+        TokenElem = document.getElementById("token");
+        NotisElem = document.getElementById("notis");
+        ErrElem = document.getElementById("err");
+
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+
+var firebaseConfig = {
+    apiKey: "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
+    authDomain: "kampus-305500.firebaseapp.com",
+    projectId: "kampus-305500",
+    storageBucket: "kampus-305500.appspot.com",
+    messagingSenderId: "968358554586",
+    appId: "1:968358554586:web:f22fed2afe90864b5d6ee3",
+    measurementId: "G-5FE0JQ1XEE"
+  };
+     firebase.initializeApp(firebaseConfig);
+
+        const messaging = firebase.messaging();
+
+        // Receive messages
+      messaging.onMessage((payload) => {
+      console.log('Message received. ', payload);
+      // ...
+     });
+
+
+      messaging.usePublicVapidKey('BMc_Wye4mGlB5K76dN8Mdnt-4Fi-VyjjRzFpOdvlzuG8yelcS_HWNiCpjTLVRVkfunPIWYbCYRQwaHs0AJCRGNc');
+        messaging
+            .requestPermission()
+            .then(function () {
+                MsgElem.innerHTML = "Notification permission granted."
+                console.log("Notification permission granted.");
+                // get the token in the form of promise
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                TokenElem.innerHTML = 'token is : ' + token
+                console.log('token is :' + token);
+                console.log('Sending token to server...');
+                // TODO(developer): Send the current token to your server.
+        $.ajax({
+        type: "GET",
+        url: '{% url 'fcm_token' %}',
+        data: {
+            "token": token,
+        },
+        dataType: "json",
+        success: function (token) {
+            // any process in data
+            console.log('successfull')
+        },
+        failure: function () {
+            console.log("failure");
+        }
+    });
+
+        })
+            .catch(function (err) {
+                ErrElem.innerHTML =  ErrElem.innerHTML + "; " + err
+                console.log("Unable to get permission to notify.", err);
+            });
+
+
+
+</script>
+{% endblock javascript %}
+
