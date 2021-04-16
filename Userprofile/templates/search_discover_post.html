@@ -38,13 +38,56 @@
             {% endif %}
         </div>
           <br>
-        <div class="row valign-wrapper">
-            <div class="col s15">
-                <a href="{% url 'like' posts.pk %}">
-               <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929" >favorite_border</i>
-                </a>
-            </div>
+                <div class="row valign-wrapper">
+                    <div class="col s15">
 
+                        {% if user in posts.like.all%}
+
+                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px;  color: red;">favorite</i>
+
+                        {% else %}
+
+                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+
+                        {% endif %}
+
+        <script>
+        function myFunction(posts_pk) {
+       console.log(posts_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'like' %}",
+        data: {
+            "pk": posts_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.liked) {
+            console.log("likeeeeeeeeeeee");
+            M.toast({html: 'post liked !'})
+                //$('#product-'+product).fadeOut;
+            var el_like = document.getElementById(posts_pk)
+            el_like.style.color = "red";
+            }
+           if (data.unliked) {
+              console.log("unlikeeeeeeeeeeee");
+              M.toast({html: 'post unliked !'})
+              var el_like = document.getElementById(posts_pk)
+              el_like.style.color = "#292929";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
+</div>
             <div class="col s15">
                 <a href="{% url 'comment_view' posts.pk %}">
                <i class="material-icons" style="font-size: 30px;  text-decoration: none; color: #292929" >comment</i>
@@ -57,9 +100,12 @@
                </a>
             </div>
 
-            <div class="col s1">
-               <i class="material-icons right" style="font-size: 30px; text-decoration: none; color: #292929" >file_download</i>
-            </div>
+                    <div class="col s1">
+                        <a href="{{posts.file.url}}" class="pull-right" download>
+                            <i class="material-icons right"
+                               style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
+                        </a>
+                    </div>
 
         </div>
 

@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
 
     path('message/chat/<int:pk>/', views.chat_page, name='chat_page'),
+    path('message/feedback/', views.feedback, name='feedback'),
     path('message/send_chat/<int:pk>/', views.send_chat, name='send_chat'),
     path('message/received_list/', views.received_list, name='received_list'),
     path('message/sent_list/', views.sent_list, name='sent_list'),

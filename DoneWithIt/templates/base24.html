@@ -40,6 +40,7 @@
     <i class="large material-icons" style="font-size:30px;">menu</i>
   </a>
   <ul>
+    <li><a href="{% url 'index' %}"><img alt="..." height="40dp" src="{% static 'images/logo.png' %}" width="40dp"></a></li>
     <li><a href="{% url 'donewithit' %}" class="btn-floating red"><i class="material-icons">home</i></a></li>
     <li><a href="{% url 'sell_item' %}" class="btn-floating btn-large #880e4f pink darken-4 darken-1"><i class="center material-icons" style="font-size:35px;">add_circle_outline</i></a></li>
     <li><a href="{% url 'account' %}" class="btn-floating #0d47a1 blue darken-4"><i class="material-icons">account_circle</i></a></li>
@@ -53,7 +54,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   {% block javascript %}
 

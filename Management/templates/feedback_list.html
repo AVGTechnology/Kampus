@@ -1,0 +1,58 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load static %}
+       <br>
+
+    <div class="container #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"><b>{{ feedback.count }} </b> Kampus Feedback </font><br>
+        </div>
+    </div>
+
+       <br>
+<div class="">
+    {% if feedback %}
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>S/N</th>
+              <th>From</th>
+              <th>Text</th>
+              <th>Timestamp </th>
+              <th></th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size: 20px;">
+        {% for feedback in feedback %}
+          <tr>
+              <td><b>{{forloop.counter}}</b></td>
+              <td>{{feedback.sender}}</td>
+            <td>
+                {{feedback.text|truncatewords:"5"}}
+            </td>
+               <td>{{feedback.timestamp}}</td>
+            <td>
+              <a href="{% url 'feedback_details' feedback.pk  %}">
+                <font class="chip #00c853 green accent-4" style="color:white;"> Feedback Details </font>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    {% else %}
+
+    <div class="center"> <font color="black" style="font-size: 30px;"><b> No Feedback Today !!! </b></font> </div>
+
+
+    {% endif %}
+
+</div>
+{% endblock %}

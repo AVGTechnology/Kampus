@@ -1,0 +1,27 @@
+ {% extends "nav.html" %}
+{% block content %}
+{% load static %}
+       <br>
+    <div class="container #3e2723 brown darken-4" style="  text-align: left;
+                  border-radius: 40px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+        <div class="center">
+            <font color="white" style="font-size: 30px;"> {{feedback.sender}} Feedback Details </font><br>
+        </div>
+    </div>
+       <br>
+
+<div class="content" style="">
+<br>
+    <div class="" align="">
+
+        <div class="card" style="border-radius: 20px 20px">
+
+            <h5>{{ feedback.text }}</h5>
+
+       </div>
+    </div>
+</div>
+ {% endblock %}

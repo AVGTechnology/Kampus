@@ -1,10 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaulttags import url
+from django.views.decorators.csrf import csrf_exempt
 from requests import Response
 
 from .forms import PostForm, CommentForm
@@ -30,7 +31,6 @@ class NewsFeed(ListView):
 def post(request):
     user_p = UserProfile.objects.get(user=request.user)
     follower = user_p.follower.all()
-    print(follower)
     form = PostForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
         instance = form.save()
@@ -44,7 +44,7 @@ def post(request):
         device.send_message(title=f'{auth} created a new post on Kampus ', body=f'{caption} ',
                             icon='static/images/logo.png',
                             data={"Details": "Details"})
-        return redirect('post')
+        return redirect('index')
     else:
         form = PostForm(user=request.user)
         messages.info(request, 'Creating Post please wait...')
@@ -80,16 +80,31 @@ def news_feed(request):
     return render(request, 'newsfeed.html', context)
 
 
+@csrf_exempt
 @login_required
-def like(request, pk):
+def like(request):
+    pk = request.GET.get('pk', None)
     liked_post = get_object_or_404(Post, pk=pk)
     user = request.user
-
+    print(pk)
     if user in liked_post.like.all():
         liked_post.like.remove(user)
+        unliked = 'unliked'
+        data = {
+            'unliked': unliked
+
+        }
+
+        return JsonResponse(data, status=200)
     else:
         liked_post.like.add(user)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        liked = 'liked'
+        data = {
+            'liked': liked
+
+        }
+
+        return JsonResponse(data, status=200)
 
 
 @login_required

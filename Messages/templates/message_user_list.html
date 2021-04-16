@@ -15,7 +15,7 @@
             <form action="{% url 'search_message_user_list' %}" method="GET">
                 {% csrf_token %}
                 <div class="row valign-wrapper space">
-                    <input class="form-control me-2" type="search" placeholder="search for username or profession" name="acct"
+                    <input class="form-control me-2" type="search" placeholder="phone or username or profession" name="acct"
                            value="{{ acct }}"
                            aria-label="Search" id="acct">
                     <br>
@@ -34,7 +34,8 @@
     </div>
 
 </div>
-<ul class="collection">
+
+<ul class="collection" >
 
     {% for users in users %}
        <li class="collection-item avatar">

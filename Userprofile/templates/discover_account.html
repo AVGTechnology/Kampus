@@ -21,7 +21,7 @@
                 <form action="{% url 'search_discover_account' %}" method="GET">
                     {% csrf_token %}
                     <div class="row valign-wrapper space">
-                        <input class="form-control me-2" type="search" placeholder="search for username or profession"
+                        <input class="form-control me-2" type="search" placeholder="school,phone,username,skill,dept."
                                name="acct"
                                value="{{ acct }}"
                                aria-label="Search" id="acct">
@@ -48,6 +48,8 @@
             <div class="collapsible-body">
                 <ul class="collection">
                     {% for prof in prof %}
+                    {% if user in prof.follower.all%}
+                    {% else %}
                     <li class="collection-item avatar">
                         <a href="{% url 'view_user_profile' prof.user.pk %}">
                             <img src={{prof.image.url}} alt="" class="circle" width="50px" height="50px">
@@ -56,14 +58,44 @@
                                 {{prof.dept}}
                             </p>
                         </a>
-                        {% if user in prof.follower.all%}
-                        <a href="{% url 'unfollow' prof.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
-                        {% else %}
-                        <a href="{% url 'follow' prof.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
-                        {% endif %}
+                    <a onclick="myFollow({{prof.user.pk}});" id="{{prof.user.pk}}"
+                   class=" waves-light btn secondary-content #1565c0 blue darken-1" >Follow</a>
+         <script>
+        function myFollow(prof_user_pk) {
+       console.log(prof_user_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'follow' %}",
+        data: {
+            "pk": prof_user_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.followed) {
+            console.log("followed");
+            M.toast({html: 'Account followed !'})
+                //$('#product-'+product).fadeOut;
+            var el_follow = document.getElementById(prof_user_pk)
+            el_follow.innerHTML = "unfollow";
+            }
+           if (data.unfollowed) {
+              console.log("unfollowed");
+              M.toast({html: 'Account unfollowed !'})
+            var el_follow = document.getElementById(prof_user_pk)
+            el_follow.innerHTML = "follow";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
                     </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
 
@@ -74,6 +106,8 @@
             <div class="collapsible-body">
                     <ul class="collection">
                     {% for depts in depts %}
+                    {% if user in depts.follower.all%}
+                    {% else %}
                     <li class="collection-item avatar">
                         <a href="{% url 'view_user_profile' depts.user.pk %}">
                             <img src={{depts.image.url}} alt="" class="circle" width="50px" height="50px">
@@ -82,14 +116,44 @@
                                 {{depts.dept}}
                             </p>
                         </a>
-                        {% if user in depts.follower.all%}
-                        <a href="{% url 'unfollow' depts.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
-                        {% else %}
-                        <a href="{% url 'follow' depts.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
-                        {% endif %}
+                        <a onclick="myFollow({{depts.user.pk}});" id="{{depts.user.pk}}"
+                   class=" waves-light btn secondary-content #1565c0 blue darken-1" >Follow</a>
+         <script>
+        function myFollow(depts_user_pk) {
+       console.log(depts_user_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'follow' %}",
+        data: {
+            "pk": depts_user_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.followed) {
+            console.log("followed");
+            M.toast({html: 'Account followed !'})
+                //$('#product-'+product).fadeOut;
+            var el_follow = document.getElementById(depts_user_pk)
+            el_follow.innerHTML = "unfollow";
+            }
+           if (data.unfollowed) {
+              console.log("unfollowed");
+              M.toast({html: 'Account unfollowed !'})
+            var el_follow = document.getElementById(depts_user_pk)
+            el_follow.innerHTML = "follow";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
                     </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>
@@ -99,24 +163,56 @@
             <div class="collapsible-body">
                 <ul class="collection">
 
-                    {% for account in account %}
-                    {% if account.follower.count >= trending.follower %}
+                    {% for trendings in trendings %}
+                    {% if trendings.follower.count >= trending.follower %}
+                       {% if user in trendings.follower.all%}
+                       {% else %}
                     <li class="collection-item avatar">
-                        <a href="{% url 'view_user_profile' account.user.pk %}">
-                            <img src={{account.image.url}} alt="" class="circle" width="50px" height="50px">
-                            <span class="title " style="color:#000000;"><b>{{account.user}}</b></span>
-                            <p style="color:gray;">{{account.profession}} <br>
-                                {{account.dept}}
+                        <a href="{% url 'view_user_profile' trendings.user.pk %}">
+                            <img src={{trendings.image.url}} alt="" class="circle" width="50px" height="50px">
+                            <span class="title " style="color:#000000;"><b>{{trendings.user}}</b></span>
+                            <p style="color:gray;">{{trendings.profession}} <br>
+                                {{trendings.dept}}
                             </p>
                         </a>
-                        {% if user in account.follower.all%}
-                        <a href="{% url 'unfollow' account.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
-                        {% else %}
-                        <a href="{% url 'follow' account.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
-                        {% endif %}
+                    <a onclick="myFollow({{trendings.user.pk}});" id="{{trendings.user.pk}}"
+                   class=" waves-light btn secondary-content #1565c0 blue darken-1" >Follow</a>
+         <script>
+        function myFollow(trendings_user_pk) {
+       console.log(trendings_user_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'follow' %}",
+        data: {
+            "pk": trendings_user_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.followed) {
+            console.log("followed");
+            M.toast({html: 'Account followed !'})
+                //$('#product-'+product).fadeOut;
+            var el_follow = document.getElementById(trendings_user_pk)
+            el_follow.innerHTML = "unfollow";
+            }
+           if (data.unfollowed) {
+              console.log("unfollowed");
+              M.toast({html: 'Account unfollowed !'})
+            var el_follow = document.getElementById(trendings_user_pk)
+            el_follow.innerHTML = "follow";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
                     </li>
+                      {% endif %}
                     {% endif %}
                     {% endfor %}
 
@@ -131,6 +227,8 @@
                 <ul class="collection">
 
                     {% for account in account %}
+                       {% if user in account.follower.all%}
+                       {% else %}
                     <li class="collection-item avatar">
                         <a href="{% url 'view_user_profile' account.user.pk %}">
                             <img src={{account.image.url}} alt="" class="circle" width="50px" height="50px">
@@ -139,14 +237,45 @@
                                 {{account.dept}}
                             </p>
                         </a>
-                        {% if user in account.follower.all%}
-                        <a href="{% url 'unfollow' account.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
-                        {% else %}
-                        <a href="{% url 'follow' account.user.pk %}"
-                           class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
-                        {% endif %}
+                        <a onclick="myFollow({{account.user.pk}});" id="{{account.user.pk}}"
+                           class=" waves-light btn secondary-content #1565c0 blue darken-1" >Follow</a>
+         <script>
+        function myFollow(account_user_pk) {
+       console.log(account_user_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'follow' %}",
+        data: {
+            "pk": account_user_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.followed) {
+            console.log("followed");
+            M.toast({html: 'Account followed !'})
+                //$('#product-'+product).fadeOut;
+            var el_follow = document.getElementById(account_user_pk)
+            el_follow.innerHTML = "unfollow";
+            }
+           if (data.unfollowed) {
+              console.log("unfollowed");
+              M.toast({html: 'Account unfollowed !'})
+            var el_follow = document.getElementById(account_user_pk)
+            el_follow.innerHTML = "follow";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
+
                     </li>
+                      {% endif %}
                     {% endfor %}
 
                 </ul>

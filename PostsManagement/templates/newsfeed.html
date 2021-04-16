@@ -24,7 +24,7 @@
 
                 <div class="space">
                     <div class="">
-                        <b>{{ posts.caption}}</b>
+                        <b >{{ posts.caption}}</b>
                     </div>
                     {% if posts.file.url|slice:"-4:" == ".mp4" %}
                     <video class="responsive-video" controls>
@@ -39,36 +39,70 @@
                     <div class="col s15">
 
                         {% if user in posts.like.all%}
-                        <a href="{% url 'like' posts.pk %}">
-                            <i class="waves-effect material-icons"
-                               style="font-size: 30px; text-decoration: none; color: red;">favorite</i>
-                        </a>
+
+                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px;  color: red;">favorite</i>
+
                         {% else %}
-                        <a href="{% url 'like' posts.pk %}">
-                            <i class="waves-effect material-icons"
-                               style="font-size: 30px; text-decoration: none; color: #292929">favorite_border</i>
-                        </a>
+
+                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+
                         {% endif %}
 
-                    </div>
+        <script>
+        function myFunction(posts_pk) {
+       console.log(posts_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'like' %}",
+        data: {
+            "pk": posts_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.liked) {
+            console.log("likeeeeeeeeeeee");
+            M.toast({html: 'post liked !'})
+                //$('#product-'+product).fadeOut;
+            var el_like = document.getElementById(posts_pk)
+            el_like.style.color = "red";
+            }
+           if (data.unliked) {
+              console.log("unlikeeeeeeeeeeee");
+              M.toast({html: 'post unliked !'})
+              var el_like = document.getElementById(posts_pk)
+              el_like.style.color = "#292929";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
+</div>
 
                     <div class="col s15">
                         <a href="{% url 'comment_view' posts.pk %}">
-                            <i class=" waves-effect material-icons"
+                            <i class="material-icons"
                                style="font-size: 30px;  text-decoration: none; color: #292929">comment</i>
                         </a>
                     </div>
 
                     <div class="col s15">
                         <a href="{% url 'chat_page' posts.user.pk %}">
-                            <i class="waves-effect material-icons"
+                            <i class="material-icons"
                                style="font-size: 30px; text-decoration: none; color: #292929; transform: rotate(0deg);">send</i>
                         </a>
                     </div>
 
                     <div class="col s1">
                         <a href="{{posts.file.url}}" class="pull-right" download>
-                            <i class=" waves-effect material-icons right"
+                            <i class="material-icons right"
                                style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
                         </a>
                     </div>
@@ -123,6 +157,7 @@
             </div>
 
         </div>
+
         {% endfor %}
     </div>
     {% if page_obj.has_next %}
@@ -168,6 +203,9 @@
 {% block javascript %}
 
 <script>
+
+
+
         MsgElem = document.getElementById("msg");
         TokenElem = document.getElementById("token");
         NotisElem = document.getElementById("notis");
@@ -177,26 +215,27 @@
         // TODO: Replace with your project's customized code snippet
 
 var firebaseConfig = {
-    apiKey: "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
-    authDomain: "kampus-305500.firebaseapp.com",
-    projectId: "kampus-305500",
-    storageBucket: "kampus-305500.appspot.com",
-    messagingSenderId: "968358554586",
-    appId: "1:968358554586:web:f22fed2afe90864b5d6ee3",
-    measurementId: "G-5FE0JQ1XEE"
+    apiKey: "AIzaSyBXBYaToCdIQOkVHPuBzO2VWimr-jh2yrg",
+    authDomain: "kampus-52a9f.firebaseapp.com",
+    projectId: "kampus-52a9f",
+    storageBucket: "kampus-52a9f.appspot.com",
+    messagingSenderId: "576665983294",
+    appId: "1:576665983294:web:25c4323279412c349af46f",
+    measurementId: "G-5X0VH0R9GV"
   };
      firebase.initializeApp(firebaseConfig);
+     firebase.analytics();
 
         const messaging = firebase.messaging();
 
         // Receive messages
-      messaging.onMessage((payload) => {
-      console.log('Message received. ', payload);
+     // messaging.onMessage((payload) => {
+      // console.log('Message received. ', payload);
       // ...
-     });
+    // });
 
 
-      messaging.usePublicVapidKey('BMc_Wye4mGlB5K76dN8Mdnt-4Fi-VyjjRzFpOdvlzuG8yelcS_HWNiCpjTLVRVkfunPIWYbCYRQwaHs0AJCRGNc');
+      messaging.usePublicVapidKey('BA515hrbYgT-oqfRhCon0CJIyjzU_ivliKX6Q9G93dhIGVXZfK9KkI2pT-lvmd-ZFmGTKv_2UkuoDlM-ZFlk0vk');
         messaging
             .requestPermission()
             .then(function () {

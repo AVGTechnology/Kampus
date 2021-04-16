@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, Count, Aggregate
 from django.views.decorators.csrf import csrf_exempt
 
+from Management.models import AboutApp, AboutExcutives
 from PostsManagement.models import Post
 from .forms import *
 from .models import *
@@ -77,6 +78,17 @@ def logout(request):
     return render(request, 'registration/logged_out.html ')
 
 
+def about(request):
+    services = AboutApp.objects.all()
+    office = AboutExcutives.objects.all()
+
+    context = {
+        'services': services,
+        'office': office,
+    }
+    return render(request, 'about.html ', context)
+
+
 @login_required
 def user_profile(request):
     user = request.user
@@ -90,6 +102,14 @@ def user_profile(request):
 
 
 @login_required
+def profile_image_view(request, pk):
+    user_p = UserProfile.objects.get(user=pk)
+
+    return render(request, 'image_detail_view.html', {'user_p': user_p,
+                                                      })
+
+
+@login_required
 def user_earning(request):
     user = request.user
     user_p = UserProfile.objects.all().filter(user=user)
@@ -97,7 +117,7 @@ def user_earning(request):
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
     payment = PaymentDetail.objects.get(user=user)
     p = payment.paid
-    w = total_like * 10
+    w = total_like * 1
     rw = w - p
     wallet = rw
     requestpay = RequestPayment.objects.all().filter(user=user)
@@ -119,7 +139,7 @@ def requestpay(request):
     payment = PaymentDetail.objects.all().filter(user=user)
     for pay in payment:
         paid = pay.paid
-        w = total_like * 10
+        w = total_like * 1
         rw = w - paid
         wallet = rw
     request = RequestPayment.objects.all().filter(user=request.user)
@@ -189,6 +209,7 @@ def view_user_profile(request, pk):
 @login_required
 def discover_account(request):
     account = UserProfile.objects.all().order_by('user').exclude(user=request.user)
+    trendings = UserProfile.objects.all().order_by('user').exclude(user=request.user)
 
     # relationship = Relationship.objects.all()
     user_p = UserProfile.objects.get(user=request.user)
@@ -206,7 +227,8 @@ def discover_account(request):
         'account': account,
         'prof': prof,
         'depts': depts,
-        'trending': trending
+        'trending': trending,
+        'trendings': trendings
 
     }
     return render(request, 'discover_account.html', context)
@@ -216,7 +238,8 @@ def discover_account(request):
 def search_discover_account(request):
     query = request.GET.get('acct')
     if query is not None:
-        lookups = Q(user__username__iexact=query) | Q(profession__icontains=query)
+        lookups = Q(user__username__iexact=query) | Q(profession__icontains=query) | Q(school__icontains=query) | \
+                  Q(dept__icontains=query) | Q(phone__iexact=query)
         account = UserProfile.objects.filter(lookups).distinct()
 
         context = {
@@ -237,6 +260,11 @@ def discover_post(request):
 
     }
     return render(request, 'discover_post.html', context)
+
+
+@login_required
+def user_info(request):
+    return render(request, 'user_info.html', )
 
 
 @login_required
@@ -265,6 +293,42 @@ def follow(request, pk):
     other_user.follower.add(request.user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@csrf_exempt
+@login_required
+def follow(request):
+    pk = request.GET.get('pk', None)
+
+    user = request.user
+    u = UserProfile.objects.get(user=pk)
+
+    print(u)
+
+    auth_user = get_object_or_404(UserProfile, user=user)
+    other_user = get_object_or_404(UserProfile, user=u.user)
+
+    print(pk)
+    if user in other_user.follower.all():
+        other_user.follower.remove(user)
+        auth_user.following.remove(u.user)
+        unfollowed = 'unfollowed'
+        data = {
+            'unfollowed': unfollowed
+
+        }
+
+        return JsonResponse(data, status=200)
+    else:
+        auth_user.following.add(u.user)
+        other_user.follower.add(user)
+        followed = 'followed'
+        data = {
+            'followed': followed
+
+        }
+
+        return JsonResponse(data, status=200)
 
 
 @login_required

@@ -6,7 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Aggregate
 # Create your views here.
 from DoneWithIt.models import Product
-from Messages.models import Chat
+from Messages.models import Chat, Feedback
 from PostsManagement.models import Post, Comment
 from StudentGuildian.models import Article
 from Userprofile.models import UserProfile, RequestPayment, PaymentDetail
@@ -24,7 +24,7 @@ def dashboard(request):
     new_posts = Post.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     new_profile = UserProfile.objects.all().exclude(user=request.user).filter(join__gte=datetime.date.today()) \
-       .order_by('-join')
+        .order_by('-join')
     new_articles = Article.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     new_messages = Chat.objects.all().filter(timestamp__gte=datetime.date.today()) \
@@ -34,6 +34,9 @@ def dashboard(request):
     rpay = RequestPayment.objects.all().filter(pending=True)
     fpay = RequestPayment.objects.all().filter(failed=True)
     ppay = RequestPayment.objects.all().filter(paid=True)
+
+    feedback = Feedback.objects.all().filter(timestamp__gte=datetime.date.today()) \
+        .order_by('-timestamp')
     context = {
         'articles': articles,
         'messages': messages,
@@ -49,6 +52,7 @@ def dashboard(request):
         'rpay': rpay,
         'fpay': fpay,
         'ppay': ppay,
+        'feedback': feedback,
 
     }
     return render(request, 'dashboard.html', context)
@@ -63,6 +67,27 @@ def kampus_users(request):
         'users': users,
     }
     return render(request, 'Kampus_users.html', context)
+
+
+@staff_member_required
+@login_required
+def feedback_list(request):
+    feedback = Feedback.objects.all().filter(timestamp__gte=datetime.date.today()) \
+        .order_by('-timestamp')
+    context = {
+        'feedback': feedback,
+    }
+    return render(request, 'feedback_list.html', context)
+
+
+@staff_member_required
+@login_required
+def feedback_details(request, pk):
+    feedback = Feedback.objects.get(pk=pk)
+    context = {
+        'feedback': feedback,
+    }
+    return render(request, 'feedback_details.html', context)
 
 
 @staff_member_required

@@ -25,7 +25,7 @@ def sell_item(request):
         instance = form.save()
         messages.success(request, 'Item added Successfully!! .')
         messages.success(request, 'Add More Items...')
-        n_item = Item.objects.get(pk=instance.pk)
+        n_item = Product.objects.get(pk=instance.pk)
         name = n_item.item_name
         seller = n_item.user
         image = n_item.first_image
@@ -52,7 +52,7 @@ def sell_item(request):
                                 icon='static/images/logo.png',
                                 data={"Details": "Details"})
 
-        return redirect('sell_item')
+        return redirect('donewithit')
     else:
         form = ItemForm(user=request.user)
         messages.info(request, 'Posting please wait...')

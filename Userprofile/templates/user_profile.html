@@ -6,11 +6,18 @@
 
     <div class="" align="center">
         <br>
+          <div class="">
+              <a href="{% url 'user_info' %}">
+            <i class="right material-icons" style="font-size:32px; color:black;">more_vert</i>
+              </a>
+        <br><br>
+          </div>
         {% for user_p in user_p %}
 
         <div class="col">
+            <a  href="{% url 'profile_image_view' user_p.user.pk %}">
             <img src={{user_p.image.url}} alt="..." width="120" height="120"
-                 class="circle"><br>
+                 class="circle"></a><br>
             <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
             <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
             <div class=" " align="center">
@@ -112,6 +119,8 @@
                                 </a>
                             </div>
 
+
+
                 </div>
 
             </div>
@@ -134,18 +143,56 @@
                     {% endif %}
                 </div>
                 <br>
-                <div class="row valign-wrapper">
+                            <div class="row valign-wrapper">
                     <div class="col s15">
-                  {% if user in posts.like.all%}
-                <a href="{% url 'like' posts.pk %}">
-                 <i class="material-icons" style="font-size: 30px; text-decoration: none; color: red;">favorite</i>
-                </a>
-                {% else %}
-                 <a href="{% url 'like' posts.pk %}">
-                    <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929">favorite_border</i>
-                </a>
-                {% endif %}
-                    </div>
+
+                        {% if user in posts.like.all%}
+
+                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px;  color: red;">favorite</i>
+
+                        {% else %}
+
+                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+
+                        {% endif %}
+
+        <script>
+        function myFunction(posts_pk) {
+       console.log(posts_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'like' %}",
+        data: {
+            "pk": posts_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.liked) {
+            console.log("likeeeeeeeeeeee");
+            M.toast({html: 'post liked !'})
+                //$('#product-'+product).fadeOut;
+            var el_like = document.getElementById(posts_pk)
+            el_like.style.color = "red";
+            }
+           if (data.unliked) {
+              console.log("unlikeeeeeeeeeeee");
+              M.toast({html: 'post unliked !'})
+              var el_like = document.getElementById(posts_pk)
+              el_like.style.color = "#292929";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+ </script>
+</div>
 
 
 

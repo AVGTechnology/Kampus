@@ -4,18 +4,18 @@ importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js');
 
 
   var firebaseConfig = {
-    apiKey: "AIzaSyDrZRgm_9-xauyre5flvN_KxLLYqQ8MCv0",
-    authDomain: "kampus-305500.firebaseapp.com",
-    projectId: "kampus-305500",
-    storageBucket: "kampus-305500.appspot.com",
-    messagingSenderId: "968358554586",
-    appId: "1:968358554586:web:f22fed2afe90864b5d6ee3",
-    measurementId: "G-5FE0JQ1XEE"
+    apiKey: "AIzaSyBXBYaToCdIQOkVHPuBzO2VWimr-jh2yrg",
+    authDomain: "kampus-52a9f.firebaseapp.com",
+    projectId: "kampus-52a9f",
+    storageBucket: "kampus-52a9f.appspot.com",
+    messagingSenderId: "576665983294",
+    appId: "1:576665983294:web:25c4323279412c349af46f",
+    measurementId: "G-5X0VH0R9GV"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 const messaging=firebase.messaging();
-messaging.usePublicVapidKey('BMc_Wye4mGlB5K76dN8Mdnt-4Fi-VyjjRzFpOdvlzuG8yelcS_HWNiCpjTLVRVkfunPIWYbCYRQwaHs0AJCRGNc');
+messaging.usePublicVapidKey('BA515hrbYgT-oqfRhCon0CJIyjzU_ivliKX6Q9G93dhIGVXZfK9KkI2pT-lvmd-ZFmGTKv_2UkuoDlM-ZFlk0vk');
 
 messaging.onBackgroundMessage(function(payload) {
 console.log('[firebase-messaging-sw.js] Received background message ', payload);
@@ -25,6 +25,8 @@ var notificationTitle = obj.title;
 var notificationOptions = {
 body: obj.body,
 icon: 'static/images/logo.png',
+tag: "notification-1"
+
 };
 return self.registration.showNotification(notificationTitle,notificationOptions);
 });

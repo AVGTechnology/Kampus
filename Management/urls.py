@@ -8,6 +8,7 @@ urlpatterns = [
 
     path("management/dashboard/", views.dashboard, name='dashboard'),
     path("management/payment/request/", views.payment_request, name='payment_request'),
+    path("management/feedback/list/", views.feedback_list, name='feedback_list'),
     path("management/payment/failed/", views.failed_payment, name='failed_payment'),
     path("management/payment/paid/", views.paid_user, name='paid_user'),
     path("management/kampus/post", views.kampus_post, name='kampus_post'),
@@ -23,6 +24,7 @@ urlpatterns = [
     path("management/request/detail/<int:pk>/", views.request_detail, name='request_detail'),
     path("management/request/paid/<int:pk>/", views.paid, name='paid'),
     path("management/request/failed/<int:pk>/", views.failed, name='failed'),
+    path("management/feedback/details/<int:pk>/", views.feedback_details, name='feedback_details'),
 ]
 
 if settings.DEBUG:

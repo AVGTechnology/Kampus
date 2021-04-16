@@ -19,9 +19,45 @@
       </p>
       </a>
        {%  if user in users.owner.follower.all%}
-           <a href="{% url 'unfollow' users.pk %}" class="waves-effect waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
+           <a href="{% url 'unfollow' users.pk %}" class="waves-light btn secondary-content #bbdefb blue lighten-3">Unfollow</a>
        {% else %}
-           <a href="{% url 'follow' users.pk %}" class="waves-effect waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
+           <a onclick="myFollow({{users.pk}});" id="{{users.pk}}"
+                           class=" waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
+                        <script>
+        function myFollow(users_pk) {
+       console.log(users_pk);
+       $.ajax({type: "GET",
+        url: "{% url 'follow' %}",
+        data: {
+            "pk": users_pk
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log(data);
+            if (data.followed) {
+            console.log("followed");
+            M.toast({html: 'Account followed !'})
+                //$('#product-'+product).fadeOut;
+            var el_follow = document.getElementById(users_pk)
+            el_follow.innerHTML = "unfollow";
+            }
+           if (data.unfollowed) {
+              console.log("unfollowed");
+              M.toast({html: 'Account unfollowed !'})
+            var el_follow = document.getElementById(users_pk)
+            el_follow.innerHTML = "follow";
+
+            }
+
+        },
+        failure: function () {
+            console.log("failure");
+        }
+ });
+ }
+
+                        </script>
        {% endif %}
     </li>
            {%  endfor %}

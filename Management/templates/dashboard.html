@@ -15,6 +15,20 @@
         </div>
     </div>
    </a>
+<br>
+{% if feedback %}
+         <a href="{% url 'feedback_list' %}">
+            <div class="center #aa00ff green accent-4" style="  text-align: left;
+                  border-radius: 30px;
+                  bottom: 0;
+                  padding: 10px;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <font color="white" style="font-size: 20px;">{{feedback.count}} New Feedback</span></font>
+                </div>
+            </div>
+         </a>
+{% endif %}
     <br>
 
 
