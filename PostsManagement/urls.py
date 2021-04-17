@@ -11,6 +11,7 @@ urlpatterns = [
     path('', NewsFeed.as_view(),  name="index"),
     path('post/', views.post, name='post'),
     path('like/', views.like, name='like'),
+    path('comment/count/', views.comment_count, name='comment_count'),
     path('comment_view/<int:pk>/', views.comment_view, name='comment_view'),
     path('comment/<int:pk>/', views.comment, name='comment'),
     path('likes/<int:pk>/', views.likes, name='likes'),

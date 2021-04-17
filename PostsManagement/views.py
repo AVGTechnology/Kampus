@@ -107,6 +107,21 @@ def like(request):
         return JsonResponse(data, status=200)
 
 
+@csrf_exempt
+def comment_count(request):
+    pk = request.GET.get('pk', None)
+    cp = get_object_or_404(Post, pk=pk)
+    comments = Comment.objects.all().filter(post=cp).count()
+    print(comments)
+
+    context = {
+       'count': comments
+
+    }
+
+    return JsonResponse(context, status=200)
+
+
 @login_required
 def comment(request, pk):
     comments = request.GET.get('comment')

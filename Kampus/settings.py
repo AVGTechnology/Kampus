@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # third party apps
+    'pwa',
     "fcm_django",
     'allauth',
     'allauth.account',
@@ -66,6 +67,36 @@ FCM_DJANGO_SETTINGS = {
     "FCM_SERVER_KEY": "AAAAhkP4mT4:APA91bGWEowOkZ27I3rWyXierG0KV2N3gCyx-14G-w0THRkySlryH-s4ycKSqbhm3TFy_9mcHDqwMYqBc4lBH9ybO-onSCQySJkJk7sQ1xNCBucr2dQECDnWBq17asJeK2m-i4A_aa5K",
 
 }
+
+PWA_APP_NAME = 'Kampus'
+PWA_APP_DESCRIPTION = "Kampus PWA social platform"
+PWA_APP_THEME_COLOR = '#2e0018'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'portrait-primary'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/logo.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/logo.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/images/logo.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
 
 
 MIDDLEWARE = [
@@ -151,6 +182,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 APP_ROOT = os.path.join(BASE_DIR, 'static')
