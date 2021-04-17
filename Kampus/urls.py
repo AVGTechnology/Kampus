@@ -24,7 +24,7 @@ urlpatterns = [
     path("", include("StudentGuildian.urls")),
     path("", include("DoneWithIt.urls")),
     path("", include("Management.urls")),
-    path('pwa', include('pwa.urls')),
+    path('', include('pwa.urls')),
     path("accounts/", include("allauth.urls")),
 
 ]
