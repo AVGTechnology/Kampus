@@ -21,9 +21,11 @@
                 <b>{{ posts.caption}}</b>
             </div>
             {% if posts.file.url|slice:"-4:" == ".mp4" %}
-            <video class="responsive-video" controls>
-                <source src={{posts.file.url}} type="video/mp4">
-            </video>
+                   <video class="responsive-video" controls="controls" poster="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg">
+
+                        <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
+
+                    </video>
             {% else %}
             <img class="responsive-img" src={{posts.file.url}}>
             {% endif %}

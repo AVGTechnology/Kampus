@@ -78,7 +78,7 @@ def logout(request):
     return render(request, 'registration/logged_out.html ')
 
 
-def about(request):
+def about_kampus(request):
     services = AboutApp.objects.all()
     office = AboutExcutives.objects.all()
 
@@ -86,7 +86,7 @@ def about(request):
         'services': services,
         'office': office,
     }
-    return render(request, 'about.html ', context)
+    return render(request, 'about_kampus.html ', context)
 
 
 @login_required

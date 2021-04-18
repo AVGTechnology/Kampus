@@ -1,3 +1,5 @@
+import io
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
@@ -7,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaulttags import url
 from django.views.decorators.csrf import csrf_exempt
 from requests import Response
+from urllib3.packages.six import BytesIO
 
 from .forms import PostForm, CommentForm
 from .models import *
@@ -17,6 +20,8 @@ from fcm_django.models import FCMDevice
 from django.shortcuts import render
 from .models import Post
 from django.views.generic.list import ListView
+from moviepy.editor import *
+from PIL import Image
 
 
 class NewsFeed(ListView):
@@ -44,12 +49,42 @@ def post(request):
         device.send_message(title=f'{auth} created a new post on Kampus ', body=f'{caption} ',
                             icon='static/images/logo.png',
                             data={"Details": "Details"})
-        return redirect('index')
+        return redirect('preview', n_post.pk)
     else:
         form = PostForm(user=request.user)
         messages.info(request, 'Creating Post please wait...')
 
     return render(request, 'add_post.html', {"form": form, })
+
+
+@login_required
+def preview(request, pk):
+    posts = get_object_or_404(Post, pk=pk)
+    return render(request, 'preview.html', {"posts": posts, })
+
+
+import base64
+import time
+from django.core.files.base import ContentFile, File
+from django.core.files.storage import FileSystemStorage
+
+
+@login_required
+def thumbnail(request, pk):
+    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
+    os.makedirs(destination_dir, exist_ok=True)
+    posts = Post.objects.get(pk=pk)
+    clip = VideoFileClip(posts.file.path)
+    print(clip)
+    print(clip.reader.fps)
+    print(clip.duration)
+    frame = clip.get_frame(2.00)
+    # print(frame)
+    new_img_path = os.path.join(destination_dir, f"{posts.pk}.jpg")
+    new_img = Image.fromarray(frame)
+    new_img.save(new_img_path)
+    # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
+    return redirect('index')
 
 
 @login_required
@@ -115,7 +150,7 @@ def comment_count(request):
     print(comments)
 
     context = {
-       'count': comments
+        'count': comments
 
     }
 

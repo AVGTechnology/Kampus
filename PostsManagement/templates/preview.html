@@ -1,0 +1,25 @@
+{% extends "baseform.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+    <div class="container">
+        <br>
+ {% if posts.file.url|slice:"-4:" == ".mp4" %}
+        <h4>Preview Video Post</h4>
+  <video class="responsive-video" controls="controls">
+      <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
+  </video>
+        <br><br>
+        <a href="{% url 'thumbnail' posts.pk%}"  class="waves-light btn #880e4f pink darken-4">Done</a>
+        <a href="{% url 'delete_post' posts.pk %}" class="waves-light btn #880e4f red darken-4">Cancel</a>
+   {% else %}
+  <h4>Preview Image Post</h4>
+    <img class="responsive-img" src={{posts.file.url}} style="max-width: 100%;">
+        <br><br>
+        <a href="{% url 'index'%}" class="waves-light btn #880e4f pink darken-4">Done</a>
+        <a href="{% url 'delete_post' posts.pk %}" class="waves-light btn #880e4f red darken-4">Cancel</a>
+  {% endif %}
+    </div>
+</div>
+{% endblock %}
