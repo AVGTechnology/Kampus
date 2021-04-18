@@ -3,6 +3,13 @@
 {% load static %}
 
 <div class="content" style="background-color: #ffffff;">
+<br>
+          <div class="">
+              <a href="{% url 'user_info' %}">
+            <b class="left" style="margin-left:20px; font-size:25px; color:black;">{{user}}</b>
+              </a>
+        <br><br>
+          </div>
 
     <div class="" align="center">
         <br>
@@ -12,7 +19,7 @@
             <a  href="{% url 'profile_image_view' user_p.user.pk %}">
             <img src={{user_p.image.url}} alt="..." width="120" height="120"
                  class="circle"></a><br>
-            <b><font style="color: #000000; font-size: 20px;">{{user_p.user}}</font></b><br>
+            <b><font style="color: #000000; font-size: 20px;">{{user_p.full_name}}</font></b><br>
             <b><font style="color: #515152; font-size: 15px;">{{user_p.profession}}</font></b>
             <div class=" " align="center">
                 <b><font color="black"> ({{ user_p.dept }}) </font>
@@ -59,207 +66,45 @@
 
 
             <br>
-            <div class="">
-                <div class="row valign-wrapper">
-                    <div class="" style="margin-left:5px;">
-                        {% if user in user_p.follower.all%}
-                        <a href="{% url 'unfollow' user_p.user.pk %}" style="font-size: 12px;"
-                           class="waves-light btn #bbdefb blue lighten-3">Unfollow</a>
-                        {% else %}
-                        <a onclick="myFollow({{user_p.user.pk}});" id="{{user_p.user.pk}}"
-                           class=" waves-light btn secondary-content #1565c0 blue darken-1">Follow</a>
-                        <script>
-        function myFollow(user_p_user_pk) {
-       console.log(user_p_user_pk);
-       $.ajax({type: "GET",
-        url: "{% url 'follow' %}",
-        data: {
-            "pk": user_p_user_pk
-        },
-        dataType: "json",
-        success: function (data) {
-            // any process in data
-            console.log(data);
-            if (data.followed) {
-            console.log("followed");
-            M.toast({html: 'Account followed !'})
-                //$('#product-'+product).fadeOut;
-            var el_follow = document.getElementById(user_p_user_pk)
-            el_follow.innerHTML = "unfollow";
-            }
-           if (data.unfollowed) {
-              console.log("unfollowed");
-              M.toast({html: 'Account unfollowed !'})
-            var el_follow = document.getElementById(user_p_user_pk)
-            el_follow.innerHTML = "follow";
-
-            }
-
-        },
-        failure: function () {
-            console.log("failure");
-        }
- });
- }
-
-                        </script>
-                        {% endif %}
-                    </div>
-                    <div class="" style="margin-left:5px;">
-                        <a href="{% url 'chat_page' user_p.user.pk %}" style="font-size: 12px;"
-                           class="#1565c0 blue darken-1 btn">Message<i
-                                class="material-icons left" style="font-size: 20px;">send</i></a>
-                    </div>
-
-                    <div class="" style="margin-left:5px;">
-                        <a href="tel:{{ user_p.phone}}" style="font-size: 12px;"
-                           class="#1565c0 blue darken-1 btn">Call<i
-                                class="material-icons left" style="font-size: 20px;">call</i></a>
-                    </div>
-                </div>
-                <br>
-
-                {% if posts %}
-                {% for posts in posts %}
-                <div style="background-color: #ffffff;">
-                    <br>
-                    <div class="space">
-                        <div class="">
-                            <b>{{ posts.caption}}</b>
-                        </div>
-                        {% if posts.file.url|slice:"-4:" == ".mp4" %}
-                   <video class="responsive-video" controls="controls" poster="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg">
-
-                        <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
-
-                    </video>
-                        {% else %}
-                        <img class="responsive-img" src={{posts.file.url}} style="max-width: 100%;">
-                        {% endif %}
-                    </div>
-                    <br>
-                    <div class="row valign-wrapper">
-                        <div class="col s15">
-
-                            {% if user in posts.like.all%}
-
-                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px;  color: red;">favorite</i>
-
-                            {% else %}
-
-                            <i id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
-
-                            {% endif %}
-
-                            <script>
-        function myFunction(posts_pk) {
-       console.log(posts_pk);
-       $.ajax({type: "GET",
-        url: "{% url 'like' %}",
-        data: {
-            "pk": posts_pk
-        },
-        dataType: "json",
-        success: function (data) {
-            // any process in data
-            console.log(data);
-            if (data.liked) {
-            console.log("likeeeeeeeeeeee");
-            M.toast({html: 'post liked !'})
-                //$('#product-'+product).fadeOut;
-            var el_like = document.getElementById(posts_pk)
-            el_like.style.color = "red";
-            }
-           if (data.unliked) {
-              console.log("unlikeeeeeeeeeeee");
-              M.toast({html: 'post unliked !'})
-              var el_like = document.getElementById(posts_pk)
-              el_like.style.color = "#292929";
-
-            }
-
-        },
-        failure: function () {
-            console.log("failure");
-        }
- });
- }
-
-                            </script>
-                        </div>
-
-                        <div class="col s15">
-                            <a href="{% url 'comment_view' posts.pk %}">
-                                <i class="material-icons"
-                                   style="font-size: 30px;  text-decoration: none; color: #292929">comment</i>
-                            </a>
-                        </div>
-
-                        <div class="col s15">
-                            <a href="{% url 'chat_page' posts.user.pk %}">
-                                <i class="material-icons"
-                                   style="font-size: 30px; text-decoration: none; color: #292929">send</i>
-                            </a>
-                        </div>
-
-                        <div class="col s1">
-                            <a href="{{posts.file.url}}" class="pull-right" download>
-                                <i class="material-icons right"
-                                   style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class="row valign-wrapper">
-                        <div class="col s15">
-                            <a href="{% url 'likes' posts.pk %}">
-                                <b style="color: black;">{{posts.like.count}} likes</b>
-                            </a>
-                        </div>
-
-                        <div class="col s15">
-                            <a href="{% url 'comment_view' posts.pk %}">
-                                <p><font color="gray">View 200 comments</font></p>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- <div class="container">
-                        comments....
-                     </div>-->
-
-                    <div class="row valign-wrapper">
-                        <div class="col s15">
-                            <img src={{profile.image.url}}
-                                 width="30px"
-                                 alt="" class="circle">
-                        </div>
-
-                        <div class="col s15 chip">
-                            <p><font color="gray">Add a comment...</font></p>
-                        </div>
-                        <br>
-                        <div class="col s4">
-                            <p class="right"><font color="gray">{{posts.timestamp|date:"D d M Y" }}</font></p>
-                        </div>
-                    </div>
-
-                </div>
-                {% endfor %}
-                {% else %}
-
-                <h2><b>{{user_p.user.username}} you haven't created any Post Yet!!!</b></h2>
-                {% endif %}
-
 
             </div>
 
         </div>
+
+          <div class="center">
+            {% if posts %}
+            <div class="row">
+            {% for posts in posts %}
+                <div class="col">
+                    {% if posts.file.url|slice:"-4:" == ".mp4" %}
+                  <a href="{% url 'comment_view' posts.pk %}">
+                <i class="material-icons left" style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute; ">play_circle_outline</i>
+                    <img class="" src="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg" style="width: 112px; height:112px">
+                  </a>
+                {% else %}
+                <a href="{% url 'comment_view' posts.pk %}">
+                <i class="material-icons left" style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute;">photo</i>
+                 <img class="" src={{posts.file.url}} style="width: 112px; height:112px">
+                </a>
+                {% endif %}
+                </div>
+
+            {% endfor %}
+            </div>
+            {% else %}
+
+            <h2><b>{{user.username}} you haven't created any Post Yet!!!</b></h2>
+            {% endif %}
+        </div>
+       </div>
+
+       {% endfor%}
+
+
+
+
     </div>
-    {% endfor%}
-</div>
+
 
 
 {% endblock %}

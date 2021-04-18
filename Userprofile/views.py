@@ -86,7 +86,12 @@ def about_kampus(request):
         'services': services,
         'office': office,
     }
-    return render(request, 'about_kampus.html ', context)
+    return render(request, 'about_kampus.html', context)
+
+
+def kampus_app(request):
+
+    return render(request, 'kampus_apps.html')
 
 
 @login_required
@@ -199,7 +204,7 @@ def edit_profile(request):
 @login_required
 def view_user_profile(request, pk):
     user_p = UserProfile.objects.all().filter(user=pk)
-    posts = Post.objects.all().filter(user=pk)
+    posts = Post.objects.all().filter(user=pk).order_by('-timestamp')
 
     return render(request, 'view_user_profile.html', {'user_p': user_p,
                                                       'posts': posts,

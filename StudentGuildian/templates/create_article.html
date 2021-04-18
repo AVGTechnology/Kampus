@@ -1,4 +1,4 @@
-{% extends "basefrom.html" %}
+{% extends "base_article.html" %}
 {% block content %}
 {% load static %}
 
@@ -11,9 +11,8 @@
     {% csrf_token %}
     {{ form.as_p }}
         <br>
-    <button type="submit" class="btn-floating btn-large #ba68c8 purple lighten-2 pulse right" onclick="myFunction()">
-        <i class="material-icons right" style="font-size: 30px;">
-      check</i></button>
+    <button type="submit" class="btn btn-large #ba68c8 purple lighten-2  right" onclick="myFunction()">
+        Summit</button>
   </form>
                <br>
         {% if messages %}
