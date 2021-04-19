@@ -91,7 +91,7 @@ def about_kampus(request):
 
 def kampus_app(request):
 
-    return render(request, 'kampus_apps.html')
+    return render(request, 'Kampus_apps.html')
 
 
 @login_required

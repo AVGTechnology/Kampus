@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="content" style="background-color: #ffffff;">
+<br>
+    <h4 style="color: #2e0018;" ><b>Kampus Apps</b></h4>
+ <br>
+<div class="row">
+
+<div class="col">
+            <a href="{% url 'index' %}">
+            <div class="#ffffff white " style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  margin-left: 30px;
+                  padding: 10px;
+                  width: 130px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #5c004e;
+                  background-color: #5c004e;">
+                <div class="center">
+                    <br>
+                    <img alt="..." class=" center rounded-circle"
+                         height="50dp" src="{% static 'images/logo.png' %}" width="50dp">
+                    <font color="black" style="font-size: 20px;">Kampus</font>
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+    <div class="col">
+            <a href="{% url 'donewithit' %}">
+            <div class="#ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  margin-left: 20px;
+                  padding: 10px;
+                  width: 130px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #e81725;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <br>
+                    <img alt="..." class=" center rounded-circle"
+                         height="50dp" src="{% static 'images/donewithit.png' %}" width="50dp">
+                    <font color="black" style="font-size: 20px;">DoneWithIt</font>
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+<div class="col">
+            <a href="{% url 'articles' %}">
+            <div class="#ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  margin-left: 30px;
+                  margin-top: 40px;
+                  padding: 10px;
+                  width: 130px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #8a031e;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <br>
+                    <img alt="..." class=" center rounded-circle"
+                         height="50dp" src="{% static 'images/garud.png' %}" width="50dp">
+                    <font color="black" style="font-size: 20px;">Guardian</font>
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+<div class="col">
+            <a href="{% url 'about_kampus' %}">
+            <div class="#ffffff white" style="  text-align: left;
+                  border-radius: 20px 20px 10px 10px;
+                  bottom: 0;
+                  margin-left: 30px;
+                  margin-top: 40px;
+                  padding: 10px;
+                  width: 130px;
+                  height: 150px;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                  border-bottom: 10px solid #5c004e;
+                  background-color: #f2f0f0;">
+                <div class="center">
+                    <br>
+                    <img alt="..." class=" center rounded-circle"
+                         height="50dp" src="{% static 'images/kampus2.png' %}" width="50dp"><br>
+                    <font color="black" style="font-size: 20px;">About</font>
+                </div>
+            </div>
+            </a>
+        </div>
+
+</div>
+</div>
+
+{% endblock content %}

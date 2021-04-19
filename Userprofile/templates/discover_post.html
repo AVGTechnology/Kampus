@@ -4,190 +4,73 @@
 
 <div class="content" style="background-color: #fffffff;">
     <br>
-<div class="container">
-<div align="center">
-    <a href="{% url 'discover_account' %}"> <font class="chip waves-effect waves-light">Discover Accounts</font></a>
-    <a href="{% url 'discover_post' %}"> <font class="chip #ce93d8 purple lighten-3 waves-effect waves-light">Discover Posts</font></a>
-</div><br>
- <div class="#e8f5e9 green lighten-5" style="
+    <div class="container">
+        <div align="center">
+            <a href="{% url 'discover_account' %}"> <font class="chip waves-effect waves-light">Discover Accounts</font></a>
+            <a href="{% url 'discover_post' %}"> <font class="chip #ce93d8 purple lighten-3 waves-effect waves-light">Discover
+                Posts</font></a>
+        </div>
+        <br>
+        <div class="#e8f5e9 green lighten-5" style="
                           text-align: center;
                            width: 100%;
                            border-radius: 25px;
                            ">
 
-        <div class="container">
-            <form action="{% url  'search_discover_post' %}" method="GET">
-                {% csrf_token %}
-                <div class="row valign-wrapper space">
-                    <input class="form-control me-2" type="search" placeholder="search for Post or username" name="post"
-                           value="{{ acct }}"
-                           aria-label="Search" id="post">
-                    <br>
-                   <!-- <i class="material-icons right"
-                       style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
-                    <br>
-                    <div>
-                        <button type="submit" class="N/A transparent" style="border: 0px;">
-                            <i class="material-icons" style="font-size: 25px;">search</i>
-                        </button>
+            <div class="container">
+                <form action="{% url  'search_discover_post' %}" method="GET">
+                    {% csrf_token %}
+                    <div class="row valign-wrapper space">
+                        <input class="form-control me-2" type="search" placeholder="search for Post or username"
+                               name="post"
+                               value="{{ acct }}"
+                               aria-label="Search" id="post">
+                        <br>
+                        <!-- <i class="material-icons right"
+                            style="font-size: 30px; padding:10px; color:#3b010f;">photo_library</i>-->
+                        <br>
+                        <div>
+                            <button type="submit" class="N/A transparent" style="border: 0px;">
+                                <i class="material-icons" style="font-size: 25px;">search</i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
+            </div>
         </div>
+
     </div>
 
-</div>
 
-
-{% if posts %}
-    {% for posts in posts %}
-     {% if posts.like.count >= trending.likes %}
-    <div style="background-color: #ffffff;">
-        <br>
-        <div class="row valign-wrapper space">
-            <div class="col s15">
-                <a href="{% url 'view_user_profile' posts.user.pk %}">
-                <img src={{posts.user.owner.image.url}}
-                     width="50px" height="50px"
-                     alt="" class="circle">
-                </a>
-            </div>
-            <div class="col s16">
-                <b>{{ posts.user}}</b>
-                <p><font color="#9e9e9e">{{ posts.user.owner.profession}}</font></p>
-            </div>
-        </div>
-
-        <div class="space">
-            <div class="">
-            <b>{{ posts.caption}}</b>
-            </div>
+    {% if posts %}
+    <div class="row">
+        {% for posts in posts %}
+        {% if posts.like.count >= trending.likes %}
+        <div class="col">
             {% if posts.file.url|slice:"-4:" == ".mp4" %}
-                   <video class="responsive-video" controls="controls" poster="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg">
-
-                        <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
-
-                    </video>
+            <a href="{% url 'comment_view' posts.pk %}">
+                <i class="material-icons left"
+                   style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute; ">play_circle_outline</i>
+                <img class="" src="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg"
+                     style="width: 112px; height:112px">
+            </a>
             {% else %}
-            <img class="responsive-img" src={{posts.file.url}} style="max-width: 100%;">
+            <a href="{% url 'comment_view' posts.pk %}">
+                <i class="material-icons left"
+                   style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute;">photo</i>
+                <img class="" src={{posts.file.url}} style="width: 112px; height:112px">
+            </a>
             {% endif %}
         </div>
-          <br>
-                <div class="row valign-wrapper">
-                    <div class="col s15">
 
-                        {% if user in posts.like.all%}
 
-                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px;  color: red;">favorite</i>
-
-                        {% else %}
-
-                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
-
-                        {% endif %}
-
-        <script>
-        function myFunction(posts_pk) {
-       console.log(posts_pk);
-       $.ajax({type: "GET",
-        url: "{% url 'like' %}",
-        data: {
-            "pk": posts_pk
-        },
-        dataType: "json",
-        success: function (data) {
-            // any process in data
-            console.log(data);
-            if (data.liked) {
-            console.log("likeeeeeeeeeeee");
-            M.toast({html: 'post liked !'})
-                //$('#product-'+product).fadeOut;
-            var el_like = document.getElementById(posts_pk)
-            el_like.style.color = "red";
-            }
-           if (data.unliked) {
-              console.log("unlikeeeeeeeeeeee");
-              M.toast({html: 'post unliked !'})
-              var el_like = document.getElementById(posts_pk)
-              el_like.style.color = "#292929";
-
-            }
-
-        },
-        failure: function () {
-            console.log("failure");
-        }
- });
- }
- </script>
-</div>
-
-            <div class="col s15">
-                <a href="{% url 'comment_view' posts.pk %}">
-               <i class="material-icons" style="font-size: 30px;  text-decoration: none; color: #292929" >comment</i>
-                </a>
-            </div>
-
-             <div class="col s15">
-               <a href="{% url 'chat_page' posts.user.pk %}">
-               <i class="material-icons" style="font-size: 30px; text-decoration: none; color: #292929" >send</i>
-               </a>
-            </div>
-
-                    <div class="col s1">
-                        <a href="{{posts.file.url}}" class="pull-right" download>
-                            <i class="material-icons right"
-                               style="font-size: 30px; text-decoration: none; color: #292929">file_download</i>
-                        </a>
-                    </div>
-
-        </div>
-
-         <div class="row valign-wrapper">
-            <div class="col s15">
-                <a href="{% url 'likes' posts.pk %}">
-                <b style="color: black;">{{posts.like.count}} likes</b>
-                </a>
-            </div>
-
-            <div class="col s15">
-                <a href="{% url 'comment_view' posts.pk %}">
-                <p> <font color="gray">View comments</font></p>
-                </a>
-            </div>
-         </div>
-       <!-- <div class="container">
-           comments....
-        </div>-->
-
-        <div class="row valign-wrapper">
-             <div class="col s15">
-                 <img src={{profile.image.url}}
-                     width="30px" height="30px"
-                     alt="" class="circle">
-            </div>
-
-            <div class="col s15 chip">
-                <p> <font color="gray">Add a comment...</font></p>
-            </div><br>
-            <div class="col s4">
-               <p class="right"> <font color="gray">{{posts.timestamp|date:"D d M Y" }}</font></p>
-            </div>
-         </div>
-
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <h2><b>No Posts has been created Yet!!</b></h2>
     </div>
     {% endif %}
-    {% endfor %}
-    {% else %}
-    <h2><b>No Posts has been created Yet!!</b></h2>
-    {% endif %}
-
-
-
-
 
 </div>
 
