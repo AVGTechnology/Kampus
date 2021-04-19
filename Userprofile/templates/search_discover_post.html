@@ -27,7 +27,11 @@
 
         <div class="space">
             <div class="">
-            <b>{{ posts.caption}}</b>
+             <b>
+                 {% if posts.caption %}
+                   {{ posts.caption}}
+                 {% endif %}
+                </b>
             </div>
             {% if posts.file.url|slice:"-4:" == ".mp4" %}
                    <video class="responsive-video" controls="controls" poster="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg">

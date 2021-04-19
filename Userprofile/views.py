@@ -277,7 +277,7 @@ def search_discover_post(request):
     query = request.GET.get('post')
     if query is not None:
         lookups = Q(user__username__iexact=query) | Q(caption__icontains=query)
-        posts = Post.objects.filter(lookups).distinct()
+        posts = Post.objects.filter(lookups).order_by('-timestamp').distinct()
 
         context = {
             'posts': posts,
