@@ -47,6 +47,7 @@
         {% if items %}
         <div class="row infinite-container">
         {% for items in items %}
+         {% if items.sold == False %}
         <div class="col-md-6 infinite-item">
         <div class="card" style="border-radius: 20px 20px">
 
@@ -95,19 +96,19 @@
                 <a href="">
                     {% if items.negotiable == True %}
                     <font style="color:white;"
-                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                                  class="chip  #00c853 green accent-4 white  waves-light">
                     Negotiable
                     </font>
                     {% else %}
                     <font style="color:white;"
-                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                                  class="chip  #b71c1c red darken-4 white  waves-light">
                     Not Negotiable
                     </font>
                     {% endif %}
                 </a>
 
                 <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white;"
-                                  class="chip  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                                  class="chip  #f4511e deep-orange darken-1 white  waves-light">
                     Contact
                 </font></a>
                  <br>
@@ -137,25 +138,25 @@
                 <br>
                 {% if items.sold == True %}
                    <font style="color:white;"
-                                  class="chip  #b71c1c red darken-4 white waves-effect waves-light">
+                                  class="chip  #b71c1c red darken-4 white  waves-light">
                     Sold
                     </font>
                 {% else %}
                    <font style="color:white;"
-                                  class="chip  #00c853 green accent-4 white waves-effect waves-light">
+                                  class="chip  #00c853 green accent-4 white  waves-light">
                     Available
                     </font>
                 {% endif %}
                 <br>
                 <h5> Contact </h5>
                  <a href="{% url 'chat_page' items.user.pk %}"> <font style="color:white; font-size:20px;"
-                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white waves-effect waves-light">
+                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white  waves-light">
                  <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">message</i>
                   Chat
                 </font></a>
 
              <a href="tel:{{ items.user.owner.phone }}" target="_blank"> <font style="color:white; font-size:20px;"
-                  class="chip valign  #004d40 teal darken-4 white waves-effect waves-light">
+                  class="chip valign  #004d40 teal darken-4 white waves-light">
                   <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">call</i>
                     Call
                 </font></a>
@@ -165,6 +166,7 @@
             </div>
         </div>
         </div>
+            {% endif %}
         {% endfor %}
         </div>
         {% else %}

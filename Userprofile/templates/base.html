@@ -31,8 +31,9 @@
       <a href="#!" class="left" style= "margin-left: 10px; font-size: 25px;">Kampus</a>
       <ul class="right ">
         <li><a href="{% url 'discover_post' %}"><i class="material-icons">search</i></a></li>
+        <!--<li><a href="{% url 'full_screen' %}"><i class="material-icons">view_carousel</i></a></li>-->
         <li><a href="{% url 'index' %}"><i class="material-icons">refresh</i></a></li>
-        <li><a href="{% url 'kampus_app' %}"><i class="material-icons">more_vert</i></a></li>
+        <li><a href="{% url 'kampus_app' %}"><i class="material-icons">view_module</i></a></li>
       </ul>
     </div>
   </nav>
@@ -54,7 +55,7 @@
   <a class="btn-floating btn-large " style="background-color: #8a031e;">
     <i class="large material-icons" style="font-size:30px;">menu</i>
   </a>
-  <ul>
+  <ul >
     <li><a href="{% url 'index' %}" class="btn-floating red"><i class="material-icons">home</i></a></li>
     <li><a href="{% url 'received_list' %}" class="btn-floating red"><i class="material-icons">chat</i></a></li>
     <li><a href="{% url 'post' %}" class="btn-floating btn-large "><i class="center material-icons" style="font-size:35px; background-color: #8a031e;">add_circle_outline</i></a></li>

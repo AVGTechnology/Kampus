@@ -201,7 +201,7 @@ def edit_profile(request):
     return render(request, 'edit_profile.html', {'user_p': user_p})
 
 
-@login_required
+
 def view_user_profile(request, pk):
     user_p = UserProfile.objects.all().filter(user=pk)
     posts = Post.objects.all().filter(user=pk).order_by('-timestamp')

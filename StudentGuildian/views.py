@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -42,6 +43,7 @@ def articles_author(request, pk):
     return render(request, 'articles_author.html', context)
 
 
+@login_required
 def create_article(request):
     form = ArticleForm(request.POST, request.FILES,)
     form.instance.user = request.user
@@ -56,6 +58,7 @@ def create_article(request):
     return render(request, 'create_article.html', {"form": form, })
 
 
+@login_required
 def add_article(request):
     body = request.POST.get('body')
     title = request.POST.get('title')
@@ -84,6 +87,7 @@ def search_article(request):
         return render(request, 'search_article.html', context)
 
 
+@login_required
 def delete_article(request, pk):
     get_object_or_404(Article, pk=pk).delete()
     return redirect('articles')

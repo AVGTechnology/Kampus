@@ -130,7 +130,85 @@
 
 {% endfor%}
 
-
+<p style="color:blue; display:none;" id="msg"></p>
+<p style="color:blue; display:none;" id="token"></p>
+<p style="color:green; display:none;" id="notis"></p>
+<p style="color:red; display:none;" id="err"></p>
 
 
 {% endblock %}
+
+{% block javascript %}
+
+<script>
+        MsgElem = document.getElementById("msg");
+        TokenElem = document.getElementById("token");
+        NotisElem = document.getElementById("notis");
+        ErrElem = document.getElementById("err");
+
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+
+var firebaseConfig = {
+    apiKey: "AIzaSyBXBYaToCdIQOkVHPuBzO2VWimr-jh2yrg",
+    authDomain: "kampus-52a9f.firebaseapp.com",
+    projectId: "kampus-52a9f",
+    storageBucket: "kampus-52a9f.appspot.com",
+    messagingSenderId: "576665983294",
+    appId: "1:576665983294:web:25c4323279412c349af46f",
+    measurementId: "G-5X0VH0R9GV"
+  };
+     firebase.initializeApp(firebaseConfig);
+     firebase.analytics();
+
+        const messaging = firebase.messaging();
+
+        // Receive messages
+     // messaging.onMessage((payload) => {
+     // console.log('Message received. ', payload);
+      // ...
+    // });
+
+
+      messaging.usePublicVapidKey('BA515hrbYgT-oqfRhCon0CJIyjzU_ivliKX6Q9G93dhIGVXZfK9KkI2pT-lvmd-ZFmGTKv_2UkuoDlM-ZFlk0vk');
+        messaging
+            .requestPermission()
+            .then(function () {
+                MsgElem.innerHTML = "Notification permission granted."
+                console.log("Notification permission granted.");
+                // get the token in the form of promise
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                TokenElem.innerHTML = 'token is : ' + token
+                console.log('token is :' + token);
+                console.log('Sending token to server...');
+                // TODO(developer): Send the current token to your server.
+        $.ajax({
+        type: "GET",
+        url: '{% url 'fcm_token' %}',
+        data: {
+            "token": token,
+        },
+        dataType: "json",
+        success: function (token) {
+            // any process in data
+            console.log('successfull')
+        },
+        failure: function () {
+            console.log("failure");
+        }
+    });
+
+        })
+            .catch(function (err) {
+                ErrElem.innerHTML =  ErrElem.innerHTML + "; " + err
+                console.log("Unable to get permission to notify.", err);
+            });
+
+
+
+</script>
+{% endblock javascript %}
+
+

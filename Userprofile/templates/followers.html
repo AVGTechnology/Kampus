@@ -5,7 +5,11 @@
 
 <div class="content" style="background-color: #fffffff;">
     <br>
+    {% if user == follower.user %}
+     <h5>followed by this accounts</h5>
+    {% else %}
     <h5>{{follower.user}} followers</h5>
+    {% endif %}
 
 <ul class="collection">
 

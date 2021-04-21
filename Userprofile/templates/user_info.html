@@ -5,9 +5,10 @@
 <div class="content" style="background-color: #ffffff;">
 
       <ul class="collection">
-      <li class="collection-item"><a href="{% url 'logout' %}">Logout Account</a></li>
+      <li class="collection-item"><a href="https://api.whatsapp.com/send?text=Please follow me on Kampus:https://kampus-jfmgg.ondigitalocean.app{% url 'view_user_profile' user.pk %}" data-action="share/whatsapp/share">Share account link</a></li>
       <li class="collection-item"><a href="{% url 'feedback' %}" style="color:black;">Send Feedback to Kampus</a></li>
       <li class="collection-item"><a href="{% url 'about_kampus' %}" style="color:black;">About Kampus </a></li>
+      <li class="collection-item"><a href="{% url 'logout' %}">Logout Account</a></li>
     </ul>
 
 </div>

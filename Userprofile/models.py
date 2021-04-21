@@ -5,8 +5,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 # Create your models here.
+from django.urls import reverse
 
 
 class UserProfile(models.Model):
@@ -25,6 +25,8 @@ class UserProfile(models.Model):
     join = models.DateTimeField(auto_now_add=True, editable=False)
     follower = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="mfollowed", blank=True)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="mfollowing", blank=True)
+
+    # slug = models.SlugField(null=True, unique=True, max_length=255,)  # new
 
     def __str__(self):
         return f'{self.user} Profile '

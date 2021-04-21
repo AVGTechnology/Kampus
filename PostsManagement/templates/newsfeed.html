@@ -21,19 +21,25 @@
                         <b>{{ posts.user}}</b>
                         <p><font color="#9e9e9e">{{ posts.user.owner.profession}}</font></p>
                     </div>
+                    <div class="col s1">
+                        <a href="{% url 'comment_view' posts.pk %}">
+                            <i class="right material-icons modal-trigger"
+                               style="font-size:30px; color:black;">more_vert</i>
+                        </a>
+                    </div>
                 </div>
-
                 <div class="space">
                     <div class="">
                         <b>
-                           {% if posts.caption %}
+                            {% if posts.caption %}
                             {{ posts.caption}}
-                           {% endif %}
+                            {% endif %}
 
                         </b>
                     </div>
                     {% if posts.file.url|slice:"-4:" == ".mp4" %}
-                   <video class="responsive-video" controls="controls" poster="media/media/Post_thumbnail/{{posts.pk}}.jpg">
+                    <video class="responsive-video" controls="controls"
+                           poster="media/media/Post_thumbnail/{{posts.pk}}.jpg">
 
                         <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
 
@@ -49,17 +55,17 @@
 
                         {% if user in posts.like.all%}
 
-                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px;  color: red;">favorite</i>
+                        <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                           style="font-size: 30px;  color: red;">favorite</i>
 
                         {% else %}
 
-                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+                        <i id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                           style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
 
                         {% endif %}
 
-        <script>
+                        <script>
         function myFunction(posts_pk) {
        console.log(posts_pk);
        $.ajax({type: "GET",
@@ -92,8 +98,9 @@
         }
  });
  }
- </script>
-</div>
+
+                        </script>
+                    </div>
 
                     <div class="col s15">
                         <a href="{% url 'comment_view' posts.pk %}">
@@ -200,6 +207,7 @@
 
     });
 
+
 </script>
 
 <p style="color:blue; display:none;" id="msg"></p>
@@ -279,6 +287,7 @@ var firebaseConfig = {
                 ErrElem.innerHTML =  ErrElem.innerHTML + "; " + err
                 console.log("Unable to get permission to notify.", err);
             });
+
 
 
 

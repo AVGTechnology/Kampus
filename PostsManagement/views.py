@@ -32,6 +32,15 @@ class NewsFeed(ListView):
     ordering = ['-timestamp']
 
 
+class FullScreen(ListView):
+    model = Post
+    paginate_by = 1
+    context_object_name = 'posts'
+    template_name = 'fullscreen_view.html'
+    ordering = ['-timestamp']
+
+
+
 @login_required
 def post(request):
     user_p = UserProfile.objects.get(user=request.user)
@@ -98,21 +107,14 @@ def likes(request, pk):
     return render(request, 'likes.html', context)
 
 
-@login_required
-def news_feed(request):
-    posts = Post.objects.all().order_by('-timestamp')
-    profile = UserProfile.objects.get(user=request.user)
-    # postuser = posts, 'user'
-    up = UserProfile.objects.all()
-    comments = Comment.objects.all()[:2]
+def full_screen(request):
+    posts = Post.objects.all().order_by('-timestamp')[:1]
     context = {
-        'up': up,
+
         'posts': posts,
-        'profile': profile,
-        'comments': comments,
 
     }
-    return render(request, 'newsfeed.html', context)
+    return render(request, 'fullscreen_view.html', context)
 
 
 @csrf_exempt
@@ -172,7 +174,7 @@ def comment(request, pk):
     return redirect('comment_view', pk)
 
 
-@login_required
+
 def comment_view(request, pk):
     posts = Post.objects.get(pk=pk)
     comments = Comment.objects.all().filter(post=posts).order_by('-timestamp')

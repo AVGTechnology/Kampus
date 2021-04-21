@@ -3,12 +3,13 @@ from django.urls import path, include
 from django.contrib.auth import login
 from django.conf import settings
 from django.conf.urls.static import static
-from PostsManagement.views import NewsFeed
+from PostsManagement.views import NewsFeed, FullScreen
 
 urlpatterns = [
 
     #path("", views.news_feed, name='index'),
     path('', NewsFeed.as_view(),  name="index"),
+    path('full_screen/view', views.full_screen, name="full_screen"),
     path('post/', views.post, name='post'),
     path('like/', views.like, name='like'),
     path('comment/count/', views.comment_count, name='comment_count'),
