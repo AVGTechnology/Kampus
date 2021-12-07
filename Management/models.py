@@ -22,3 +22,13 @@ class AboutExcutives(models.Model):
 
     def __str__(self):
         return f'About {self.office}'
+
+
+class LikePaymentUnit(models.Model):
+    # likeId is a constant to idetify the specific unit
+    likeId = models.IntegerField(default=1)
+    unit = models.IntegerField(default=1)
+    payment_threshold = models.BigIntegerField(default=1000)
+
+    def __str__(self):
+        return f'LikePaymentUnit: {self.unit}'

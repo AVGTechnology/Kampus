@@ -52,7 +52,7 @@
                 <br>
                 <div class="row valign-wrapper">
                     <div class="col s15">
-
+                     {% if user.is_authenticated %}
                         {% if user in posts.like.all%}
 
                         <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
@@ -64,6 +64,10 @@
                            style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
 
                         {% endif %}
+                     {% else %}
+                        <i id="login" class="material-icons" onclick="M.toast({html: 'please login'})"
+                           style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+                     {% endif %}
 
                         <script>
         function myFunction(posts_pk) {
@@ -179,9 +183,9 @@
     {% if page_obj.has_next %}
     <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
     {% endif %}
-    <div class="d-flex justify-content-center" style="display:none;">
+    <div class="d-flex justify-content-center" style="display:block;">
         <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+
         </div>
     </div>
 

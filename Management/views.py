@@ -31,11 +31,11 @@ def dashboard(request):
         .order_by('-timestamp')
     new_items = Product.objects.all().filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
-    rpay = RequestPayment.objects.all().filter(pending=True)
-    fpay = RequestPayment.objects.all().filter(failed=True)
-    ppay = RequestPayment.objects.all().filter(paid=True)
+    rpay = RequestPayment.objects.filter(pending=True)
+    fpay = RequestPayment.objects.filter(failed=True)
+    ppay = RequestPayment.objects.filter(paid=True)
 
-    feedback = Feedback.objects.all().filter(timestamp__gte=datetime.date.today()) \
+    feedback = Feedback.objects.filter(timestamp__gte=datetime.date.today()) \
         .order_by('-timestamp')
     context = {
         'articles': articles,

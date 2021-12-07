@@ -1,26 +1,22 @@
-{% extends "baseform.html" %}
+{% extends "base.html" %}
 {% block content %}
 {% load static %}
 
-<div class="content" style="background-color: #ffffff;">
-    <div class="container">
-        <br>
+<div class="container">
+      <br>
         <div align="center "><img alt="..." class=""
                                   height="70dp" src="{% static 'images/kampuslogo2.png' %}" width="70dp"></a></div>
 
-        <h4><font color="black">Whats happening... on Kampus!</font></h4> <br>
-        <form method="post" enctype='multipart/form-data' style="font-size: 20px;">
+        <h4><font color="black">Whats happening... on Kampus!</font></h4>
+        <form method="post" enctype='multipart/form-data'>
             {% csrf_token %}
             {{ form.as_p }}
-            <br>
-            <button type="submit" class="btn-floating btn-large cyan  right" id = 'btn1' style="display:block;" onclick="myFunction()">
-                <i class="material-icons right" style="font-size: 30px;">check</i></button>
+        <input type="submit" value="Upload" class="btn btn-primary" id = 'btn1' style="display:block;" onclick="myFunction()">
 
-            <a  class="btn-floating btn-large cyan pulse right" id = 'btn2' style="display:none;">
+                <a  class="btn-floating btn-large cyan pulse right" id = 'btn2' style="display:none;">
                 <i class="material-icons right" style="font-size: 30px;">check</i></a>
-
-        </form>
-        <br>
+    </form>
+ <br>
         {% if messages %}
         {% for message in messages %}
         {% if 'success' in message.tags %}
@@ -81,4 +77,8 @@ function myFunction() {
     </div>
 
 </div>
-{%endblock%}
+
+
+
+{% endblock content %}
+

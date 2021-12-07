@@ -40,7 +40,6 @@ class FullScreen(ListView):
     ordering = ['-timestamp']
 
 
-
 @login_required
 def post(request):
     user_p = UserProfile.objects.get(user=request.user)
@@ -59,9 +58,10 @@ def post(request):
                             icon='static/images/logo.png',
                             data={"Details": "Details"})
         return redirect('preview', n_post.pk)
+
     else:
         form = PostForm(user=request.user)
-        messages.info(request, 'Creating Post please wait...')
+        messages.info(request, 'Creating Post please wait...Uploading Video file take long time!')
 
     return render(request, 'add_post.html', {"form": form, })
 
@@ -123,7 +123,7 @@ def like(request):
     pk = request.GET.get('pk', None)
     liked_post = get_object_or_404(Post, pk=pk)
     user = request.user
-    print(pk)
+    # print(pk)
     if user in liked_post.like.all():
         liked_post.like.remove(user)
         unliked = 'unliked'
@@ -172,7 +172,6 @@ def comment(request, pk):
         form.save()
 
     return redirect('comment_view', pk)
-
 
 
 def comment_view(request, pk):

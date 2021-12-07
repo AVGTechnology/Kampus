@@ -37,7 +37,7 @@
                 </div>
 
                 <div>
-                    You get ₦1 for every like
+                    You get ₦{{like_unit}} for every like
                 </div>
 
             </div>
@@ -75,7 +75,7 @@
            {% endif %}
             {% endfor %}
 
-            {% if wallet >= 1000 %}
+            {% if wallet >= pay_threshold  %}
             {% if payment %}
 
              <a href="{% url 'requestpay' %}">
@@ -155,7 +155,7 @@
                   padding: 10px;
                   background-color: #f2f0f0;">
                 <div class="center">
-                    <font color="black" style="font-size: 20px;"> Wallet balance must be ₦1000 or above to
+                    <font color="black" style="font-size: 20px;"> Wallet balance must be ₦{{ pay_threshold }} or above to
                         withdraw </font>
                 </div>
             </div>

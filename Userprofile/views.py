@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, Count, Aggregate
 from django.views.decorators.csrf import csrf_exempt
 
-from Management.models import AboutApp, AboutExcutives
+from Management.models import AboutApp, AboutExcutives, LikePaymentUnit
 from PostsManagement.models import Post
 from .forms import *
 from .models import *
@@ -90,7 +90,6 @@ def about_kampus(request):
 
 
 def kampus_app(request):
-
     return render(request, 'Kampus_apps.html')
 
 
@@ -114,15 +113,21 @@ def profile_image_view(request, pk):
                                                       })
 
 
+unit = LikePaymentUnit.unit
+
+
 @login_required
 def user_earning(request):
+    likepayunit = LikePaymentUnit.objects.get(likeId=1)
+    like_unit = likepayunit.unit
+    pay_threshold = likepayunit.payment_threshold
     user = request.user
     user_p = UserProfile.objects.all().filter(user=user)
     posts = Post.objects.all().filter(user=user)
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
     payment = PaymentDetail.objects.get(user=user)
     p = payment.paid
-    w = total_like * 1
+    w = total_like * like_unit
     rw = w - p
     wallet = rw
     requestpay = RequestPayment.objects.all().filter(user=user)
@@ -132,19 +137,23 @@ def user_earning(request):
                                                  'total_like': total_like,
                                                  'wallet': wallet,
                                                  'payment': payment,
+                                                 'pay_threshold': pay_threshold,
+                                                 'like_unit': like_unit,
                                                  'requestpay': requestpay,
                                                  })
 
 
 def requestpay(request):
     wallet = 0
+    likepayunit = LikePaymentUnit.objects.get(likeId=1)
+    like_unit = likepayunit.unit
     user = request.user
     posts = Post.objects.all().filter(user=request.user)
     total_like = posts.aggregate(total_like=Count('like'))['total_like']
     payment = PaymentDetail.objects.all().filter(user=user)
     for pay in payment:
         paid = pay.paid
-        w = total_like * 1
+        w = total_like * like_unit
         rw = w - paid
         wallet = rw
     request = RequestPayment.objects.all().filter(user=request.user)
@@ -199,7 +208,6 @@ def edit_profile(request):
     user = request.user
     user_p = UserProfile.objects.all().filter(user=user)
     return render(request, 'edit_profile.html', {'user_p': user_p})
-
 
 
 def view_user_profile(request, pk):

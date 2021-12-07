@@ -54,17 +54,22 @@
                        <div class="row valign-wrapper">
                     <div class="col s15">
 
+                              {% if user.is_authenticated %}
                         {% if user in posts.like.all%}
 
-                            <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px;  color: red;">favorite</i>
+                        <i id="unlike{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                           style="font-size: 30px;  color: red;">favorite</i>
 
                         {% else %}
 
-                            <i  id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
-                               style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+                        <i id="{{posts.pk}}" class="material-icons" onclick="myFunction({{posts.pk}});"
+                           style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
 
                         {% endif %}
+                     {% else %}
+                        <i id="login" class="material-icons" onclick="M.toast({html: 'please login'})"
+                           style="font-size: 30px; text-decoration: none; color: #292929">favorite</i>
+                     {% endif %}
 
         <script>
         function myFunction(posts_pk) {
