@@ -61,7 +61,7 @@ def post(request):
 
     else:
         form = PostForm(user=request.user)
-        messages.info(request, 'Creating Post please wait...Uploading Video file take long time!')
+        messages.info(request, 'Creating Post, Uploading Video file take long time! please wait...')
 
     return render(request, 'add_post.html', {"form": form, })
 
