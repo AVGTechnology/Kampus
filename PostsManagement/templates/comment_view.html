@@ -183,12 +183,13 @@
  <!-- Modal Structure -->
   <div id="modal{{ posts.pk}}" class="modal bottom-sheet">
     <div class="modal-content">
-        <a href="https://api.whatsapp.com/send?text=Go check out this post on Kampus:https://kampus-jfmgg.ondigitalocean.app{% url 'comment_view' posts.pk %}" data-action="share/whatsapp/share">
+        <a href="https://api.whatsapp.com/send?text=Go check out this post on Kampus:https://kampusng.com{% url 'comment_view' posts.pk %}" data-action="share/whatsapp/share">
         <div class="row valign-wrapper">
 
       <i class="material-icons">share</i><b>Share to....</b><br>
-        </div>
 
+        </div>
+        </a>
        {% if user == posts.user %}
         <a href="{% url 'delete_post' posts.pk %}">
         <div class="row valign-wrapper">
