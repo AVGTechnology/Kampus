@@ -53,7 +53,7 @@ def user_login(request):
             fcm.type = 'web'
             fcm.user = user.pk
             fcm.save()
-            #print(token)
+          #  print(token)
     return render(request, 'registration/login.html ')
 
 
@@ -66,18 +66,6 @@ def create_profile(request):
         payment = PaymentDetail()
         payment.user = user
         payment.save()
-        devices = FCMDevice.objects.filter(user=user.pk).exists()
-        if devices:
-            ufm = FCMDevice.objects.filter(user=user.pk)
-            ufm.registration_id = ''
-            ufm.save()
-        else:
-            fcm = FCMDevice()
-            fcm.name = user
-            fcm.registration_id = ''
-            fcm.type = 'web'
-            fcm.user = user.pk
-            fcm.save()
         return redirect('user_profile')
     else:
         form = UserProfileForm(user=request.user)
