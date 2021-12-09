@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin-database-coded/', admin.site.urls),
     path("", include("Userprofile.urls")),
     path("", include("PostsManagement.urls")),
     path("", include("Messages.urls")),
