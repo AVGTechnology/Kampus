@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Messages',
     'DoneWithIt',
     'sslserver',
+    'cdn',
 
     # default apps
     'django.contrib.admin',
