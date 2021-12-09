@@ -30,15 +30,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'{self.user} Profile '
 
-    def save(self, *arg, **kwargs):
-        super().save(*arg, **kwargs)
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
-
 
 class Relationship(models.Model):
     follower = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="following", on_delete=models.CASCADE)
