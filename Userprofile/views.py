@@ -30,6 +30,18 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            devices = FCMDevice.objects.filter(user=user.pk).exists()
+            if devices:
+                ufm = FCMDevice.objects.filter(user=user.pk)
+                ufm.registration_id = ''
+                ufm.save()
+            else:
+                fcm = FCMDevice()
+                fcm.name = user
+                fcm.registration_id = ''
+                fcm.type = 'web'
+                fcm.user = user.pk
+                fcm.save()
             return redirect('create_profile')
     else:
         form = SignUpForm()
@@ -40,7 +52,7 @@ def user_login(request):
     user = request.user
     if request.is_ajax():
         token = request.POST.get('token')
-        print(token)
+       # print(token)
         devices = FCMDevice.objects.filter(user=user.pk).exists()
         if devices:
             ufm = FCMDevice.objects.filter(user=user.pk)
@@ -53,7 +65,7 @@ def user_login(request):
             fcm.type = 'web'
             fcm.user = user.pk
             fcm.save()
-            print(token)
+            #print(token)
     return render(request, 'registration/login.html ')
 
 
