@@ -236,11 +236,11 @@ def discover_account(request):
     user_p = UserProfile.objects.get(user=request.user)
     prof = user_p.profession
     plookups = Q(profession__icontains=prof)
-    prof = UserProfile.objects.filter(plookups).distinct().exclude(user=request.user).exclude(is_staff=True)
+    prof = UserProfile.objects.filter(plookups, is_staff=False).distinct().exclude(user=request.user)
 
     depts = user_p.dept
     dlookups = Q(profession__icontains=depts)
-    depts = UserProfile.objects.filter(dlookups).distinct().exclude(user=request.user).exclude(is_staff=True)
+    depts = UserProfile.objects.filter(dlookups, is_staff=False).distinct().exclude(user=request.user)
 
     trending = Trending.objects.get(Trend_number=1)
 
