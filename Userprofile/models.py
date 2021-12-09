@@ -12,8 +12,7 @@ from django.urls import reverse
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, related_name='owner', on_delete=models.CASCADE)
-    image = models.ImageField(verbose_name='Profile Image', default='media/profile.jpg',
-                              upload_to='media/profile_image',
+    image = models.ImageField(verbose_name='Profile Image', upload_to='media/profile_image',
                               null=True, blank=True)
     profession = models.CharField(max_length=100, verbose_name='profession or skill', null=True, blank=True)
     full_name = models.CharField(max_length=100, verbose_name="Full Name", default='full name', null=False, blank=False)
