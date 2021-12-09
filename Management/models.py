@@ -27,7 +27,7 @@ class AboutExcutives(models.Model):
 class LikePaymentUnit(models.Model):
     # likeId is a constant to idetify the specific unit
     likeId = models.IntegerField(default=1)
-    unit = models.FloatField(default=0.5)
+    unit = models.FloatField(default=1)
     payment_threshold = models.BigIntegerField(default=1000)
 
     def __str__(self):
