@@ -37,13 +37,16 @@
     <br>
     <div align="center">
          <a href="{% url 'fcm_token' %}">
-    <input type="submit" value="login"  class="btn #4a148c purple darken-4" />
+    <input type="submit" value="login"
+           id = 'btn1' style="display:block;" onclick="myFunction()"
+           class="btn #4a148c purple darken-4" />
          </a>
     <input type="hidden" name="next" value="{{ next }}" />
     <input type="hidden" name="token" value="{{token}}" id="token">
     </div>
 
   </form>
+<h5 id = 'btn2' style="display:none;">Login...in progress</h5>
 <br>
     <div align="center">
   {# Assumes you setup the password_reset view in your URLconf #}
@@ -56,7 +59,16 @@
   </div>
   </div>
 
+  <script>
 
+function myFunction() {
+      var btn1 = document.getElementById('btn1')
+      var btn2 = document.getElementById('btn2')
+      btn1.style.display = "none"
+      btn2.style.display = "block"
+}
+
+ </script>
 
 {%endblock%}
 

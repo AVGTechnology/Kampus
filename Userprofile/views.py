@@ -72,7 +72,7 @@ def create_profile(request):
         fcm.name = user
         fcm.registration_id = ''
         fcm.type = 'web'
-        fcm.user = user.pk
+        fcm.user = user
         fcm.save()
         return redirect('user_profile')
     else:
