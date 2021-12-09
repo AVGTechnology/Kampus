@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'Messages',
     'DoneWithIt',
     'sslserver',
-    'cdn',
+
 
     # default apps
     'django.contrib.admin',
@@ -201,7 +201,7 @@ MEDIA_URL = "/media/"
 
 # social_app/settings.py
 
-from cdn.conf import * # noqa
+from .cdn.conf import * # noqa
 
 #STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
 
