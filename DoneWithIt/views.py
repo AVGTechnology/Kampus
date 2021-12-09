@@ -35,8 +35,10 @@ def sell_item(request):
         contact = n_item.contact
         if price > 0:
             device = FCMDevice.objects.all()
-            device.send_message(title=f'{seller} want to sell {name} on DoneWithIt ', body=f'For ₦{price}, location is '
-                                                                                           f'at {location}. Check App for more details...',
+            device.send_message(title=f'{seller}  want to sell {name} on DoneWithIt ', body=f'For ₦{price}, location is '
+                                f'at {location}. Check App for more details...'
+                                'https://kampusng.com{% url "view_user_profile" user.pk %}'
+                                ,
                                 icon='static/images/logo.png',
                                 data={"Details": "Details"})
         elif free:
