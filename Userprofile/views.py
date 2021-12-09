@@ -30,18 +30,6 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            devices = FCMDevice.objects.filter(user=user.pk).exists()
-            if devices:
-                ufm = FCMDevice.objects.filter(user=user.pk)
-                ufm.registration_id = ''
-                ufm.save()
-            else:
-                fcm = FCMDevice()
-                fcm.name = user
-                fcm.registration_id = ''
-                fcm.type = 'web'
-                fcm.user = user.pk
-                fcm.save()
             return redirect('create_profile')
     else:
         form = SignUpForm()
@@ -78,6 +66,18 @@ def create_profile(request):
         payment = PaymentDetail()
         payment.user = user
         payment.save()
+        devices = FCMDevice.objects.filter(user=user.pk).exists()
+        if devices:
+            ufm = FCMDevice.objects.filter(user=user.pk)
+            ufm.registration_id = ''
+            ufm.save()
+        else:
+            fcm = FCMDevice()
+            fcm.name = user
+            fcm.registration_id = ''
+            fcm.type = 'web'
+            fcm.user = user.pk
+            fcm.save()
         return redirect('user_profile')
     else:
         form = UserProfileForm(user=request.user)
