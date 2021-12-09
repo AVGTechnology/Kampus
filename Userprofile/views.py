@@ -41,9 +41,9 @@ def user_login(request):
     if request.is_ajax():
         token = request.POST.get('token')
        # print(token)
-        devices = FCMDevice.objects.filter(user=user.pk).exists()
+        devices = FCMDevice.objects.get(user=user.pk).exists()
         if devices:
-            ufm = FCMDevice.objects.filter(user=user.pk)
+            ufm = FCMDevice.objects.get(user=user.pk)
             ufm.registration_id = token
             ufm.save()
         else:
@@ -63,9 +63,17 @@ def create_profile(request):
     form = UserProfileForm(request.POST, request.FILES, user=request.user)
     if form.is_valid():
         form.save()
+        #payment details reg.
         payment = PaymentDetail()
         payment.user = user
         payment.save()
+        #firebase notification
+        fcm = FCMDevice()
+        fcm.name = user
+        fcm.registration_id = ''
+        fcm.type = 'web'
+        fcm.user = user.pk
+        fcm.save()
         return redirect('user_profile')
     else:
         form = UserProfileForm(user=request.user)
