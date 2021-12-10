@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -15,6 +16,24 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.user} Post '
+
+    def typecheck(self):
+        filename = self.file.name
+        try:
+            ext = filename.split('.')[-1]
+            if ext == 'jpeg':
+                a = 1
+            elif ext == 'JPG':
+                a = 1
+            elif ext == 'png':
+                a = 1
+            elif ext == 'gif':
+                a = 1
+            else:
+                a = 2
+        except Exception:
+            a = -1  # couldn't determine
+        return a
 
 
 class Comment(models.Model):
