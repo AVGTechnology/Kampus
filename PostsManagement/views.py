@@ -83,7 +83,7 @@ def thumbnail(request, pk):
     destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
     os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
-    clip = VideoFileClip(posts.file.path)
+    clip = VideoFileClip(posts.file.name)
     print(clip)
     print(clip.reader.fps)
     print(clip.duration)
