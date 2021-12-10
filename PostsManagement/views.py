@@ -86,7 +86,7 @@ def thumbnail(request, pk):
    # print(f"{posts.file.url}")
    # print(posts.file.path)
     #https: // kampusstorage.fra1.digitaloceanspaces.com / media / media / Post_Files / 1639068579411724267657957181444.j
-    clip = VideoFileClip(f"https://kampusstorage.fra1.digitaloceanspaces.com{posts.file.url}")
+    clip = VideoFileClip(f"{posts.file.url}")
     #clip = VideoFileClip(posts.file.path)
    # print(clip)
    # print(clip.reader.fps)
