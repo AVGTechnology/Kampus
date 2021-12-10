@@ -37,7 +37,7 @@
 
                         </b>
                     </div>
-                    {% if posts.file.url|slice:"-4:" == ".mp4" %}
+                    {% if posts.find_typecheck == 2 %}
                     <video class="responsive-video" controls="controls"
                            poster="media/media/Post_thumbnail/{{posts.pk}}.jpg">
 
@@ -45,7 +45,7 @@
 
                     </video>
 
-                    {% else %}
+                    {% elif posts.find_typecheck == 1 %}
                     <img class="responsive-img" src={{posts.file.url}} style="max-width: 100%;">
                     {% endif %}
                 </div>

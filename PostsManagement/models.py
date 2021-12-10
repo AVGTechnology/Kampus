@@ -17,20 +17,39 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.user} Post '
 
-    def typecheck(self):
+    def __unicode__(self):
+        return self.file
+
+    def find_typecheck(self):
         filename = self.file.name
         try:
             ext = filename.split('.')[-1]
-            if ext == 'jpeg':
+            if ext == 'jpg':
                 a = 1
-            elif ext == 'JPG':
+
+            elif ext == 'jpeg':
                 a = 1
+
             elif ext == 'png':
                 a = 1
+
             elif ext == 'gif':
                 a = 1
-            else:
+
+            elif ext == 'mp4':
                 a = 2
+
+            elif ext == 'avi':
+                a = 2
+
+            elif ext == 'mov':
+                a = 2
+
+            elif ext == 'mkv':
+                a = 2
+
+            else:
+                a = 3
         except Exception:
             a = -1  # couldn't determine
         return a
