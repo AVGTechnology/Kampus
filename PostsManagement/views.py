@@ -82,7 +82,7 @@ from django.core.files.storage import FileSystemStorage
 def thumbnail(request, pk):
     destination_dir = os.path.join(settings.AWS_LOCATION, 'media', 'media', 'Post_thumbnail')
     #destination_dir = 'media', 'media', 'Post_thumbnail'
-    # os.makedirs(destination_dir, exist_ok=True)
+    os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
     # print(f"{posts.file.url}") print(posts.file.path) https://kampusstorage.fra1.digitaloceanspaces.com / media /
     # media / Post_Files / 1639068579411724267657957181444.j
