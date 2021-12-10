@@ -106,12 +106,12 @@
             <div class="row" style="padding:5px;" >
             {% for posts in posts %}
                 <div class="col" style="padding:2px;">
-                    {% if posts.file.url|slice:"-4:" == ".mp4" %}
+                    {% if posts.find_typecheck == 2 %}
                   <a href="{% url 'comment_view' posts.pk %}">
                 <i class="material-icons left" style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute; ">play_circle_outline</i>
                     <img class="" src="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg" style="width: 110px; height:110px">
                   </a>
-                {% else %}
+                {% elif posts.find_typecheck == 1 %}
                 <a href="{% url 'comment_view' posts.pk %}">
                 <i class="material-icons left" style="margin-left:4px; margin-top:4px; color:#fff5fa; font-size: 30px; position: absolute;">photo</i>
                  <img class="" src={{posts.file.url}} style="width: 110px; height:110px">
