@@ -41,13 +41,13 @@
        <li class="collection-item avatar">
       <a href="{% url 'view_user_profile' users.user.pk %}">
       <img src={{users.image.url}} alt="" class="circle" width="40px" height="40px">
-          <span class="title " style="color:#000000;"><b>{{users.user}}</b></span>
+       </a>
+     <a href="{% url 'chat_page' users.user.pk %}">
+        <span class="title " style="color:#000000;"><b>{{users.user}}</b></span>
       <p  style="color:gray;">{{users.profession}} <br>
          {{users.dept}}
       </p>
-      </a>
-       <a href="{% url 'chat_page' users.user.pk %}">
-        <i class="material-icons secondary-content " style="color:#06bd4c">send</i>
+    <i class="material-icons secondary-content " style="color:#06bd4c; ">send</i>
       </a>
     </li>
         {% endfor %}

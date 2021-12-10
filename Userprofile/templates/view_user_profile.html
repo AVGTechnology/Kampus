@@ -31,6 +31,21 @@
 
 
         </div>
+
+           <div class="center">
+                 <a href="{% url 'chat_page' user_p.pk %}"> <font style="color:white; font-size:20px;"
+                  class="chip valign-wrapper  #f4511e deep-orange darken-1 white  waves-light">
+                 <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">message</i>
+                  Chat
+                </font></a>
+
+             <a href="tel:{{ user_p.phone }}" target="_blank"> <font style="color:white; font-size:20px;"
+                  class="chip valign  #004d40 teal darken-4 white waves-light">
+                  <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">call</i>
+                    Call
+                </font></a>
+
+            </div>
         <br>
         <div class="container" align="center">
 

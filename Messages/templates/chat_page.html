@@ -7,7 +7,9 @@
     <nav class="#263238 blue-grey darken-4">
         <div class="nav-wrapper container">
             <div class="row valign-wrapper space">
-
+                 <a href="{% url 'sent_list' %}">
+                 <i class="material-icons" style="font-size: 15px; text-decoration: none; color: #ffffff">chevron_left</i>
+                 </a>
                 <img src={{recipient.image.url}}
                      width="40px" height="40px"
                      alt="" class="circle">
