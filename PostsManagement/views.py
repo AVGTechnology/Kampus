@@ -80,7 +80,7 @@ from django.core.files.storage import FileSystemStorage
 
 @login_required
 def thumbnail(request, pk):
-    destination_dir = os.path.join(settings.AWS_LOCATION, 'media', 'media', 'Post_thumbnail')
+    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
     print("destination dir:")
     print(destination_dir)
     #destination_dir = 'media', 'media', 'Post_thumbnail'
