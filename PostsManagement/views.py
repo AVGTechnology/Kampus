@@ -80,7 +80,7 @@ from django.core.files.storage import FileSystemStorage
 
 @login_required
 def thumbnail(request, pk):
-    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnails')
+    destination_dir = os.path.join(settings.DEFAULT_FILE_STORAGE, 'media', 'media', 'Post_thumbnail')
     # destination_dir = 'media', 'media', 'Post_thumbnail'
     os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
