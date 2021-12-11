@@ -78,13 +78,11 @@ from django.core.files.base import ContentFile, File
 from django.core.files.storage import FileSystemStorage
 
 from storages.backends.s3boto3 import S3Boto3Storage
-
-
 @login_required
 def thumbnail(request, pk):
-    destination_dir = (S3Boto3Storage, 'media', 'media', 'Post_thumbnail')
+    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
     # destination_dir = 'media', 'media', 'Post_thumbnail'
-    #os.makedirs(destination_dir, exist_ok=True)
+    os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
     # print(f"{posts.file.url}") print(posts.file.path) https://kampusstorage.fra1.digitaloceanspaces.com / media /
     # media / Post_Files / 1639068579411724267657957181444.j
@@ -96,7 +94,7 @@ def thumbnail(request, pk):
     frame = clip.get_frame(2.00)
     # print(frame)
     # new_img_path = os.path.join(settings.DEFAULT_FILE_STORAGE, f"{posts.pk}.jpg")
-    new_img_path = (destination_dir, f"{posts.pk}.jpg")
+    new_img_path = os.path.join(destination_dir, f"{posts.pk}.jpg")
     new_img = Image.fromarray(frame)
     new_img.save(new_img_path)
     # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
