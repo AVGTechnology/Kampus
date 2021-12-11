@@ -87,14 +87,14 @@ def preview(request, pk):
 
 @login_required
 def thumbnail(request, pk):
-    destination_dir = os.path.join(settings.MEDIA_URL, 'media', 'media', 'Post_thumbnail')
+    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
     # destination_dir = 'media', 'media', 'Post_thumbnail'
     os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
     # print(f"{posts.file.url}") print(posts.file.path) https://kampusstorage.fra1.digitaloceanspaces.com / media /
     # media / Post_Files / 1639068579411724267657957181444.j
     clip = VideoFileClip(f"{posts.file.url}")
-    #clip = VideoFileClip(posts.file.path)
+    # clip = VideoFileClip(posts.file.path)
     # print(clip)
     # print(clip.reader.fps)
     # print(clip.duration)
@@ -104,34 +104,35 @@ def thumbnail(request, pk):
     new_img_path = f"{posts.pk}.jpg"
     new_img = Image.fromarray(frame)
     new_img.save(new_img_paths)
-    #file = ContentFile(new_img)
-    #new_img_path = f"media/media/Post_thumbnail/{posts.pk}.jpg"
-    #default_storage.save(new_img_path, file)
+    # file = ContentFile(new_img)
+    # new_img_path = f"media/media/Post_thumbnail/{posts.pk}.jpg"
+    # default_storage.save(new_img_path, file)
     # new_img.save(new_img_path)
-    # thumbnails = Post_thumbnail()
-    # thumbnails.thumbnail = new_img.save(new_img_path)
+    thumbnails = Post_thumbnail()
+    thumbnails.thumbnail = new_img_paths
+    thumbnails.save()
     # thumbnails.thumbnail.save(new_img_path, new_img.save(new_img_path))
     # thumbnails.save()
     # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
 
     # Use the API Keys you generated at Digital Ocean
-    #ACCESS_ID = 'FMAGECPBUNCWXWAIIVOD'
-   # SECRET_KEY = 'N1MX6oStDkTXglMLGBMXRf7CjzayFEJ+ihaVsGJX/OA'
+    # ACCESS_ID = 'FMAGECPBUNCWXWAIIVOD'
+    # SECRET_KEY = 'N1MX6oStDkTXglMLGBMXRf7CjzayFEJ+ihaVsGJX/OA'
 
     # Initiate session
-   # sessions = session.Session()
-  #  client = sessions.client('s3',
-                        #     region_name='fra1',  # enter your own region_name
-                        #     endpoint_url='https://fra1.digitaloceanspaces.com',  # enter your own endpoint url
+    # sessions = session.Session()
+    # client = sessions.client('s3',
+    #                         region_name='fra1',  # enter your own region_name
+    #                         endpoint_url='https://fra1.digitaloceanspaces.com',  # enter your own endpoint url
 
-                       #      aws_access_key_id=ACCESS_ID,
-                       #      aws_secret_access_key=SECRET_KEY)
+    #                        aws_access_key_id=ACCESS_ID,
+    #                         aws_secret_access_key=SECRET_KEY)
 
-   # transfer = S3Transfer(client)
+    # transfer = S3Transfer(client)
 
     # Uploads a file called 'name-of-file' to your Space called 'name-of-space'
     # Creates a new-folder and the file's final name is defined as 'name-of-file'
-   # transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
+    # transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
 
     return redirect('index')
 

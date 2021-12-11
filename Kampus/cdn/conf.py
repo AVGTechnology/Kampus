@@ -11,4 +11,4 @@ AWS_LOCATION = f"https://{AWS_STORAGE_BUCKET_NAME}.fra1.digitaloceanspaces.com"
 
 DEFAULT_FILE_STORAGE = "Kampus.cdn.backend.MediaRootS3Boto3Storage"
 STATICFILES_STORAGE = "Kampus.cdn.backend.StaticRootS3Boto3Storage"
-MEDIA_URL = "https://fra1.digitaloceanspaces.com/kampusstorage/"
+#MEDIA_URL = "https://fra1.digitaloceanspaces.com/kampusstorage/"
