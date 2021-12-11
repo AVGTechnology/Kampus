@@ -87,7 +87,7 @@ def preview(request, pk):
 
 @login_required
 def thumbnail(request, pk):
-    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
+    destination_dir = os.path.join(settings.MEDIA_URL, 'media', 'media', 'Post_thumbnail')
     # destination_dir = 'media', 'media', 'Post_thumbnail'
     os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
@@ -115,23 +115,23 @@ def thumbnail(request, pk):
     # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
 
     # Use the API Keys you generated at Digital Ocean
-    ACCESS_ID = 'FMAGECPBUNCWXWAIIVOD'
-    SECRET_KEY = 'N1MX6oStDkTXglMLGBMXRf7CjzayFEJ+ihaVsGJX/OA'
+    #ACCESS_ID = 'FMAGECPBUNCWXWAIIVOD'
+   # SECRET_KEY = 'N1MX6oStDkTXglMLGBMXRf7CjzayFEJ+ihaVsGJX/OA'
 
     # Initiate session
-    sessions = session.Session()
-    client = sessions.client('s3',
-                             region_name='fra1',  # enter your own region_name
-                             endpoint_url='https://fra1.digitaloceanspaces.com',  # enter your own endpoint url
+   # sessions = session.Session()
+  #  client = sessions.client('s3',
+                        #     region_name='fra1',  # enter your own region_name
+                        #     endpoint_url='https://fra1.digitaloceanspaces.com',  # enter your own endpoint url
 
-                             aws_access_key_id=ACCESS_ID,
-                             aws_secret_access_key=SECRET_KEY)
+                       #      aws_access_key_id=ACCESS_ID,
+                       #      aws_secret_access_key=SECRET_KEY)
 
-    transfer = S3Transfer(client)
+   # transfer = S3Transfer(client)
 
     # Uploads a file called 'name-of-file' to your Space called 'name-of-space'
     # Creates a new-folder and the file's final name is defined as 'name-of-file'
-    transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
+   # transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
 
     return redirect('index')
 
