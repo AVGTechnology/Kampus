@@ -9,3 +9,5 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Comment, CommentAdmin)
+
+admin.site.register(Post_thumbnail)

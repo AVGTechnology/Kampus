@@ -64,3 +64,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.post} Post '
+
+
+class Post_thumbnail(models.Model):
+    thumbnail = models.ImageField(verbose_name='Post Thumbnail', upload_to='media/Post_thumbnail', blank=True, null=True)
+
+    def __str__(self):
+        return f'image {self.thumbnail}'

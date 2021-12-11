@@ -1,5 +1,6 @@
 import io
 
+import PIL
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
@@ -18,10 +19,22 @@ from django.contrib import messages
 from fcm_django.models import FCMDevice
 
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Post_thumbnail
 from django.views.generic.list import ListView
 from moviepy.editor import *
 from PIL import Image
+import base64
+import time
+from django.core.files.base import ContentFile, File
+from django.core.files.storage import FileSystemStorage
+
+from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.files import File
+from django.core.files.storage import default_storage
+import boto3
+from boto3 import session
+from botocore.client import Config
+from boto3.s3.transfer import S3Transfer
 
 
 class NewsFeed(ListView):
@@ -72,32 +85,54 @@ def preview(request, pk):
     return render(request, 'preview.html', {"posts": posts, })
 
 
-import base64
-import time
-from django.core.files.base import ContentFile, File
-from django.core.files.storage import FileSystemStorage
-
-from storages.backends.s3boto3 import S3Boto3Storage
 @login_required
 def thumbnail(request, pk):
     destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
     # destination_dir = 'media', 'media', 'Post_thumbnail'
-    os.makedirs(destination_dir, exist_ok=True)
+    # os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
     # print(f"{posts.file.url}") print(posts.file.path) https://kampusstorage.fra1.digitaloceanspaces.com / media /
     # media / Post_Files / 1639068579411724267657957181444.j
     clip = VideoFileClip(f"{posts.file.url}")
-    # clip = VideoFileClip(posts.file.path)
+    #clip = VideoFileClip(posts.file.path)
     # print(clip)
     # print(clip.reader.fps)
     # print(clip.duration)
     frame = clip.get_frame(2.00)
     # print(frame)
-    # new_img_path = os.path.join(settings.DEFAULT_FILE_STORAGE, f"{posts.pk}.jpg")
-    new_img_path = os.path.join(destination_dir, f"{posts.pk}.jpg")
+    new_img_paths = os.path.join(destination_dir, f"{posts.pk}.jpg")
+    new_img_path = f"{posts.pk}.jpg"
     new_img = Image.fromarray(frame)
-    new_img.save(new_img_path)
+    new_img.save(new_img_paths)
+    #file = ContentFile(new_img)
+    #new_img_path = f"media/media/Post_thumbnail/{posts.pk}.jpg"
+    #default_storage.save(new_img_path, file)
+    # new_img.save(new_img_path)
+    # thumbnails = Post_thumbnail()
+    # thumbnails.thumbnail = new_img.save(new_img_path)
+    # thumbnails.thumbnail.save(new_img_path, new_img.save(new_img_path))
+    # thumbnails.save()
     # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
+
+    # Use the API Keys you generated at Digital Ocean
+    ACCESS_ID = 'FMAGECPBUNCWXWAIIVOD'
+    SECRET_KEY = 'N1MX6oStDkTXglMLGBMXRf7CjzayFEJ+ihaVsGJX/OA'
+
+    # Initiate session
+    sessions = session.Session()
+    client = sessions.client('s3',
+                             region_name='fra1',  # enter your own region_name
+                             endpoint_url='https://fra1.digitaloceanspaces.com',  # enter your own endpoint url
+
+                             aws_access_key_id=ACCESS_ID,
+                             aws_secret_access_key=SECRET_KEY)
+
+    transfer = S3Transfer(client)
+
+    # Uploads a file called 'name-of-file' to your Space called 'name-of-space'
+    # Creates a new-folder and the file's final name is defined as 'name-of-file'
+    transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
+
     return redirect('index')
 
 

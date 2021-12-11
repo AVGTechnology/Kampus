@@ -36,3 +36,11 @@ class CommentForm(forms.ModelForm):
 
         ]
 
+
+class ThumbnailForm(forms.ModelForm):
+    class Meta:
+        model = Post_thumbnail
+        fields = [
+            'thumbnail',
+
+        ]
