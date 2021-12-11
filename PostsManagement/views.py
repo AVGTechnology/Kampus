@@ -132,6 +132,9 @@ def thumbnail(request, pk):
     # Uploads a file called 'name-of-file' to your Space called 'name-of-space'
     # Creates a new-folder and the file's final name is defined as 'name-of-file'
     transfer.upload_file(new_img_paths, 'kampusstorage', 'media' + "/" + 'media' + "/" + 'Post_thumbnail' + "/" + f'{posts.pk}.jpg')
+    # This makes the file you are have specifically uploaded public by default.
+    response = client.put_object_acl(ACL='public-read', Bucket='kampusstorage',
+                                     Key="%s/%s" % ('media' + "/" + 'media' + "/" + 'Post_thumbnail', f'{posts.pk}.jpg'))
 
     return redirect('index')
 
