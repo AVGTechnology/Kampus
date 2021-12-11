@@ -80,27 +80,21 @@ from django.core.files.storage import FileSystemStorage
 
 @login_required
 def thumbnail(request, pk):
-    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnail')
-    print("destination dir:")
-    print(destination_dir)
-    #destination_dir = 'media', 'media', 'Post_thumbnail'
+    destination_dir = os.path.join(settings.BASE_DIR, 'media', 'media', 'Post_thumbnails')
+    # destination_dir = 'media', 'media', 'Post_thumbnail'
     os.makedirs(destination_dir, exist_ok=True)
     posts = Post.objects.get(pk=pk)
     # print(f"{posts.file.url}") print(posts.file.path) https://kampusstorage.fra1.digitaloceanspaces.com / media /
     # media / Post_Files / 1639068579411724267657957181444.j
     clip = VideoFileClip(f"{posts.file.url}")
-    print("post file:")
-    print(f"{posts.file.url}")
     # clip = VideoFileClip(posts.file.path)
     # print(clip)
     # print(clip.reader.fps)
     # print(clip.duration)
     frame = clip.get_frame(2.00)
     # print(frame)
+    # new_img_path = os.path.join(settings.DEFAULT_FILE_STORAGE, f"{posts.pk}.jpg")
     new_img_path = os.path.join(destination_dir, f"{posts.pk}.jpg")
-    print("new image path:")
-    print(new_img_path)
-    #new_img_path = os.path.join(settings.DEFAULT_FILE_STORAGE, f"{posts.pk}.jpg")
     new_img = Image.fromarray(frame)
     new_img.save(new_img_path)
     # file = open(os.path.join(settings.MEDIA_ROOT, 'media', 'Post_thumbnail', f"{posts.pk}.jpg"),'r')
