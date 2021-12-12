@@ -101,7 +101,7 @@ def thumbnail(request, pk):
     frame = clip.get_frame(2.00)
     # print(frame)
     new_img_paths = os.path.join(destination_dir, f"{posts.pk}.jpg")
-    new_img_path = f"{posts.pk}.jpg"
+    #new_img_path = f"{posts.pk}.jpg"
     new_img = Image.fromarray(frame)
     new_img.save(new_img_paths)
     #file = ContentFile(new_img)

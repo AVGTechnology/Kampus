@@ -34,7 +34,7 @@
                 </b>
             </div>
             {% if posts.find_typecheck == 2 %}
-                   <video class="responsive-video" controls="controls" poster="{{ MEDIA_URL }}/media/media/Post_thumbnail/{{posts.pk}}.jpg">
+                   <video class="responsive-video" controls="controls" poster="https://fra1.digitaloceanspaces.com/kampusstorage/media/media/Post_thumbnail/{{posts.pk}}.jpg">
 
                         <source src="{{posts.file.url}}" type="video/mp4" style="max-width: 100%;">
 
