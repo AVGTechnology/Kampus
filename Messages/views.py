@@ -40,14 +40,14 @@ def feedback(request):
         form.instance.sender = user
         if form.is_valid():
             instance = form.save()
-            sender = instance.sender
+            #sender = instance.sender
 
             mgs = 'Thanks for sending a feedback to Kampus.. we promise to serve you better.'
-            device = FCMDevice.objects.get(user=sender)
-            device.send_message(title=f'{sender} we have received your feedback...', body=f'{mgs} ',
-                                icon='static/images/logo.png',
-                                badge="static/images/logo.png",
-                                )
+            #device = FCMDevice.objects.get(user=sender)
+            #device.send_message(title=f'{sender} we have received your feedback...', body=f'{mgs} ',
+             #                   icon='static/images/logo.png',
+             #                   badge="static/images/logo.png",
+             #                   )
 
             return redirect('user_info')
     else:
@@ -116,11 +116,11 @@ def send_chat(request, pk):
     chat.sender = request.user
     chat.text = chats
     chat.save()
-    sender = request.user
-    device = FCMDevice.objects.get(user=receiver)
-    device.send_message(title=f'{sender} sent you a message', body=f'{chats} ',
-                        icon='static/images/logo.png',
+    #sender = request.user
+    #device = FCMDevice.objects.get(user=receiver)
+    #device.send_message(title=f'{sender} sent you a message', body=f'{chats} ',
+      #                  icon='static/images/logo.png',
 
-                        badge="static/images/logo.png",)
+      #                  badge="static/images/logo.png",)
 
     return redirect('chat_page', pk)

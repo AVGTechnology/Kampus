@@ -92,7 +92,7 @@ PWA_APP_ICONS_APPLE = [
 PWA_APP_SPLASH_SCREEN = [
     {
         'src': '/static/images/logo.png',
-        'sizes': '250x250',
+        'sizes': '200x200',
         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
@@ -133,7 +133,7 @@ WSGI_APPLICATION = 'Kampus.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "False"
 
 if DEVELOPMENT_MODE is True:
     DATABASES = {
