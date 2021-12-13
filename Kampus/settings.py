@@ -133,7 +133,7 @@ WSGI_APPLICATION = 'Kampus.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "False"
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 if DEVELOPMENT_MODE is True:
     DATABASES = {
